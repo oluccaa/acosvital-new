@@ -123,6 +123,7 @@ const Header: React.FC = () => {
                             : 'h-auto opacity-100 mb-2 pb-2'
                         } 
                         flex justify-between items-center text-xs text-gray-300
+                        relative z-[60]
                     `}
                 >
                      <div className="flex items-center gap-4">
@@ -204,7 +205,7 @@ const Header: React.FC = () => {
             <div 
                 className={`
                     fixed inset-0 z-50 bg-[#081437] 
-                    flex flex-col h-[100dvh] w-screen overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+                    flex flex-col h-[100dvh] w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
                     ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}
                 `}
             >

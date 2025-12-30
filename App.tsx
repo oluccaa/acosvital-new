@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -52,7 +53,7 @@ const App: React.FC = () => {
         // The main container intentionally DOES NOT have a background color (removed bg-white).
         // This ensures that if there's a pixel gap between header and content, it shows blue (blending with header)
         // instead of a white line. Page components handle their own backgrounds.
-        <div className="bg-brand-blue-dark font-sans text-gray-800 flex flex-col min-h-screen">
+        <div className="bg-brand-blue-dark font-sans text-gray-800 flex flex-col min-h-screen w-full overflow-x-hidden relative">
             <Header />
             {/* 
                 Padding Adjustment:

@@ -353,7 +353,7 @@ const CatalogFlipbook: React.FC = () => {
                 ref={wrapperRef}
                 className={`
                     bg-[#111827] rounded-2xl shadow-2xl border border-gray-700/50 flex flex-col overflow-hidden transition-all duration-300
-                    ${isFullscreen ? 'fixed inset-0 z-50 rounded-none border-0 h-screen w-screen' : 'w-full max-w-6xl mx-auto'}
+                    ${isFullscreen ? 'fixed inset-0 z-50 rounded-none border-0 h-screen w-full' : 'w-full max-w-6xl mx-auto'}
                 `}
             >
                 {/* 1. VIEWPORT (Janela de Visualização) */}

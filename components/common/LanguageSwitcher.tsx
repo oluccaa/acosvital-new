@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Globe, ChevronDown } from 'lucide-react';
@@ -33,7 +34,7 @@ export const LanguageSwitcher: React.FC = () => {
             </button>
             
             {isLangDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-20" role="menu">
+                <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-50" role="menu">
                     <ul className="py-1 text-gray-700">
                         <li>
                             <button
