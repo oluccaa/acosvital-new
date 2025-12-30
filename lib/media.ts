@@ -3,6 +3,9 @@
 
 // Centralized Asset Registry
 export const ASSETS = {
+
+  // Imagens usadas no Sobre nós (Featured Products) e Outdoors
+
   LOGO: "https://images.builderservices.io/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-hostgator-brasil-v1-0-0%2F850%2F1911850%2FCU3jUjet%2Ffa2ee8c3569d413fb2ae26686f42b928&methods=resize%2C1000%2C5000",
   
   HERO: {
@@ -11,8 +14,16 @@ export const ASSETS = {
     FEATURES_BG: "https://images.unsplash.com/photo-1581243981884-a1dc2c687e37?q=80&w=2070&auto=format&fit=crop"
   },
 
+  HERO_SLIDES_IMGS: {
+    ENTRESSAFRA: 'https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/home/hero/1.webp',
+    TRAPEZOIDAL: 'https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/home/hero/2.webp',
+    EXCELLENCE: 'https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/home/hero/3.webp',
+    FLANGES: 'https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/home/hero/4.webp',
+    FLOORING: 'https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/home/hero/5.webp'
+  },
+
   ABOUT: {
-    CONTENT_IMAGE: "https://images.builderservices.io/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-hostgator-brasil-v1-0-0%2F850%2F1911850%2FCU3jUjet%2F2fb97ecd50b64315bc4e1f38ca1daacf&methods=resize%2C2000%2C5000",
+    CONTENT_IMAGE: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/home/sobre/vertical-sobre-empresa.gif",
     UNITS_MAP: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/MapaOndeAtuamos.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvTWFwYU9uZGVBdHVhbW9zLnBuZyIsImlhdCI6MTc2NDY5NzE2MCwiZXhwIjoxNzk2MjMzMTYwfQ.IRHkVywspCVxCLapfO2ah3204NxkuJ1OEJI8WouT8_A"
   },
 
@@ -20,12 +31,18 @@ export const ASSETS = {
     HERO_BG: "https://images.builderservices.io/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-hostgator-brasil-v1-0-0%2F850%2F1911850%2FCU3jUjet%2F5c1f0aff29d040d5999d668eb4419bfa&methods=resize%2C2000%2C5000",
     CONTENT_IMAGE: "https://images.builderservices.io/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-hostgator-brasil-v1-0-0%2F850%2F1911850%2FCU3jUjet%2Fafc82e27a4894ee8ba16231adb5e8f09&methods=resize%2C2000%2C5000"
   },
+
+  CERTIFICATIONS_LOGOS: {
+    ISO9001: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/Logo/ISO.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvTG9nby9JU08ucG5nIiwiaWF0IjoxNzY0NzAwMzE5LCJleHAiOjE3OTYyMzYzMTl9.id7WHHdFczzHPzUrZcfEcJPOTuOfxIDTyPq16Ct_n6Y",
+    CRC: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/Logo/CRC.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvTG9nby9DUkMucG5nIiwiaWF0IjoxNzY0NzAwMjk2LCJleHAiOjE3OTYyMzYyOTZ9.KPWK1CFK3U-x1F8oV1D_j7UCdbQ92SN37H5lL_GQhLg",
+    YPFB: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/Logo/YPFB_Logo.svg.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvTG9nby9ZUEZCX0xvZ28uc3ZnLnBuZyIsImlhdCI6MTc2NTgyMjUzMCwiZXhwIjoxNzk3MzU4NTMwfQ.XMqCBVThLKm4SHRejHMKm6vofXhluUB8_i356FWYiqc"
+  },
   
   CTA: {
     BG_GIF: "https://cpcqextgfcqhmwsqqdao.supabase.co/storage/v1/object/public/public-assets/acosvital/acos-empresa-gif.png"
   },
 
-  // Imagens usadas na Home (Featured Products)
+  // Imagens usadas na Home (Featured Products) e Outdoors
   HOME_FEATURED: {
     TUBOS: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/home-product-feature/Tubos.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvaG9tZS1wcm9kdWN0LWZlYXR1cmUvVHVib3Mud2VicCIsImlhdCI6MTc2NDc4ODQ2OSwiZXhwIjoxNzk2MzI0NDY5fQ.KM6PFQHzeak1yRuaEmtImIm8T3H94VjhBCvhsxf41eo",
     CHAPAS: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/home-product-feature/Chapas.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvaG9tZS1wcm9kdWN0LWZlYXR1cmUvQ2hhcGFzLndlYnAiLCJpYXQiOjE3NjQ3ODg0OTIsImV4cCI6MTc5NjMyNDQ5Mn0.jv4DVYI36aVqhHrpErv1ud4xvKZ_eHgPWko8P2eWfCI",
@@ -39,7 +56,41 @@ export const ASSETS = {
     GROOVED: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/home-product-feature/Grooved.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvaG9tZS1wcm9kdWN0LWZlYXR1cmUvR3Jvb3ZlZC53ZWJwIiwiaWF0IjoxNzY0ODQzODY2LCJleHAiOjE3OTYzNzk4NjZ9.ZbgLJUXQYCDIk8ulWz7ye5soRH_lkz8j3iELil3utmY"
   },
 
-  // Capas das Categorias (Página /products)
+  // Setores de Atuação
+  SECTORS: {
+    AGRICULTURE: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/1.webp",
+    ARCHITECTURE: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/2.webp",
+    AUTOMOTIVE: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/3.webp",
+    CIVIL_CONST: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/4.webp",
+    ENERGY: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/5.webp",
+    NAVAL: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/6.webp",
+    MINING: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/7.webp",
+    OIL_GAS: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/8.webp",
+    PULP_PAPER: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/9.webp",
+    PETROCHEMICAL: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/10.webp",
+    SANITATION: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/11.webp",
+    STEEL: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/setores_atendidos/12.webp",
+  },
+
+  // Miniaturas da Página de Produtos
+  PRODUCT_THUMBNAILS: {
+    FLANGES: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/1Flange.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS8xRmxhbmdlLndlYnAiLCJpYXQiOjE3NjU4MjI5NjUsImV4cCI6MjA4MTE4Mjk2NX0.2XtJ9HW08hmbE6HUXym0oh01144t9mLCn1dvUENLADs',
+    TUBES: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/2Tubos.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS8yVHVib3Mud2VicCIsImlhdCI6MTc2NTgyMzAwOCwiZXhwIjoyMDgxMTgzMDA4fQ.shdxuS_a9DNReqCr1iN7G6qRY6o8yNpC2O4EopoYHFQ',
+    FITTINGS: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/3Conexoes.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS8zQ29uZXhvZXMud2VicCIsImlhdCI6MTc2NTgyMzAzNCwiZXhwIjoyMDgxMTgzMDM0fQ.51CCXfXekm-ZktRNa-rvF5j6W6nya1IgG1LaG5wncfs',
+    VALVES: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/4Valvula.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS80VmFsdnVsYS53ZWJwIiwiaWF0IjoxNzY1ODIzMDUxLCJleHAiOjIwODExODMwNTF9.Y58h3aJWwDFfxQgmRQC9r9MasdOvgL8Yd8uUTbgsTzM',
+    PROFILES: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/5Perfis.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS81UGVyZmlzLndlYnAiLCJpYXQiOjE3NjU4MjMwODQsImV4cCI6MjA4MTE4MzA4NH0.Oa43oZFIBC21v5mvOugqmgKpGRjNqka-xKOJ4UIfYKE',
+    PLATES: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/6Chapas.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS82Q2hhcGFzLndlYnAiLCJpYXQiOjE3NjU4MjMxMzMsImV4cCI6MjA4MTE4MzExM30.CjrKny8i_rM1H9VmlIzUqVOg7AWxWnmcUS7YhQHdQbI',
+    GRATINGS: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/7Grades.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS83R3JhZGVzLndlYnAiLCJpYXQiOjE3NjU4MjMxMzUsImV4cCI6MjA4MTE4MzEzNX0.21XOqLxUBq1W43nHqIVbakdxF9qHGyyZ2ruHdRS7rI0',
+    TILES: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/8Telhas.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS84VGVsaGFzLndlYnAiLCJpYXQiOjE3NjU4MjMxNjAsImV4cCI6MjA4MTE4MzE2MH0.8qRto_qxlFTvQgyYhh1YowOBR9eteLmgpOTtikLn98M',
+    CIVIL: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/9ConstrucaoCivil.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS85Q29uc3RydWNhb0NpdmlsLndlYnAiLCJpYXQiOjE3NjU4MjY0NjAsImV4cCI6MjA4MTE4NjQ2MH0.ytMA2RBAmNK98CCzkzzyVg1qH_mSj6cVFpA3cXAP7TY',
+    BOILERMAKING: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/10Calderaria.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS8xMENhbGRlcmFyaWEud2VicCIsImlhdCI6MTc2NTgyMzIwNywiZXhwIjoyMDgxMTgzMjA3fQ.4aAL9Z2SJ3MfpnoL2tWe-D8Rt_eWxZDmeRDkWxC3mNc',
+    CUTTING: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/11Oxicorte.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS8xMU94aWNvcnRlLndlYnAiLCJpYXQiOjE3NjU4MjMyMjgsImV4cCI6MjA4MTE4MzIyOH0.pZiexwnW5LLduR7sOa8xWertbVJl7QOMZ9QTtiDJ2cc',
+    CONDUITS: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/12Eletrodutos.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS8xMkVsZXRyb2R1dG9zLndlYnAiLCJpYXQiOjE3NjU4MjMyNDgsImV4cCI6MjA4MTE4MzI0OH0.rJmn0GPPw16-_K3MaYj37bTV5uBkLqXpsuACVrARg74',
+    TANKS: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/13Tanques.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS8xM1RhbnF1ZXMud2VicCIsImlhdCI6MTc2NTgyMzI2NiwiZXhwIjoyMDgxMTgzMjY2fQ.TBb_zUnhuS53m8w9hiwkAMu2Ac2fRXO8Qbwb_QPkHeE',
+    GROOVED: 'https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/pagina-produtos/miniatura/14Bombeiro.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvcGFnaW5hLXByb2R1dG9zL21pbmlhdHVyYS8xNEJvbWJlaXJvLndlYnAiLCJpYXQiOjE3NjU4MjMyODMsImV4cCI6MjA4MTE4MzI4M30.EEludxSvRjxBdoZeTV1gcngoQV2PUDFZFkp_OxG2aZ4'
+  },
+
+  // Capas das Categorias (Página /products) - USADAS COMO COVER
   PRODUCTS: {
     FLANGES: 'https://storage.googleapis.com/production-hostgator-brasil-v1-0-0/850/1911850/CU3jUjet/1b023f67b1e9414ea1952f0d9c144952',
     TUBOS: 'https://storage.googleapis.com/production-hostgator-brasil-v1-0-0/850/1911850/CU3jUjet/32796067427343a480188b691405b848',

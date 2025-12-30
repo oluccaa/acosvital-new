@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useI18n } from '../../../context/I18nContext';
 import { ChevronDown } from 'lucide-react';
@@ -208,6 +209,7 @@ const Hero: React.FC = () => {
         {pulse.key !== 0 && <span key={pulse.key} className="pulse-effect" style={{ top: pulse.y, left: pulse.x }} aria-hidden="true" />}
 
         <div className="relative z-10 flex h-full items-center">
+          {/* STANDARD CONTAINER PADDING: px-6 sm:px-12 lg:px-24 */}
           <div className="container mx-auto px-6 sm:px-12 lg:px-24 max-w-[1920px]">
             <div className="max-w-xl md:max-w-2xl lg:max-w-3xl text-center md:text-left mx-auto md:mx-0">
               <div key={currentIndex} role="group" aria-roledescription="slide">

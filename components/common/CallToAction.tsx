@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useI18n } from '../../context/I18nContext';
 import { ASSETS } from '../../lib/media';
@@ -6,7 +7,7 @@ const CallToAction: React.FC = () => {
     const { t } = useI18n();
     return (
         <section 
-            className="relative py-24 md:py-32 bg-cover bg-center text-white"
+            className="relative py-12 md:py-20 bg-cover bg-center text-white"
             style={{ backgroundImage: `url('${ASSETS.CTA.BG_GIF}')` }}
         >
             {/* Overlay Div */}

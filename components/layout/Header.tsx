@@ -115,7 +115,7 @@ const Header: React.FC = () => {
                 {/* Top Bar */}
                 <div 
                     className={`
-                        container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1920px] 
+                        container mx-auto px-6 sm:px-12 lg:px-24 max-w-[1920px] 
                         border-b border-white/10 
                         transition-all duration-300 ease-in-out
                         ${isScrolled 
@@ -153,7 +153,7 @@ const Header: React.FC = () => {
                 </div>
 
                 {/* Main Header Content */}
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1920px] relative">
+                <div className="container mx-auto px-6 sm:px-12 lg:px-24 max-w-[1920px] relative">
                     <div className="flex justify-between items-center gap-4">
                         {/* Logo */}
                         <a href="#/" aria-label="Aços Vital Home" className="flex-shrink-0 z-50 transition-transform hover:scale-105 origin-left">

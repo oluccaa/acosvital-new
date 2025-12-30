@@ -23,7 +23,8 @@ const Footer: React.FC = () => {
 
     return (
         <footer className="bg-brand-midnight text-white pt-16 md:pt-20 pb-12">
-            <div className="container mx-auto px-6 sm:px-12 lg:px-24">
+            {/* Main Footer Content */}
+            <div className="container mx-auto px-6 sm:px-12 lg:px-24 max-w-[1920px]">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 items-start">
                     
                     {/* Column 1: Identity (Left) */}
@@ -70,7 +71,7 @@ const Footer: React.FC = () => {
             <div className="border-t border-white/10 w-full"></div>
             
             {/* Bottom Bar */}
-            <div className="container mx-auto px-6 sm:px-12 lg:px-12">
+            <div className="container mx-auto px-6 sm:px-12 lg:px-24 max-w-[1920px]">
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center py-10 space-y-8 lg:space-y-0 text-sm text-gray-400">
                     <address className="not-italic max-w-xs">
                         <p>Rod. Pedro Eroles, nº 1855 – KM49</p>
