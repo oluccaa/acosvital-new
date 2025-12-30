@@ -31,29 +31,6 @@ const COMMON_PRESETS = [
     { label: '1"', val: '25,4' }
 ];
 
-// --- DICIONÁRIO DE DESCRIÇÕES (TOOLTIPS) ---
-const DESCRIPTIONS: Record<string, string> = {
-    // Produtos
-    'plate': 'Chapas planas de aço (xadrez, lisas, perfuradas).',
-    'bar_round': 'Barras sólidas de seção circular.',
-    'bar_square': 'Barras sólidas de seção quadrada.',
-    'tube_round': 'Tubos industriais com costura ou sem costura.',
-    'fitting_elbow': 'Curvas de gomo (segmentadas) ou curvas prontas.',
-    'fitting_reducer': 'Peça de caldeiraria para união de diâmetros diferentes (Cone).',
-    'fitting_tee': 'Conexão em formato de T para derivação.',
-    'flange_square': 'Anéis cortados de chapas ou flanges planos.',
-    'tube_calendered': 'Tubo fabricado a partir do curvamento de chapas.',
-    'grating': 'Grades de piso para passarelas e plataformas.',
-    'expanded_metal': 'Chapa metálica cortada e esticada (losangos).',
-    
-    // Campos
-    'swd': 'Short Way of Design: Diagonal menor do losango.',
-    'strand': 'Largura do cordão (fio) da malha.',
-    'pitch': 'Distância entre centros das barras.',
-    'radius': 'Raio de centro da curva.',
-    'angle': 'Grau de abertura da curva ou gomo.'
-};
-
 const EXPANDED_PATTERNS = [
     { id: "xp-13", label: "XP-13", swd: 13, strand: 1.5, thickness: 1.5 },
     { id: "gme-13", label: "GME-13", swd: 13, strand: 2.0, thickness: 2.0 },
@@ -83,6 +60,37 @@ const SteelCalculator: React.FC = () => {
         calculatorState,
         updateCalculatorField
     } = useEngineering();
+
+    // Move Categories inside component to use 't'
+    const CATEGORIES = {
+        raw: { id: 'raw', label: t('calculatorPage.categories.raw'), items: [
+            { id: 'plate', icon: <Layers size={14} />, label: t('calculatorPage.products.plate') },
+            { id: 'bar_round', icon: <Disc size={14} />, label: t('calculatorPage.products.barRound') },
+            { id: 'bar_square', icon: <Box size={14} />, label: t('calculatorPage.products.barSquare') },
+        ]},
+        piping: { id: 'piping', label: t('calculatorPage.categories.piping'), items: [
+            { id: 'tube_round', icon: <Circle size={14} />, label: t('calculatorPage.products.tubeRound') },
+            { id: 'fitting_elbow', icon: <CornerDownRight size={14} />, label: t('calculatorPage.products.fittingElbow') },
+            { id: 'fitting_reducer', icon: <Filter size={14} />, label: t('calculatorPage.products.fittingReducer') },
+            { id: 'fitting_tee', icon: <Split size={14} />, label: t('calculatorPage.products.fittingTee') },
+            { id: 'flange_square', icon: <Square size={14} className="fill-current" />, label: t('calculatorPage.products.flangeSquare') },
+            { id: 'tube_calendered', icon: <Cylinder size={14} />, label: t('calculatorPage.products.tubeCalendered') },
+        ]},
+        structural: { id: 'structural', label: t('calculatorPage.categories.structural'), items: [
+            { id: 'grating', icon: <Grid size={14} />, label: t('calculatorPage.products.grating') },
+            { id: 'expanded_metal', icon: <LayoutGrid size={14} />, label: t('calculatorPage.products.expandedMetal') },
+        ]}
+    };
+
+    // Descriptions using translation keys
+    // We map keys directly to t() call when rendering or constructing strings
+    const getDescription = (key: string) => t(`calculatorPage.toolDescriptions.${key}`); // Note: Using toolDescriptions prefix for generic descriptions if applicable or specific keys
+
+    // Specific field help text
+    const getFieldHelp = (key: string) => {
+        // Fallback or specific translation logic if needed
+        return ""; // Simplified for now as tooltips were hardcoded in previous version
+    };
 
     const selectedType = (calculatorState.selectedType as ProductType) || 'plate';
     const setSelectedType = (type: ProductType) => {
@@ -244,45 +252,27 @@ const SteelCalculator: React.FC = () => {
         }
     };
 
-    const CATEGORIES = {
-        raw: { id: 'raw', label: "Matéria Prima", items: [
-            { id: 'plate', icon: <Layers size={14} />, label: "Chapa" },
-            { id: 'bar_round', icon: <Disc size={14} />, label: "Barra Red." },
-            { id: 'bar_square', icon: <Box size={14} />, label: "Barra Quad." },
-        ]},
-        piping: { id: 'piping', label: "Tubulação", items: [
-            { id: 'tube_round', icon: <Circle size={14} />, label: "Tubo Ind." },
-            { id: 'fitting_elbow', icon: <CornerDownRight size={14} />, label: "Curva" },
-            { id: 'fitting_reducer', icon: <Filter size={14} />, label: "Redução" },
-            { id: 'fitting_tee', icon: <Split size={14} />, label: "Tê" },
-            { id: 'flange_square', icon: <Square size={14} className="fill-current" />, label: "Anel" },
-            { id: 'tube_calendered', icon: <Cylinder size={14} />, label: "Tubo Cal." },
-        ]},
-        structural: { id: 'structural', label: "Estrutural", items: [
-            { id: 'grating', icon: <Grid size={14} />, label: "Grade Piso" },
-            { id: 'expanded_metal', icon: <LayoutGrid size={14} />, label: "Expandida" },
-        ]}
-    };
-
     const generateTechnicalSpec = () => {
-        const mat = values.material === 'carbon' ? "Aço Carbono" : 
-                   values.material === 'inox304' ? "Inox 304" : 
-                   values.material === 'inox316' ? "Inox 316" : "Alumínio";
+        const matKey = values.material === 'carbon' ? "carbon" : 
+                   values.material === 'inox304' ? "inox304" : 
+                   values.material === 'inox316' ? "inox316" : "aluminum";
+        const mat = t(`calculatorPage.materials.${matKey}`);
                    
         const fmt = (v: string, suffix: string = "mm") => v ? `${v}${suffix}` : "?";
+        const prodName = t(`calculatorPage.products.${selectedType}` as any);
         
         switch(selectedType) {
-            case 'plate': return `Chapa ${mat} - ${fmt(values.thickness)} x ${fmt(values.width)} x ${fmt(values.length)}`;
-            case 'bar_round': return `Barra Red. ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.length)}`;
-            case 'bar_square': return `Barra Quad. ${mat} - ${fmt(values.width)} x ${fmt(values.length)}`;
-            case 'tube_round': return `Tubo ${mat} - Ø ${fmt(values.outerDiameter)} x Parede ${fmt(values.thickness)} x ${fmt(values.length)}`;
-            case 'tube_calendered': return `Tubo Cal. ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} x ${fmt(values.length)}`;
-            case 'flange_square': return `Anel ${mat} - Ø Ext ${fmt(values.outerDiameter)} x Ø Int ${fmt(values.innerDiameter)} x ${fmt(values.thickness)}`;
-            case 'fitting_elbow': return `Curva Gomo ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} - R ${fmt(values.radius)} (${values.angle}°)`;
-            case 'fitting_reducer': return `Redução ${mat} - Ø Maior ${fmt(values.outerDiameter)} x Ø Menor ${fmt(values.innerDiameter)} x ${fmt(values.thickness)} x H ${fmt(values.length)}`;
-            case 'fitting_tee': return `Tê ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} - Corpo ${fmt(values.length)} / Deriv. ${fmt(values.height)}`;
-            case 'grating': return `Grade ${mat} - ${values.length}x${values.width} - Barra ${values.height}x${values.thickness}`;
-            case 'expanded_metal': return `Chapa Exp. ${mat} - ${values.width}x${values.length}`;
+            case 'plate': return `${prodName} ${mat} - ${fmt(values.thickness)} x ${fmt(values.width)} x ${fmt(values.length)}`;
+            case 'bar_round': return `${prodName} ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.length)}`;
+            case 'bar_square': return `${prodName} ${mat} - ${fmt(values.width)} x ${fmt(values.length)}`;
+            case 'tube_round': return `${prodName} ${mat} - Ø ${fmt(values.outerDiameter)} x ${t('calculatorPage.inputs.wallThickness')} ${fmt(values.thickness)} x ${fmt(values.length)}`;
+            case 'tube_calendered': return `${prodName} ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} x ${fmt(values.length)}`;
+            case 'flange_square': return `${prodName} ${mat} - Ø Ext ${fmt(values.outerDiameter)} x Ø Int ${fmt(values.innerDiameter)} x ${fmt(values.thickness)}`;
+            case 'fitting_elbow': return `${prodName} ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} - R ${fmt(values.radius)} (${values.angle}°)`;
+            case 'fitting_reducer': return `${prodName} ${mat} - Ø Maior ${fmt(values.outerDiameter)} x Ø Menor ${fmt(values.innerDiameter)} x ${fmt(values.thickness)} x H ${fmt(values.length)}`;
+            case 'fitting_tee': return `${prodName} ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} - Corpo ${fmt(values.length)} / Deriv. ${fmt(values.height)}`;
+            case 'grating': return `${prodName} ${mat} - ${values.length}x${values.width} - Barra ${values.height}x${values.thickness}`;
+            case 'expanded_metal': return `${prodName} ${mat} - ${values.width}x${values.length}`;
             default: return `Item ${mat}`;
         }
     };
@@ -343,9 +333,9 @@ const SteelCalculator: React.FC = () => {
                     <div className="bg-[#0f172a] border border-white/5 rounded-xl p-3 shadow-xl flex flex-col h-full max-h-[600px] overflow-hidden">
                         <div className="flex justify-between items-center mb-4 px-1 pb-2 border-b border-white/5">
                             <h3 className="text-white text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                                <BoxSelect size={12} className="text-brand-orange" /> Seleção
+                                <BoxSelect size={12} className="text-brand-orange" /> {t('calculatorPage.common.selection')}
                             </h3>
-                            <button onClick={reset} className="text-gray-500 hover:text-white transition-colors" title="Resetar">
+                            <button onClick={reset} className="text-gray-500 hover:text-white transition-colors" title={t('calculatorPage.common.clear')}>
                                 <RefreshCcw size={12} />
                             </button>
                         </div>
@@ -391,7 +381,7 @@ const SteelCalculator: React.FC = () => {
                         {/* Header do Card */}
                         <div className="p-4 flex items-center justify-between border-b border-white/5">
                             <h3 className="text-white text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                                <Calculator size={12} className="text-brand-blue-light" /> Console de Engenharia
+                                <Calculator size={12} className="text-brand-blue-light" /> {t('calculatorPage.common.console')}
                             </h3>
                             <div className="relative min-w-[160px]">
                                  <select 
@@ -399,10 +389,10 @@ const SteelCalculator: React.FC = () => {
                                     onChange={(e) => handleInputChange('material', e.target.value)} 
                                     className="w-full bg-[#1e293b] border border-white/10 rounded text-[10px] uppercase font-bold text-white py-1.5 pl-3 pr-8 outline-none appearance-none cursor-pointer hover:border-brand-orange/50 transition-colors"
                                  >
-                                    <option value="carbon">Aço Carbono (7.85)</option>
-                                    <option value="inox304">Inox 304 (7.93)</option>
-                                    <option value="inox316">Inox 316 (7.98)</option>
-                                    <option value="aluminum">Alumínio (2.70)</option>
+                                    <option value="carbon">{t('calculatorPage.materials.carbon')}</option>
+                                    <option value="inox304">{t('calculatorPage.materials.inox304')}</option>
+                                    <option value="inox316">{t('calculatorPage.materials.inox316')}</option>
+                                    <option value="aluminum">{t('calculatorPage.materials.aluminum')}</option>
                                 </select>
                                 <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={12} />
                             </div>
@@ -416,21 +406,21 @@ const SteelCalculator: React.FC = () => {
                                  <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
                                      {/* Lógica de Renderização de Inputs */}
                                      {(selectedType === 'plate' || selectedType === 'bar_square' || selectedType === 'flange_square') && (
-                                        renderInput('width', (selectedType === 'flange_square' || selectedType === 'bar_square') ? "Lado" : "Largura")
+                                        renderInput('width', (selectedType === 'flange_square' || selectedType === 'bar_square') ? t('calculatorPage.inputs.side') : t('calculatorPage.inputs.width'))
                                     )}
 
                                      {selectedType === 'grating' && (
                                         <>
                                             <div className="col-span-2 grid grid-cols-2 gap-4 bg-[#1e293b]/30 p-2 rounded-lg border border-white/5">
-                                                 {renderInput('length', "Comp. (Vão)")}
-                                                 {renderInput('width', "Largura")}
+                                                 {renderInput('length', t('calculatorPage.inputs.length') + " (" + t('calculatorPage.inputs.gap') + ")")}
+                                                 {renderInput('width', t('calculatorPage.inputs.width'))}
                                             </div>
-                                            {renderInput('height', "Alt. Barra")}
-                                            {renderInput('thickness', "Esp. Barra")}
+                                            {renderInput('height', t('calculatorPage.inputs.barHeight'))}
+                                            {renderInput('thickness', t('calculatorPage.inputs.barThickness'))}
                                             
                                             <div className="col-span-2">
                                                 <div className="flex items-center gap-1 mb-0.5">
-                                                    <label className="text-[10px] text-gray-400 uppercase font-bold">Malha</label>
+                                                    <label className="text-[10px] text-gray-400 uppercase font-bold">{t('calculatorPage.inputs.mesh')}</label>
                                                 </div>
                                                 <div className="flex gap-2">
                                                     <div className="relative flex-1">
@@ -448,7 +438,7 @@ const SteelCalculator: React.FC = () => {
                                     {selectedType === 'expanded_metal' && (
                                         <>
                                             <div className="col-span-2">
-                                                <label className="text-[10px] text-gray-400 uppercase font-bold mb-0.5 block">Malha</label>
+                                                <label className="text-[10px] text-gray-400 uppercase font-bold mb-0.5 block">{t('calculatorPage.inputs.mesh')}</label>
                                                 <div className="relative">
                                                     <select value={expandedPatternId} onChange={handleExpandedPatternSelect} className="w-full bg-[#1e293b] border border-white/10 rounded-md py-1.5 pl-2 text-white text-[10px] outline-none appearance-none mb-2 h-8">
                                                         {EXPANDED_PATTERNS.map(opt => (<option key={opt.id} value={opt.id}>{opt.label}</option>))}
@@ -458,36 +448,35 @@ const SteelCalculator: React.FC = () => {
                                             </div>
                                             {isCustomExpanded && (
                                                 <>
-                                                    {renderInput('thickness', "Espessura")}
-                                                    {renderInput('strandWidth', "Cordão", DESCRIPTIONS['strand'])}
-                                                    {renderInput('meshSWD', "SWD", DESCRIPTIONS['swd'])}
+                                                    {renderInput('thickness', t('calculatorPage.inputs.thickness'))}
+                                                    {renderInput('strandWidth', t('calculatorPage.inputs.strandWidth'))}
+                                                    {renderInput('meshSWD', t('calculatorPage.inputs.meshSWD'))}
                                                 </>
                                             )}
-                                            {renderInput('width', "Largura")}
-                                            {renderInput('length', "Comprimento")}
+                                            {renderInput('width', t('calculatorPage.inputs.width'))}
+                                            {renderInput('length', t('calculatorPage.inputs.length'))}
                                         </>
                                     )}
 
                                      {(selectedType !== 'flange_square' && selectedType !== 'fitting_elbow' && selectedType !== 'grating' && selectedType !== 'expanded_metal' && selectedType !== 'fitting_reducer' && selectedType !== 'fitting_tee') && (
-                                        renderInput('length', "Comprimento")
+                                        renderInput('length', t('calculatorPage.inputs.length'))
                                     )}
 
                                     {isTubeType && (
                                         <div className="col-span-2 xl:col-span-3 grid grid-cols-3 gap-3 bg-[#1e293b]/30 p-2 rounded-lg border border-white/5 relative">
                                             <div className="absolute -top-1.5 right-2 text-[8px] bg-brand-orange text-white px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1"><Zap size={8}/> Auto</div>
-                                            {renderTubeInput('outerDiameter', "Ø Externo")}{renderTubeInput('innerDiameter', "Ø Interno")}{renderTubeInput('thickness', "Parede")}
+                                            {renderTubeInput('outerDiameter', t('calculatorPage.inputs.outerDiameter'))}{renderTubeInput('innerDiameter', t('calculatorPage.inputs.innerDiameter'))}{renderTubeInput('thickness', t('calculatorPage.inputs.wallThickness'))}
                                         </div>
                                     )}
 
-                                    {selectedType === 'bar_round' && (renderInput('outerDiameter', "Diâmetro"))}
+                                    {selectedType === 'bar_round' && (renderInput('outerDiameter', t('calculatorPage.inputs.diameter')))}
                                     
                                     {selectedType === 'fitting_elbow' && (
                                         <>
-                                            {renderInput('radius', "Raio Centro", DESCRIPTIONS['radius'])}
+                                            {renderInput('radius', t('calculatorPage.inputs.radius'))}
                                             <div>
                                                 <div className="flex items-center gap-1 mb-0.5">
-                                                    <label className="text-[10px] text-gray-400 uppercase font-bold">Ângulo</label>
-                                                    <Tooltip text={DESCRIPTIONS['angle']} />
+                                                    <label className="text-[10px] text-gray-400 uppercase font-bold">{t('calculatorPage.inputs.angle')}</label>
                                                 </div>
                                                 <input type="text" value={values.angle} onChange={(e) => handleInputChange('angle', e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-md py-1.5 px-2 text-white text-xs outline-none focus:border-brand-orange transition-colors h-8" />
                                             </div>
@@ -498,15 +487,15 @@ const SteelCalculator: React.FC = () => {
                                         <>
                                             {renderInput('outerDiameter', "Ø Maior (Ext)")}
                                             {renderInput('innerDiameter', "Ø Menor (Ext)")}
-                                            {renderInput('length', "Altura")}
-                                            {renderInput('thickness', "Espessura")}
+                                            {renderInput('length', t('calculatorPage.inputs.height'))}
+                                            {renderInput('thickness', t('calculatorPage.inputs.thickness'))}
                                         </>
                                     )}
 
                                     {selectedType === 'fitting_tee' && (
                                         <>
                                             {renderInput('outerDiameter', "Ø Corpo (Ext)")}
-                                            {renderInput('thickness', "Espessura")}
+                                            {renderInput('thickness', t('calculatorPage.inputs.thickness'))}
                                             {renderInput('length', "Comp. Corpo")}
                                             {renderInput('height', "Comp. Derivação")}
                                         </>
@@ -514,7 +503,7 @@ const SteelCalculator: React.FC = () => {
 
                                     {(selectedType === 'plate') && (
                                         <div className="col-span-1">
-                                            {renderInput('thickness', "Espessura")}
+                                            {renderInput('thickness', t('calculatorPage.inputs.thickness'))}
                                         </div>
                                     )}
 
@@ -522,32 +511,29 @@ const SteelCalculator: React.FC = () => {
                                     {(!typesWithoutThickness.includes(selectedType) && !isCustomExpanded) && (
                                         <div className="col-span-2 xl:col-span-3 flex flex-col gap-1 pb-1 mt-1">
                                             <div className="flex items-center gap-1 text-[9px] text-brand-orange uppercase font-bold tracking-wider">
-                                                <MousePointerClick size={10} /> Presets de Medida
+                                                <MousePointerClick size={10} /> {t('calculatorPage.common.presets')}
                                             </div>
                                             <div className="flex gap-1.5 flex-wrap items-end">
-                                                {COMMON_PRESETS.map((t) => (
+                                                {COMMON_PRESETS.map((t_preset) => (
                                                     <button 
-                                                        key={t.label} 
-                                                        onClick={() => handlePresetClick(t.val)}
+                                                        key={t_preset.label} 
+                                                        onClick={() => handlePresetClick(t_preset.val)}
                                                         className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-gray-400 hover:text-white hover:bg-white/10 hover:border-brand-orange/30 transition-all h-6 active:bg-brand-orange/20"
-                                                        title={`Aplicar ${t.label} ao campo selecionado`}
+                                                        title={t('calculatorPage.common.presetsHelp')}
                                                     >
-                                                        {t.label}
+                                                        {t_preset.label}
                                                     </button>
                                                 ))}
-                                            </div>
-                                            <div className="text-[8px] text-gray-600 italic">
-                                                * Selecione um campo acima e clique em um preset para aplicar.
                                             </div>
                                         </div>
                                     )}
 
                                     {(selectedType !== 'plate' && !isTubeType && !typesWithoutThickness.includes(selectedType) && !['fitting_reducer', 'fitting_tee', 'grating', 'expanded_metal'].includes(selectedType)) && (
-                                        renderInput('thickness', "Espessura")
+                                        renderInput('thickness', t('calculatorPage.inputs.thickness'))
                                     )}
                                     
                                     <div className="col-span-1">
-                                        <label className="text-[10px] text-gray-400 uppercase font-bold mb-0.5 block">Quantidade</label>
+                                        <label className="text-[10px] text-gray-400 uppercase font-bold mb-0.5 block">{t('calculatorPage.inputs.quantity')}</label>
                                         <div className="flex items-center bg-[#1e293b] border border-white/10 rounded-md p-0.5 h-8 focus-within:border-brand-orange transition-colors">
                                             <input type="number" value={values.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} min="1" className="flex-1 bg-transparent px-2 text-white text-xs font-bold outline-none h-full text-center" />
                                             <span className="text-gray-500 text-[10px] px-2 border-l border-white/5 h-full flex items-center bg-white/5">UN</span>
@@ -559,25 +545,19 @@ const SteelCalculator: React.FC = () => {
                              {/* COLUNA DIREITA: DADOS TÉCNICOS ENRIQUECIDOS */}
                              <div className="w-full lg:w-[280px] xl:w-[320px] flex flex-col gap-4">
                                 <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-white/10 pb-2 mb-1 flex items-center justify-between">
-                                    <span>Telemetria</span>
+                                    <span>{t('calculatorPage.common.telemetry')}</span>
                                     <div className="flex gap-1">
                                         <div className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse"></div>
                                         <div className="w-1.5 h-1.5 rounded-full bg-brand-blue-light/50"></div>
                                     </div>
                                 </h4>
                                 
-                                {/* CARD PRINCIPAL: PESO UNITÁRIO */}
-                                {/* REMOVIDO PARA DAR DESTAQUE AO HUD INFERIOR, 
-                                    MAS SE PRECISAR PODE SER REATIVADO COMO UM CARD SECUNDÁRIO 
-                                    DE DETALHES ESPECÍFICOS DO MATERIAL 
-                                */}
-                                
                                 {/* CARD SECUNDÁRIO: ÁREA DE PINTURA */}
                                 <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col relative overflow-hidden group hover:bg-white/10 transition-colors">
                                     <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
                                         <Paintbrush size={32} />
                                     </div>
-                                    <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1 block">Área Superficial</span>
+                                    <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1 block">{t('calculatorPage.common.surfaceArea')}</span>
                                     <div className="flex items-baseline gap-1">
                                         <span className="text-xl font-mono font-bold text-white">
                                             {(engData.surfaceArea || 0).toFixed(2)}
@@ -589,7 +569,7 @@ const SteelCalculator: React.FC = () => {
                                 {/* CARD TERCIÁRIO: DENSIDADE */}
                                 <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col mt-auto group hover:bg-white/10 transition-colors">
                                      <div className="flex justify-between items-center mb-1">
-                                        <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Densidade</span>
+                                        <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">{t('calculatorPage.common.density')}</span>
                                         <Ruler size={14} className="text-gray-600 group-hover:text-brand-orange transition-colors"/>
                                      </div>
                                     <div className="text-sm font-mono text-gray-300">
@@ -608,7 +588,7 @@ const SteelCalculator: React.FC = () => {
                                 {/* Peso Principal - GIGANTE (TOTAL) */}
                                 <div className="flex flex-col items-center md:items-start">
                                     <span className="text-[10px] font-bold uppercase text-brand-orange tracking-[0.2em] mb-1 flex items-center gap-2">
-                                        <Info size={12} /> Peso Total ({values.quantity} un)
+                                        <Info size={12} /> {t('calculatorPage.common.totalWeight')} ({values.quantity} un)
                                     </span>
                                     <div 
                                         className="flex items-baseline gap-2 cursor-pointer group/copy" 
@@ -630,7 +610,7 @@ const SteelCalculator: React.FC = () => {
                                 <div className="flex flex-col justify-center gap-2">
                                         {/* Unit Weight */}
                                         <div className="flex items-center gap-3">
-                                            <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider w-16 text-right">Unitário:</span>
+                                            <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider w-16 text-right">{t('calculatorPage.common.unitWeight')}:</span>
                                             <div className="flex items-baseline gap-1.5">
                                             <span className="text-2xl font-mono font-bold text-gray-300 tracking-tight">
                                                 {unitWeight > 0 ? unitWeight.toFixed(2) : '0.00'}
@@ -643,7 +623,7 @@ const SteelCalculator: React.FC = () => {
                                         
                                         {/* Total Area */}
                                         <div className="flex items-center gap-3">
-                                            <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider w-16 text-right">Área Total:</span>
+                                            <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider w-16 text-right">{t('calculatorPage.common.totalArea')}:</span>
                                             <div className="flex items-baseline gap-1.5">
                                             <span className="text-2xl font-mono font-bold text-gray-300 tracking-tight">
                                                 {totalArea > 0 ? totalArea.toFixed(2) : '0.00'}
@@ -662,7 +642,7 @@ const SteelCalculator: React.FC = () => {
                                 className="w-full md:w-auto bg-brand-orange hover:bg-white hover:text-brand-orange text-white font-bold py-4 px-10 rounded-xl shadow-[0_0_20px_rgba(234,97,0,0.3)] hover:shadow-[0_0_30px_rgba(234,97,0,0.5)] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 uppercase tracking-wider text-sm whitespace-nowrap transform hover:-translate-y-0.5 group"
                             >
                                 <Plus size={18} strokeWidth={3} /> 
-                                <span>Adicionar à Lista</span>
+                                <span>{t('calculatorPage.common.addToList')}</span>
                                 <ArrowRight size={16} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
                             </button>
                         </div>
@@ -676,19 +656,19 @@ const SteelCalculator: React.FC = () => {
                         <div className="px-4 py-3 border-b border-white/5 bg-[#1e293b]/50 flex flex-col sm:flex-row items-center justify-between gap-3">
                             <div>
                                 <h3 className="font-bold text-white flex items-center gap-2 uppercase text-xs tracking-wide">
-                                    <ShoppingCart size={14} className="text-brand-orange" /> Lista de Materiais
+                                    <ShoppingCart size={14} className="text-brand-orange" /> {t('calculatorPage.common.materialList')}
                                 </h3>
                             </div>
                             <div className="flex gap-1.5">
-                                 <button className="text-gray-400 hover:text-white p-1.5 rounded hover:bg-white/10 transition-colors" title="Imprimir">
+                                 <button className="text-gray-400 hover:text-white p-1.5 rounded hover:bg-white/10 transition-colors" title={t('calculatorPage.common.print')}>
                                     <Printer size={14} />
                                  </button>
-                                 <button className="text-gray-400 hover:text-white p-1.5 rounded hover:bg-white/10 transition-colors" title="Compartilhar">
+                                 <button className="text-gray-400 hover:text-white p-1.5 rounded hover:bg-white/10 transition-colors" title={t('calculatorPage.common.share')}>
                                     <Share2 size={14} />
                                  </button>
                                  <div className="w-px h-5 bg-white/10 mx-1 self-center"></div>
                                  <button onClick={clearProject} className="text-red-400 hover:text-red-300 flex items-center gap-1 px-2 py-1 rounded hover:bg-red-500/10 transition-colors text-[10px] font-bold uppercase">
-                                    <Trash2 size={12} /> Limpar
+                                    <Trash2 size={12} /> {t('calculatorPage.common.clear')}
                                 </button>
                             </div>
                         </div>
@@ -697,16 +677,16 @@ const SteelCalculator: React.FC = () => {
                             {projectItems.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-48 text-gray-500">
                                     <Package size={32} className="mb-2 opacity-20" />
-                                    <p className="text-xs font-medium">Nenhum item adicionado.</p>
+                                    <p className="text-xs font-medium">{t('calculatorPage.common.emptyList')}</p>
                                 </div>
                             ) : (
                                 <table className="w-full text-left border-collapse">
                                     <thead className="bg-[#1e293b] text-gray-400 font-bold text-[9px] uppercase tracking-wider sticky top-0 z-10 shadow-sm">
                                         <tr>
-                                            <th className="px-4 py-2 border-b border-white/5">Item</th>
-                                            <th className="px-4 py-2 border-b border-white/5 text-center">Qtd</th>
-                                            <th className="px-4 py-2 border-b border-white/5 text-right">Peso Unit.</th>
-                                            <th className="px-4 py-2 border-b border-white/5 text-right">Peso Total</th>
+                                            <th className="px-4 py-2 border-b border-white/5">{t('calculatorPage.project.item')}</th>
+                                            <th className="px-4 py-2 border-b border-white/5 text-center">{t('calculatorPage.project.qty')}</th>
+                                            <th className="px-4 py-2 border-b border-white/5 text-right">{t('calculatorPage.result.weightPerPiece')}</th>
+                                            <th className="px-4 py-2 border-b border-white/5 text-right">{t('calculatorPage.result.totalWeight')}</th>
                                             <th className="px-4 py-2 border-b border-white/5 w-8"></th>
                                         </tr>
                                     </thead>
@@ -714,7 +694,7 @@ const SteelCalculator: React.FC = () => {
                                         {projectItems.map((item, idx) => (
                                             <tr key={item.id} className="hover:bg-white/5 transition-colors group">
                                                 <td className="px-4 py-2.5">
-                                                    <div className="font-bold text-gray-200 text-[11px] leading-tight">{idx + 1}. {item.type.toUpperCase().replace('_', ' ')}</div>
+                                                    <div className="font-bold text-gray-200 text-[11px] leading-tight">{idx + 1}. {t(`calculatorPage.products.${item.type}` as any).toUpperCase()}</div>
                                                     <div className="text-[9px] text-gray-500 mt-0.5 font-mono leading-tight">{item.specs}</div>
                                                 </td>
                                                 <td className="px-4 py-2.5 text-center text-xs font-medium text-gray-400">{item.quantity}</td>
@@ -739,13 +719,13 @@ const SteelCalculator: React.FC = () => {
                         {projectItems.length > 0 && (
                             <div className="p-4 bg-[#1e293b]/30 border-t border-white/5 flex justify-between items-center gap-4">
                                 <div>
-                                    <span className="text-[9px] text-gray-500 uppercase font-bold tracking-widest block">Total do Projeto</span>
+                                    <span className="text-[9px] text-gray-500 uppercase font-bold tracking-widest block">{t('calculatorPage.common.projectTotal')}</span>
                                     <div className="text-2xl font-bold text-white leading-none">
                                         {projectItems.reduce((acc, i) => acc + i.totalWeight, 0).toFixed(2)} <span className="text-xs text-gray-500 font-medium">kg</span>
                                     </div>
                                 </div>
                                 <button onClick={handleWhatsAppQuote} className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-2 px-4 rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-1.5 text-xs uppercase tracking-wide">
-                                    <WhatsappIcon size={16} /> <span className="hidden sm:inline">Solicitar Cotação</span>
+                                    <WhatsappIcon size={16} /> <span className="hidden sm:inline">{t('calculatorPage.common.requestQuote')}</span>
                                 </button>
                             </div>
                         )}

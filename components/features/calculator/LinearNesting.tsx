@@ -61,7 +61,7 @@ const LinearNesting: React.FC = () => {
     const len = parseFloat(newItemLength);
     const qty = parseInt(newItemQty);
     if (isNaN(len) || len <= 0) { setError("Comprimento inválido."); return; }
-    if (len + bladeWidth > stockLength) { setError(`Peça maior que a barra de estoque (${stockLength}mm).`); return; }
+    if (len + bladeWidth > stockLength) { setError(t('calculatorPage.nesting.errorLength')); return; }
     
     addNestingItem({ id: Math.random().toString(36).substr(2, 9), length: len, quantity: qty });
     setNewItemLength('');
@@ -152,11 +152,11 @@ const LinearNesting: React.FC = () => {
             {/* Stock Settings */}
             <div>
                 <h3 className="text-white font-bold text-xs uppercase flex items-center gap-2 border-b border-white/5 pb-2 mb-3">
-                    <Settings size={14} className="text-brand-orange" /> Parâmetros de Estoque
+                    <Settings size={14} className="text-brand-orange" /> {t('calculatorPage.nesting.params')}
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                        <label className="text-[10px] text-gray-500 font-bold uppercase">Barra Padrão (mm)</label>
+                        <label className="text-[10px] text-gray-500 font-bold uppercase">{t('calculatorPage.nesting.barLength')} (mm)</label>
                         <input 
                             type="number" 
                             value={calculatorState.nestStockLength} 
@@ -165,7 +165,7 @@ const LinearNesting: React.FC = () => {
                         />
                     </div>
                     <div className="space-y-1">
-                        <label className="text-[10px] text-gray-500 font-bold uppercase">Corte / Serra (mm)</label>
+                        <label className="text-[10px] text-gray-500 font-bold uppercase">{t('calculatorPage.nesting.bladeWidth')} (mm)</label>
                         <input 
                             type="number" 
                             value={calculatorState.nestBladeWidth} 
@@ -179,14 +179,14 @@ const LinearNesting: React.FC = () => {
             {/* Input Form */}
             <div>
                 <h3 className="text-white font-bold text-xs uppercase flex items-center gap-2 border-b border-white/5 pb-2 mb-3">
-                    <Plus size={14} className="text-brand-orange" /> Adicionar Peças
+                    <Plus size={14} className="text-brand-orange" /> {t('calculatorPage.nesting.addPieces')}
                 </h3>
                 <div className="flex gap-2 mb-2">
                     <div className="flex-1 relative">
                         <input 
                             id="nest-length-input"
                             type="number" 
-                            placeholder="Comprimento (mm)" 
+                            placeholder={`${t('calculatorPage.nesting.length')} (mm)`}
                             value={newItemLength} 
                             onChange={e => setNewItemLength(e.target.value)} 
                             onKeyDown={handleKeyDown}
@@ -196,7 +196,7 @@ const LinearNesting: React.FC = () => {
                     <div className="w-20 relative">
                          <input 
                             type="number" 
-                            placeholder="Qtd" 
+                            placeholder={t('calculatorPage.nesting.qty')}
                             value={newItemQty} 
                             onChange={e => setNewItemQty(e.target.value)} 
                             onKeyDown={handleKeyDown}
@@ -216,7 +216,7 @@ const LinearNesting: React.FC = () => {
             {/* Cut List */}
             <div className="flex-1 flex flex-col min-h-[200px]">
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-[10px] text-gray-500 font-bold uppercase">Lista de Corte ({nestingItems.length})</span>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase">{t('calculatorPage.nesting.cutList')} ({nestingItems.length})</span>
                     {nestingItems.length > 0 && (
                         <span className="text-[10px] text-brand-orange font-bold">
                             Total: {nestingItems.reduce((acc, i) => acc + (i.length * i.quantity), 0).toFixed(0)}mm
@@ -228,7 +228,7 @@ const LinearNesting: React.FC = () => {
                     {nestingItems.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-40 text-gray-600 opacity-50">
                             <Scissors size={32} className="mb-2" />
-                            <span className="text-xs italic">Adicione peças para otimizar</span>
+                            <span className="text-xs italic">{t('calculatorPage.nesting.waitingDesc')}</span>
                         </div>
                     ) : (
                         <div className="space-y-1">
@@ -257,7 +257,7 @@ const LinearNesting: React.FC = () => {
                 disabled={nestingItems.length === 0} 
                 className="w-full bg-white text-brand-blue-dark font-bold py-3 rounded-lg hover:bg-gray-100 transition-all uppercase text-xs tracking-widest disabled:opacity-30 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform active:scale-[0.99]"
             >
-                Calcular Otimização
+                {t('calculatorPage.nesting.calculateBtn')}
             </button>
         </div>
 
@@ -270,29 +270,29 @@ const LinearNesting: React.FC = () => {
                     <div className="grid grid-cols-3 gap-3">
                         <div className="bg-[#1e293b] p-4 rounded-xl text-center border border-white/10 shadow-lg relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-12 h-12 bg-white/5 rounded-bl-full -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
-                            <span className="text-[10px] text-gray-400 uppercase block font-bold tracking-wider mb-1">Total Barras</span>
+                            <span className="text-[10px] text-gray-400 uppercase block font-bold tracking-wider mb-1">{t('calculatorPage.nesting.results.totalBars')}</span>
                             <span className="text-2xl font-bold text-white">{result.totalBars}</span>
                             <span className="block text-[9px] text-gray-500 mt-1">de {stockLength}mm</span>
                         </div>
                         <div className="bg-[#1e293b] p-4 rounded-xl text-center border border-white/10 shadow-lg relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-12 h-12 bg-green-500/10 rounded-bl-full -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
-                            <span className="text-[10px] text-gray-400 uppercase block font-bold tracking-wider mb-1">Aproveitamento</span>
+                            <span className="text-[10px] text-gray-400 uppercase block font-bold tracking-wider mb-1">{t('calculatorPage.nesting.results.barUsage')}</span>
                             <span className="text-2xl font-bold text-green-400">{(100 - result.totalWastePercent).toFixed(1)}%</span>
-                            <span className="block text-[9px] text-gray-500 mt-1">Eficiência</span>
+                            <span className="block text-[9px] text-gray-500 mt-1">{t('calculatorPage.nesting.results.efficiency')}</span>
                         </div>
                         <div className="bg-[#1e293b] p-4 rounded-xl text-center border border-white/10 shadow-lg relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-12 h-12 bg-red-500/10 rounded-bl-full -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
-                            <span className="text-[10px] text-gray-400 uppercase block font-bold tracking-wider mb-1">Sobra Total</span>
+                            <span className="text-[10px] text-gray-400 uppercase block font-bold tracking-wider mb-1">{t('calculatorPage.nesting.results.totalWaste')}</span>
                             <span className="text-2xl font-bold text-red-400">{result.totalWaste.toFixed(0)}<span className="text-sm">mm</span></span>
-                            <span className="block text-[9px] text-gray-500 mt-1">Retalhos</span>
+                            <span className="block text-[9px] text-gray-500 mt-1">{t('calculatorPage.nesting.results.scraps')}</span>
                         </div>
                     </div>
 
                     {/* Bars Visualization */}
                     <div className="bg-[#0f172a] border border-white/5 rounded-xl p-4 shadow-xl">
                         <h4 className="text-white font-bold text-xs uppercase mb-4 flex justify-between items-center">
-                            <span>Plano de Corte</span>
-                            <span className="text-[9px] font-normal text-gray-500">Passe o mouse para ver detalhes</span>
+                            <span>{t('calculatorPage.nesting.results.cutPlan')}</span>
+                            <span className="text-[9px] font-normal text-gray-500">{t('calculatorPage.nesting.results.hoverDetails')}</span>
                         </h4>
                         
                         <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
@@ -302,7 +302,7 @@ const LinearNesting: React.FC = () => {
                                         <span className="flex items-center gap-2">
                                             <span className="w-5 h-5 rounded-full bg-brand-blue-dark flex items-center justify-center text-brand-orange border border-white/10">#{bar.id}</span>
                                         </span>
-                                        <span>Uso: <span className={bar.usage > 90 ? "text-green-400" : bar.usage > 70 ? "text-yellow-400" : "text-gray-400"}>{bar.usage.toFixed(1)}%</span></span>
+                                        <span>{t('calculatorPage.nesting.results.barUsage')}: <span className={bar.usage > 90 ? "text-green-400" : bar.usage > 70 ? "text-yellow-400" : "text-gray-400"}>{bar.usage.toFixed(1)}%</span></span>
                                     </div>
                                     
                                     <div className="h-8 bg-gray-900 rounded-md flex overflow-hidden border border-white/5 relative">
@@ -326,7 +326,7 @@ const LinearNesting: React.FC = () => {
                                         {/* Waste Part */}
                                         <div className="flex-1 bg-red-500/10 flex items-center justify-center relative group pattern-diagonal-lines-sm">
                                              <div className="absolute bottom-full mb-2 bg-black text-red-300 text-[10px] px-2 py-1 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none border border-red-500/30">
-                                                Sobra: {bar.waste.toFixed(0)} mm
+                                                {t('calculatorPage.nesting.results.totalWaste')}: {bar.waste.toFixed(0)} mm
                                                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black"></div>
                                             </div>
                                         </div>
@@ -346,8 +346,8 @@ const LinearNesting: React.FC = () => {
                   <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
                       <Scissors size={32} className="opacity-40" />
                   </div>
-                  <h4 className="text-sm font-bold text-gray-400 mb-1">Aguardando Cálculo</h4>
-                  <span className="text-xs italic max-w-xs text-center">Adicione as peças que deseja cortar na lista ao lado e defina o tamanho da barra do seu estoque.</span>
+                  <h4 className="text-sm font-bold text-gray-400 mb-1">{t('calculatorPage.nesting.waiting')}</h4>
+                  <span className="text-xs italic max-w-xs text-center">{t('calculatorPage.nesting.waitingDesc')}</span>
                 </div>
             )}
         </div>

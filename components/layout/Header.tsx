@@ -16,38 +16,6 @@ const SOCIAL_ICONS: Record<string, any> = {
     linkedin: Linkedin,
 };
 
-// Grouping Logic for Mobile Menu
-const MOBILE_PRODUCT_GROUPS = [
-    {
-        id: 'tubular',
-        label: 'Tubulação & Linhas',
-        icon: <Layers size={20} />,
-        description: 'Tubos, Eletrodutos e Grooved',
-        items: ['tubes', 'conduits', 'grooved']
-    },
-    {
-        id: 'conexoes',
-        label: 'Conexões & Válvulas',
-        icon: <Settings size={20} />,
-        description: 'Flanges, Conexões e Válvulas',
-        items: ['flanges', 'fittings', 'valves']
-    },
-    {
-        id: 'estrutural',
-        label: 'Aço Estrutural & Civil',
-        icon: <Box size={20} />,
-        description: 'Perfis, Chapas, Grades e Telhas',
-        items: ['profiles', 'plates', 'gratings', 'tiles', 'civil']
-    },
-    {
-        id: 'industrial',
-        label: 'Soluções Industriais',
-        icon: <Factory size={20} />,
-        description: 'Corte, Tanques e Caldeiraria',
-        items: ['boilermaking', 'cutting', 'tanks']
-    }
-];
-
 const Header: React.FC = () => {
     const { t } = useTranslation();
     const currentRoute = useRouter();
@@ -58,6 +26,38 @@ const Header: React.FC = () => {
     // Mobile Menu States
     const [activeProductGroup, setActiveProductGroup] = useState<string | null>(null);
     const [isProductsExpanded, setIsProductsExpanded] = useState(false);
+
+    // Grouping Logic for Mobile Menu (Moved inside to access 't')
+    const MOBILE_PRODUCT_GROUPS = [
+        {
+            id: 'tubular',
+            label: t('header.mobileGroups.tubular'),
+            icon: <Layers size={20} />,
+            description: t('header.mobileGroups.tubularDesc'),
+            items: ['tubes', 'conduits', 'grooved']
+        },
+        {
+            id: 'conexoes',
+            label: t('header.mobileGroups.connections'),
+            icon: <Settings size={20} />,
+            description: t('header.mobileGroups.connectionsDesc'),
+            items: ['flanges', 'fittings', 'valves']
+        },
+        {
+            id: 'estrutural',
+            label: t('header.mobileGroups.structural'),
+            icon: <Box size={20} />,
+            description: t('header.mobileGroups.structuralDesc'),
+            items: ['profiles', 'plates', 'gratings', 'tiles', 'civil']
+        },
+        {
+            id: 'industrial',
+            label: t('header.mobileGroups.industrial'),
+            icon: <Factory size={20} />,
+            description: t('header.mobileGroups.industrialDesc'),
+            items: ['boilermaking', 'cutting', 'tanks']
+        }
+    ];
 
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
@@ -130,7 +130,7 @@ const Header: React.FC = () => {
                             <Phone size={12} /> (11) 4797-2352
                         </a>
                         <span className="hidden sm:inline opacity-50">|</span>
-                        <span className="hidden sm:inline">Seg - Sex: 08:00 - 18:00</span>
+                        <span className="hidden sm:inline">{t('layout.schedule')}</span>
                      </div>
                      <div className="flex items-center gap-4">
                         <nav aria-label="Redes sociais" className="hidden sm:block">
@@ -203,24 +203,24 @@ const Header: React.FC = () => {
             {/* --- PREMIUM MOBILE MENU OVERLAY --- */}
             <div 
                 className={`
-                    fixed inset-0 z-40 bg-brand-blue-dark/98 backdrop-blur-xl
+                    fixed inset-0 z-50 bg-[#081437] 
                     flex flex-col h-[100dvh] w-screen overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
                     ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}
                 `}
             >
-                {/* Decorative Background */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-blue-light/10 rounded-full blur-[80px] pointer-events-none translate-y-1/2 -translate-x-1/2"></div>
+                {/* Decorative Background (Lower opacity to maintain high contrast) */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-blue-light/5 rounded-full blur-[80px] pointer-events-none translate-y-1/2 -translate-x-1/2"></div>
 
                 {/* Menu Header (Fixed) */}
-                <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-white/5 relative z-10">
-                     <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Menu Principal</span>
+                <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-white/10 relative z-10">
+                     <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('layout.menu')}</span>
                      <div className="flex items-center gap-4">
                         <LanguageSwitcher />
                         {/* Dedicated Close Button */}
                         <button 
                             onClick={closeMobileMenu}
-                            className="p-2 -mr-2 text-white/50 hover:text-white bg-white/5 hover:bg-brand-orange rounded-full transition-all duration-300"
+                            className="p-2 -mr-2 text-white/70 hover:text-white bg-white/5 hover:bg-brand-orange rounded-full transition-all duration-300"
                             aria-label="Fechar"
                         >
                             <X size={20} />
@@ -233,11 +233,11 @@ const Header: React.FC = () => {
                     
                     {/* Search Bar */}
                     <div 
-                        className="flex items-center bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 mb-8 text-gray-300 active:bg-white/10 transition-colors cursor-text"
+                        className="flex items-center bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 mb-8 text-gray-200 active:bg-white/10 transition-colors cursor-text hover:border-brand-orange/30"
                         onClick={() => { closeMobileMenu(); setIsSearchOpen(true); }}
                     >
                         <Search size={20} className="mr-3 text-brand-orange" />
-                        <span className="text-sm font-medium opacity-60">Buscar produtos, tabelas...</span>
+                        <span className="text-sm font-medium opacity-80">{t('layout.searchPlaceholder')}</span>
                     </div>
 
                     {/* Navigation Links */}
@@ -246,31 +246,31 @@ const Header: React.FC = () => {
                         <a 
                             href="#/" 
                             onClick={closeMobileMenu}
-                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/5'}`}
+                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/') ? 'bg-white/10 text-white' : 'text-gray-200 hover:bg-white/5'}`}
                         >
-                            <Home size={20} className={isLinkActive('#/') ? 'text-brand-orange' : 'text-gray-500'} />
-                            <span className="font-bold text-lg">Início</span>
+                            <Home size={20} className={isLinkActive('#/') ? 'text-brand-orange' : 'text-gray-400'} />
+                            <span className="font-bold text-lg">{t('header.navLinks.home')}</span>
                         </a>
 
                         {/* 2. INSTITUCIONAL */}
                         <a 
                             href="#/about" 
                             onClick={closeMobileMenu}
-                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/about') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/5'}`}
+                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/about') ? 'bg-white/10 text-white' : 'text-gray-200 hover:bg-white/5'}`}
                         >
-                            <Award size={20} className={isLinkActive('#/about') ? 'text-brand-orange' : 'text-gray-500'} />
-                            <span className="font-bold text-lg">Sobre a Empresa</span>
+                            <Award size={20} className={isLinkActive('#/about') ? 'text-brand-orange' : 'text-gray-400'} />
+                            <span className="font-bold text-lg">{t('header.navLinks.about')}</span>
                         </a>
 
                         {/* 3. PRODUTOS (Accordion) */}
                         <div className="border-y border-white/5 my-2 py-2">
                             <button 
                                 onClick={() => setIsProductsExpanded(!isProductsExpanded)}
-                                className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isProductsExpanded ? 'text-white' : 'text-gray-300'}`}
+                                className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isProductsExpanded ? 'text-white' : 'text-gray-200'}`}
                             >
                                 <div className="flex items-center gap-4">
                                     <Package size={20} className="text-brand-orange" />
-                                    <span className="font-bold text-lg">Nossos Produtos</span>
+                                    <span className="font-bold text-lg">{t('header.navLinks.products')}</span>
                                 </div>
                                 <ChevronRight size={20} className={`transition-transform duration-300 ${isProductsExpanded ? 'rotate-90 text-brand-orange' : 'text-gray-500'}`} />
                             </button>
@@ -299,7 +299,7 @@ const Header: React.FC = () => {
                                                             <span className="block text-[10px] text-gray-500 mt-0.5">{group.description}</span>
                                                         </div>
                                                     </div>
-                                                    <ChevronRight size={16} className={`transition-transform ${isActiveGroup ? 'rotate-90 text-brand-orange' : 'text-gray-600'}`} />
+                                                    <ChevronRight size={16} className={`transition-transform ${isActiveGroup ? 'rotate-90 text-brand-orange' : 'text-gray-500'}`} />
                                                 </button>
 
                                                 {/* Actual Products Links */}
@@ -329,7 +329,7 @@ const Header: React.FC = () => {
                                         onClick={closeMobileMenu}
                                         className="flex items-center justify-center gap-2 w-full p-4 mt-2 rounded-xl bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-bold text-xs uppercase tracking-wide hover:bg-brand-orange hover:text-white transition-all"
                                     >
-                                        <FileText size={16} /> Baixar Catálogo Completo
+                                        <FileText size={16} /> {t('header.mobileLinks.downloadCatalog')}
                                     </a>
                                 </div>
                             </div>
@@ -339,48 +339,48 @@ const Header: React.FC = () => {
                         <a 
                             href="#/calculator" 
                             onClick={closeMobileMenu}
-                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/calculator') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/5'}`}
+                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/calculator') ? 'bg-white/10 text-white' : 'text-gray-200 hover:bg-white/5'}`}
                         >
-                            <Calculator size={20} className={isLinkActive('#/calculator') ? 'text-brand-orange' : 'text-gray-500'} />
+                            <Calculator size={20} className={isLinkActive('#/calculator') ? 'text-brand-orange' : 'text-gray-400'} />
                             <div className="flex flex-col">
-                                <span className="font-bold text-lg">Calculadora de Aço</span>
-                                <span className="text-[10px] text-gray-500 uppercase font-bold">Ferramenta</span>
+                                <span className="font-bold text-lg">{t('header.mobileLinks.calculatorTitle')}</span>
+                                <span className="text-[10px] text-gray-500 uppercase font-bold">{t('header.mobileLinks.calculatorDesc')}</span>
                             </div>
                         </a>
 
                         <a 
                             href="#/tables" 
                             onClick={closeMobileMenu}
-                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/tables') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/5'}`}
+                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/tables') ? 'bg-white/10 text-white' : 'text-gray-200 hover:bg-white/5'}`}
                         >
-                            <FileText size={20} className={isLinkActive('#/tables') ? 'text-brand-orange' : 'text-gray-500'} />
+                            <FileText size={20} className={isLinkActive('#/tables') ? 'text-brand-orange' : 'text-gray-400'} />
                             <div className="flex flex-col">
-                                <span className="font-bold text-lg">Tabelas Técnicas</span>
-                                <span className="text-[10px] text-gray-500 uppercase font-bold">Normas & Medidas</span>
+                                <span className="font-bold text-lg">{t('header.mobileLinks.tablesTitle')}</span>
+                                <span className="text-[10px] text-gray-500 uppercase font-bold">{t('header.mobileLinks.tablesDesc')}</span>
                             </div>
                         </a>
                         
                          <a 
                             href="#/contact" 
                             onClick={closeMobileMenu}
-                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/contact') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/5'}`}
+                            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${isLinkActive('#/contact') ? 'bg-white/10 text-white' : 'text-gray-200 hover:bg-white/5'}`}
                         >
-                            <Mail size={20} className={isLinkActive('#/contact') ? 'text-brand-orange' : 'text-gray-500'} />
-                            <span className="font-bold text-lg">Fale Conosco</span>
+                            <Mail size={20} className={isLinkActive('#/contact') ? 'text-brand-orange' : 'text-gray-400'} />
+                            <span className="font-bold text-lg">{t('header.mobileLinks.contact')}</span>
                         </a>
 
                     </nav>
                 </div>
 
                 {/* Footer (Fixed) */}
-                <div className="p-6 border-t border-white/10 bg-black/20 backdrop-blur-md relative z-20">
+                <div className="p-6 border-t border-white/10 bg-black/40 backdrop-blur-md relative z-20">
                      <a 
                         href="#" 
                         onClick={closeMobileMenu} 
                         className="flex w-full items-center justify-center gap-3 bg-[#25D366] text-white py-3.5 rounded-xl font-bold text-base shadow-[0_0_20px_rgba(37,211,102,0.2)] active:scale-95 transition-all mb-6"
                     >
                         <WhatsappIcon size={20} />
-                        Atendimento WhatsApp
+                        {t('header.mobileLinks.whatsappSupport')}
                     </a>
                     
                     <div className="flex justify-between items-end">
@@ -395,7 +395,7 @@ const Header: React.FC = () => {
                             })}
                         </div>
                         <div className="text-right">
-                             <p className="text-[10px] text-gray-600 font-bold uppercase">© Aços Vital</p>
+                             <p className="text-[10px] text-gray-500 font-bold uppercase">© Aços Vital</p>
                         </div>
                     </div>
                 </div>

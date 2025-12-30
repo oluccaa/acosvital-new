@@ -54,14 +54,14 @@ const SheetMetalDevelopment: React.FC = () => {
             <div className="lg:col-span-5 space-y-6">
                 <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-6 shadow-xl h-full">
                     <h3 className="text-white font-bold text-sm uppercase tracking-widest flex items-center gap-2 mb-6 border-b border-white/5 pb-4">
-                        <Ruler size={16} className="text-brand-blue-light" /> Dimensões do Cone
+                        <Ruler size={16} className="text-brand-blue-light" /> {t('calculatorPage.sheetMetal.dimensions')}
                     </h3>
                     <div className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
-                            <div><label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">Ø Maior (D)</label><input type="number" value={D} onChange={e => setD(e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-2 pl-3 text-white text-sm focus:border-brand-orange outline-none" placeholder="mm" /></div>
-                            <div><label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">Ø Menor (d)</label><input type="number" value={d} onChange={e => setd(e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-2 pl-3 text-white text-sm focus:border-brand-orange outline-none" placeholder="mm" /></div>
-                            <div><label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">Altura (H)</label><input type="number" value={H} onChange={e => setH(e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-2 pl-3 text-white text-sm focus:border-brand-orange outline-none" placeholder="mm" /></div>
-                            <div><label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">Espessura (T)</label><input type="number" value={T} onChange={e => setT(e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-2 pl-3 text-white text-sm focus:border-brand-orange outline-none" placeholder="mm (Opcional)" /></div>
+                            <div><label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">{t('calculatorPage.sheetMetal.inputs.D')}</label><input type="number" value={D} onChange={e => setD(e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-2 pl-3 text-white text-sm focus:border-brand-orange outline-none" placeholder="mm" /></div>
+                            <div><label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">{t('calculatorPage.sheetMetal.inputs.d')}</label><input type="number" value={d} onChange={e => setd(e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-2 pl-3 text-white text-sm focus:border-brand-orange outline-none" placeholder="mm" /></div>
+                            <div><label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">{t('calculatorPage.sheetMetal.inputs.H')}</label><input type="number" value={H} onChange={e => setH(e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-2 pl-3 text-white text-sm focus:border-brand-orange outline-none" placeholder="mm" /></div>
+                            <div><label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">{t('calculatorPage.sheetMetal.inputs.T')}</label><input type="number" value={T} onChange={e => setT(e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-2 pl-3 text-white text-sm focus:border-brand-orange outline-none" placeholder="mm (Opcional)" /></div>
                         </div>
                         <p className="text-[10px] text-gray-500 italic flex items-center gap-1"><AlertCircle size={10} /> Cálculo pela linha neutra se espessura informada.</p>
                     </div>
@@ -74,35 +74,35 @@ const SheetMetalDevelopment: React.FC = () => {
                     <div className="absolute top-0 right-0 w-48 h-48 bg-brand-orange/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
                     
                     <h3 className="text-white font-bold text-sm uppercase tracking-widest flex items-center gap-2 mb-6 z-10">
-                        <ArrowDownToLine size={16} className="text-brand-orange" /> Resultado da Planificação
+                        <ArrowDownToLine size={16} className="text-brand-orange" /> {t('calculatorPage.sheetMetal.results')}
                     </h3>
 
                     {!results ? (
                         <div className="flex-1 flex flex-col items-center justify-center text-white/20 min-h-[200px]">
                             <Cone size={48} className="mb-2 opacity-50" />
-                            <p className="text-sm font-medium">Insira as dimensões para calcular</p>
+                            <p className="text-sm font-medium">{t('calculatorPage.common.selectItem')}</p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10 flex-1 content-start">
                             <div className="space-y-4">
                                 <div className="bg-black/20 p-4 rounded-xl border border-white/10">
-                                    <span className="text-[10px] text-gray-400 uppercase block mb-1">Raio Maior (Compasso)</span>
+                                    <span className="text-[10px] text-gray-400 uppercase block mb-1">{t('calculatorPage.sheetMetal.outputs.radiusLarge')}</span>
                                     <span className="text-2xl font-mono font-bold text-brand-orange">{results.radiusLarge.toFixed(1)} mm</span>
                                 </div>
                                 <div className="bg-black/20 p-4 rounded-xl border border-white/10">
-                                    <span className="text-[10px] text-gray-400 uppercase block mb-1">Raio Menor</span>
+                                    <span className="text-[10px] text-gray-400 uppercase block mb-1">{t('calculatorPage.sheetMetal.outputs.radiusSmall')}</span>
                                     <span className="text-2xl font-mono font-bold text-white">{results.radiusSmall.toFixed(1)} mm</span>
                                 </div>
                                 <div className="bg-black/20 p-4 rounded-xl border border-white/10">
-                                    <span className="text-[10px] text-gray-400 uppercase block mb-1">Ângulo do Setor</span>
+                                    <span className="text-[10px] text-gray-400 uppercase block mb-1">{t('calculatorPage.sheetMetal.outputs.angle')}</span>
                                     <span className="text-2xl font-mono font-bold text-white">{results.angle.toFixed(2)}°</span>
                                 </div>
                             </div>
                             <div className="bg-black/20 p-4 rounded-xl border border-white/10 flex flex-col justify-center">
-                                <span className="text-[10px] text-gray-400 uppercase block mb-1">Geratriz (Slant Height)</span>
+                                <span className="text-[10px] text-gray-400 uppercase block mb-1">{t('calculatorPage.sheetMetal.outputs.slantHeight')}</span>
                                 <span className="text-2xl font-mono font-bold text-white mb-4">{results.slantHeight.toFixed(1)} mm</span>
                                 
-                                <span className="text-[10px] text-gray-400 uppercase block mb-1">Corda Maior (Traçagem)</span>
+                                <span className="text-[10px] text-gray-400 uppercase block mb-1">{t('calculatorPage.sheetMetal.outputs.chordLarge')}</span>
                                 <span className="text-2xl font-mono font-bold text-white">{results.chordLarge.toFixed(1)} mm</span>
                             </div>
                         </div>
@@ -115,29 +115,29 @@ const SheetMetalDevelopment: React.FC = () => {
                 <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-6 shadow-inner">
                     <div className="flex items-center gap-2 mb-6 border-b border-white/5 pb-2">
                         <Sigma size={16} className="text-brand-blue-light" />
-                        <h4 className="text-sm font-bold text-white uppercase tracking-widest">Memória de Cálculo</h4>
+                        <h4 className="text-sm font-bold text-white uppercase tracking-widest">{t('calculatorPage.sheetMetal.memory')}</h4>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-400">
                         <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                            <strong className="text-brand-orange block mb-2 font-bold uppercase">1. Geratriz (g)</strong>
-                            <div className="font-mono bg-black/30 p-2 rounded mb-2 text-white">g = √[H² + (R - r)²]</div>
+                            <strong className="text-brand-orange block mb-2 font-bold uppercase">1. {t('calculatorPage.sheetMetal.formulas.slantHeight')}</strong>
+                            <div className="font-mono bg-black/30 p-2 rounded mb-2 text-white">{t('calculatorPage.sheetMetal.formulas.formulaG')}</div>
                             <p className="leading-relaxed text-gray-500">
-                                A geratriz é a hipotenusa do triângulo retângulo formado pela altura e a diferença dos raios da base e do topo.
+                                {t('calculatorPage.sheetMetal.formulas.slantDesc')}
                             </p>
                         </div>
                         
                         <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                            <strong className="text-brand-orange block mb-2 font-bold uppercase">2. Ângulo do Setor (θ)</strong>
-                            <div className="font-mono bg-black/30 p-2 rounded mb-2 text-white">θ = 360° × (R / g)</div>
+                            <strong className="text-brand-orange block mb-2 font-bold uppercase">2. {t('calculatorPage.sheetMetal.formulas.angle')}</strong>
+                            <div className="font-mono bg-black/30 p-2 rounded mb-2 text-white">{t('calculatorPage.sheetMetal.formulas.formulaTheta')}</div>
                             <p className="leading-relaxed text-gray-500">
-                                O ângulo de abertura do molde plano é proporcional à razão entre o raio da base e a geratriz do cone.
+                                {t('calculatorPage.sheetMetal.formulas.angleDesc')}
                             </p>
                         </div>
                     </div>
                     
                     <div className="mt-4 text-[10px] text-gray-600 text-center italic">
-                        * Cálculo baseado em geometria euclidiana para desenvolvimento de sólidos de revolução (Cones Concêntricos).
+                        * {t('calculatorPage.sheetMetal.theory')}
                     </div>
                 </div>
             </div>

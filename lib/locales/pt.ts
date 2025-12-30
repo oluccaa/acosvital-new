@@ -4,10 +4,21 @@
 // ==========================================================================
 
 export const pt = {
-    // ... (MANTENHA TODO O CONTEÚDO ANTERIOR ATÉ calculatorPage)
-    // -------------------------------------------------------------------------
-    // CABEÇALHO E NAVEGAÇÃO
-    // -------------------------------------------------------------------------
+    layout: {
+        schedule: "Seg - Sex: 08:00 - 18:00",
+        menu: "Menu Principal",
+        searchPlaceholder: "Buscar produtos, tabelas...",
+        departments: "Departamentos",
+        viewAll: "Ver Todos",
+        viewSpecs: "Ver especificações",
+        catalogCall: "Catálogo Técnico Completo",
+        catalogDesc: "Tenha acesso a todas as tabelas de medidas, normas e especificações em um único documento PDF.",
+        downloadNow: "Baixar Agora",
+        updated: "Atualizado 2025",
+        close: "Fechar",
+        list: "Lista",
+        navigation: "Navegação"
+    },
     header: {
       navLinks: {
         home: 'INÍCIO',
@@ -19,170 +30,32 @@ export const pt = {
         certifications: 'CERTIFICAÇÕES',
         contact: 'CONTATO',
       },
-      whatsapp: 'WHATSAPP'
+      whatsapp: 'WHATSAPP',
+      mobileGroups: {
+          tubular: "Tubulação & Linhas",
+          tubularDesc: "Tubos, Eletrodutos e Grooved",
+          connections: "Conexões & Válvulas",
+          connectionsDesc: "Flanges, Conexões e Válvulas",
+          structural: "Aço Estrutural & Civil",
+          structuralDesc: "Perfis, Chapas, Grades e Telhas",
+          industrial: "Soluções Industriais",
+          industrialDesc: "Corte, Tanques e Caldeiraria"
+      },
+      mobileLinks: {
+          downloadCatalog: "Baixar Catálogo Completo",
+          calculatorTitle: "Calculadora de Aço",
+          calculatorDesc: "Ferramenta",
+          tablesTitle: "Tabelas Técnicas",
+          tablesDesc: "Normas & Medidas",
+          contact: "Fale Conosco",
+          whatsappSupport: "Atendimento WhatsApp"
+      }
     },
-
-    // -------------------------------------------------------------------------
-    // RODAPÉ (FOOTER)
-    // -------------------------------------------------------------------------
     footer: {
         slogan: "A confiança é o que nos conecta!",
         pagesTitle: "Páginas",
         followUsTitle: "Siga-nos"
     },
-
-    // -------------------------------------------------------------------------
-    // HERO SLIDER
-    // -------------------------------------------------------------------------
-    hero: {
-      slides: {
-        entressafra: {
-            title: 'Entressafra: Pare sua usina, não sua produção!',
-            subtitle: 'A entressafra é curta. Cada dia parado custa milhões.',
-            buttonText: 'Nossas Soluções'
-        },
-        trapezoidal: {
-            title: 'Telhas Trapezoidais',
-            subtitle: 'Proteção máxima, design moderno. A força que sua obra precisa.',
-            buttonText: 'Linha Trapezoidal'
-        },
-        excellence: {
-            title: 'Excelência em Aços: A confiança é o que nos conecta!',
-            subtitle: 'Chapas, Tubos, Flanges, Conexões e Aços em geral. Trazemos soluções inovadoras para desafios complexos!',
-            buttonText: 'Explorar Produtos'
-        },
-        flanges: {
-            title: 'Excelência em Aços: A confiança é o que nos conecta!',
-            subtitle: 'Chapas, Tubos, Flanges, Conexões e Aços em geral. Trazemos soluções inovadoras para desafios complexos!',
-            buttonText: 'Ver Flanges'
-        },
-        flooring: {
-            title: 'Grades de Piso e Chapas',
-            subtitle: 'Segurança e versatilidade para sua indústria. Soluções robustas e duráveis.',
-            buttonText: 'Conheça Nossos Pisos'
-        }
-      },
-      scrollText: 'Role para baixo'
-    },
-
-    // -------------------------------------------------------------------------
-    // HOME: SEÇÃO SOBRE
-    // -------------------------------------------------------------------------
-    about: {
-        title: 'A confiança é o que nos conecta!',
-        p1: 'Aços Vital destaca-se como fabricante de Flanges, Curvas de Gomos, Tubos Calandrados, Chapas Expandidas e Grades de Piso com a mais alta qualidade para atender às demandas dos segmentos da indústria e da construção.',
-        p2: 'Somos reconhecidos pela excelência e precisão de nossos produtos, além do compromisso inabalável com a qualidade e a melhoria contínua dos processos, oferecendo soluções sob medida que atendam às necessidades específicas de cada cliente, garantindo o seu alto desempenho.',
-        p3: 'Nosso processo estratégico é otimizado e executado com excelência, abrangendo desde o atendimento personalizado ao cliente até a entrega dos produtos. Contamos com profissionais capacitados e qualificados para atender aos mais diversos segmentos. Tais fatores decisivos nos colocam à frente da concorrência, pois oferecemos durabilidade, performance e confiabilidade com um prazo de entrega diferenciado.',
-        p4: 'Somos o parceiro confiável que une um time técnico de alta performance, produtos de extrema qualidade e acabamento incomparável. Aços Vital é a melhor decisão para o seu negócio.',
-        callToAction: {
-             buttonText: "FALE COM UM CONSULTOR"
-        }
-    },
-
-    // -------------------------------------------------------------------------
-    // HOME: DESTAQUES
-    // -------------------------------------------------------------------------
-    features: {
-        list: {
-            fast_delivery: { title: "Entrega Rápida e Flexível", description: "Produção ágil e logística otimizada para cumprir seus prazos em todo o território nacional." },
-            certified_quality: { title: "Qualidade Certificada", description: "Nossos produtos seguem os mais altos padrões, com certificações ISO 9001, CRC Petrobrás e YPFB." },
-            global_reach: { title: "Alcance Global", description: "Atendemos com excelência clientes no Brasil e no exterior, levando nossas soluções além das fronteiras." },
-            satisfied_clients: { title: "+2.000 Clientes Satisfeitos", description: "A confiança de milhares de clientes anualmente, comprovando nossa dedicação e qualidade." }
-        }
-    },
-
-    // -------------------------------------------------------------------------
-    // PÁGINA SOBRE: PILARES, UNIDADES E HISTÓRIA
-    // -------------------------------------------------------------------------
-    pillars: {
-        subtitle: "QUEM SOMOS E O QUE BUSCAMOS?",
-        title: "Nossos Pilares",
-        list: {
-            mission: { title: "MISSÃO", description: "A empresa entrega produtos de aço de alta qualidade, fortalecendo parcerias, promovendo crescimento sustentável." },
-            vision: { title: "VISÃO", description: "Ser referencia nacional em produtos de aço, destacando-se pela qualidade, inovação e sustentabilidade." },
-            values: { title: "VALORES", description: "Qualidade, inovação, sustentabilidade, parceria e segurança." }
-        }
-    },
-    units: {
-        subtitle: "SOBRE NÓS",
-        title: "Onde atuamos",
-    },
-    history: {
-        title: "Uma história de superação!",
-        youtubeUrl: "https://www.youtube.com/embed/Vt8dUUSsSZA?si=HsCaIShmSAQVrNhS",
-        stats: {
-            clients: { value: "+2K", label: "Clientes Anualmente" },
-            factory_area: { value: "36K m²", label: "Área Total Fabril" },
-            employees: { value: "+200", label: "Colaboradores" },
-            factories: { value: "4", label: "Fábricas Próprias" }
-        }
-    },
-    aboutPage: {
-        hero: {
-            title: 'Quem Somos',
-        }
-    },
-
-    // -------------------------------------------------------------------------
-    // PRODUTOS
-    // -------------------------------------------------------------------------
-    featuredProducts: {
-        title: 'Produtos em Destaque',
-        items: {
-            plates: 'Chapas de Aço',
-            tubes: 'Tubos de Aço',
-            flanges: 'Flanges de Aço',
-            valves: 'Válvulas Industriais',
-            meshes: 'Telas de Aço',
-            profiles: 'Perfis de Aço',
-            gratings: 'Grades de Piso',
-            fittings: 'Conexões de Aço',
-            bars: 'Barras de Aço',
-            tanks: 'Tanques Industriais',
-            piping: 'Tubulação Industrial',
-            boilermaking: 'Caldeiraria Industrial',
-            grooved: 'Linha Grooved'
-        },
-        viewDetails: 'Ver detalhes',
-        onRequest: 'Sob consulta'
-    },
-    productsPage: {
-      title: 'Catálogo de Produtos',
-      description: 'Conheça nosso catálogo completo de produtos, desenvolvido para atender com excelência as demandas dos segmentos da indústria e da construção, com qualidade garantida. Prontos para fortalecer seus projetos com segurança, resistência e precisão. Seguimos os mais rigorosos padrões de fabricação, desde a aquisição da matéria-prima, recebimento, armazenagem, corte, beneficiamento e inspeção.',
-      buttonText: 'Ver Produto',
-      categories: {
-        flanges: 'FLANGES',
-        tubes: 'TUBOS',
-        fittings: 'CONEXÕES',
-        valves: 'VÁLVULAS',
-        profiles: 'PERFILES LAMINADOS E DOBRADOS',
-        plates: 'CHAPAS',
-        gratings: 'GRADES DE PISO',
-        tiles: 'TELHA TRAPEZOIDAL',
-        civil: 'CONSTRUÇÃO CIVIL',
-        boilermaking: 'CALDEIRARIA INDUSTRIAL',
-        cutting: 'OXICORTE',
-        conduits: 'ELETRODUTOS',
-        grooved: 'LINHA GROOVED',
-        tanks: 'TANQUE DE COMBUSTÍVEL E GLP',
-      },
-      catalogPdfUrl: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/pdf/Catalogo%201%20-%20Flanges,%20Conexoes,%20Valvulas%20e%20Tubos%20-%20Acos%20Vital%20Ed.4.pdf?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9wZGYvQ2F0YWxvZ28gMSAtIEZsYW5nZXMsIENvbmV4b2VzLCBWYWx2dWxhcyBlIFR1Ym9zIC0gQWNvcyBWaXRhbCBFZC40LnBkZiIsImlhdCI6MTc2NDg3MTE5OCwiZXhwIjoxNzk2NDA3MTk4fQ.k4RWJgWBKsu5Rq6jP0RJv2wzJ-M8tGCMvmtV2YRU8E0"
-    },
-    catalogPage: {
-      links: {
-        products: {
-            title: "Conheça nossa linha de produtos",
-            buttonText: "Ver Produtos",
-        },
-        tables: {
-            title: "Acesse as tabelas de medidas",
-            buttonText: "Acessar Tabelas",
-        }
-      }
-    },
-    // -------------------------------------------------------------------------
-    // CALCULATOR PAGE
-    // -------------------------------------------------------------------------
     calculatorPage: {
         title: "Vital Steel Suite",
         subtitle: "Workstation de Engenharia v5.0",
@@ -192,6 +65,28 @@ export const pt = {
             welding: "Estimativa",
             converter: "Conversor"
         },
+        common: {
+            selection: "Seleção",
+            console: "Console de Engenharia",
+            telemetry: "Telemetria",
+            presets: "Presets de Medida",
+            presetsHelp: "Selecione um campo acima e clique em um preset para aplicar.",
+            surfaceArea: "Área Superficial",
+            density: "Densidade",
+            totalWeight: "Peso Total",
+            unitWeight: "Unitário",
+            totalArea: "Área Total",
+            addToList: "Adicionar à Lista",
+            materialList: "Lista de Materiais",
+            print: "Imprimir",
+            share: "Compartilhar",
+            clear: "Limpar",
+            emptyList: "Nenhum item adicionado.",
+            projectTotal: "Total do Projeto",
+            requestQuote: "Solicitar Cotação",
+            waiting: "Aguardando Cálculo",
+            selectItem: "Selecione um item para calcular"
+        },
         toolDescriptions: {
             calculator: "Calcule o peso teórico de chapas, tubos, barras e perfis complexos. Essencial para planejamento de materiais, orçamentos e logística.",
             nesting: "Otimize o corte linear de barras e perfis. Reduza o desperdício de material (sucata) calculando o melhor aproveitamento das barras de estoque.",
@@ -200,10 +95,26 @@ export const pt = {
             welding: "Estime a quantidade de consumível de solda necessária para diferentes tipos de juntas. Ideal para planejamento de custos de soldagem.",
             converter: "Converta rapidamente unidades de medida comuns na engenharia industrial (mm, pol, kg, lb, psi, bar) para facilitar seu dia a dia."
         },
-        // ... (MANTENHA O RESTO DO ARQUIVO IGUAL)
         sheetMetal: {
             title: "Planificação de Cone",
             subtitle: "Cálculo de desenvolvimento para caldeiraria",
+            dimensions: "Dimensões do Cone",
+            results: "Resultado da Planificação",
+            memory: "Memória de Cálculo",
+            theory: "Cálculo baseado em geometria euclidiana para desenvolvimento de sólidos de revolução (Cones Concêntricos).",
+            inputs: {
+                D: "Ø Maior (D)",
+                d: "Ø Menor (d)",
+                H: "Altura (H)",
+                T: "Espessura (T)"
+            },
+            outputs: {
+                radiusLarge: "Raio Maior (Compasso)",
+                radiusSmall: "Raio Menor",
+                angle: "Ângulo do Setor",
+                slantHeight: "Geratriz (Slant Height)",
+                chordLarge: "Corda Maior (Traçagem)"
+            },
             formulas: {
                 title: "Matemática da Planificação",
                 slantHeight: "Geratriz (g)",
@@ -217,7 +128,22 @@ export const pt = {
         },
         bending: {
             title: "Calculadora de Dobra",
-            subtitle: "Desconto de dobra e Fator K"
+            subtitle: "Desconto de dobra e Fator K",
+            params: "Parâmetros de Dobra",
+            blankSize: "Tamanho do Blank (Corte)",
+            theory: "Teoria",
+            inputs: {
+                thickness: "Espessura (T)",
+                radius: "Raio Int. (R)",
+                angle: "Ângulo (°)",
+                kFactor: "Fator K",
+                leg1: "Aba 1",
+                leg2: "Aba 2"
+            },
+            outputs: {
+                deduction: "Dedução (BD)",
+                allowance: "Tolerância (BA)"
+            }
         },
         formulas: {
             title: "Entenda o Cálculo",
@@ -246,25 +172,29 @@ export const pt = {
         selectMaterial: "Material",
         categories: {
             raw: "Matéria Prima",
-            piping: "Calderiaria & Tubulação",
+            piping: "Caldeiraria & Tubulação",
             structural: "Industrial & Estrutural"
         },
         inputs: {
-            thickness: "Espessura (mm)",
-            width: "Largura (mm)",
-            length: "Comprimento (mm)",
-            outerDiameter: "Diâmetro Externo (mm)",
-            innerDiameter: "Diâmetro Interno (mm)",
-            wallThickness: "Parede (mm)",
-            height: "Altura Barra (mm)",
-            diameter: "Diâmetro (mm)",
+            thickness: "Espessura",
+            width: "Largura",
+            length: "Comprimento",
+            outerDiameter: "Diâmetro Externo",
+            innerDiameter: "Diâmetro Interno",
+            wallThickness: "Parede",
+            height: "Altura",
+            diameter: "Diâmetro",
             quantity: "Quantidade",
             angle: "Ângulo (°)",
-            pitch: "Passo da Malha (mm)",
-            strandWidth: "Cordão (mm)",
-            meshSWD: "Malha Menor/SWD (mm)",
-            radius: "Raio de Centro (mm)",
-            side: "Medida do Lado (mm)"
+            pitch: "Passo da Malha",
+            strandWidth: "Cordão",
+            meshSWD: "Malha SWD",
+            radius: "Raio de Centro",
+            side: "Lado",
+            barHeight: "Alt. Barra",
+            barThickness: "Esp. Barra",
+            mesh: "Malha",
+            gap: "Vão"
         },
         products: {
             plate: "Chapa",
@@ -275,7 +205,9 @@ export const pt = {
             grating: "Grade de Piso",
             tubeCalendered: "Tubo Calandrado",
             expandedMetal: "Chapa Expandida",
-            fittingElbow: "Curva/Gomo"
+            fittingElbow: "Curva",
+            fittingReducer: "Redução",
+            fittingTee: "Tê"
         },
         materials: {
             carbon: "Aço Carbono (7.85)",
@@ -284,7 +216,7 @@ export const pt = {
             aluminum: "Alumínio (2.70)"
         },
         painting: {
-            title: "Pintura e Revestimento",
+            title: "Pintura e Revestimiento",
             coverage: "Rendimento (m²/L)",
             coats: "Demãos",
             density: "Densidade Tinta (kg/L)",
@@ -333,6 +265,11 @@ export const pt = {
             length: "Comprimento da Peça",
             qty: "Qtd",
             add: "Adicionar",
+            addPieces: "Adicionar Peças",
+            calculateBtn: "Calcular Otimização",
+            params: "Parâmetros de Estoque",
+            waiting: "Aguardando Cálculo",
+            waitingDesc: "Adicione as peças que deseja cortar na lista ao lado e defina o tamanho da barra do seu estoque.",
             helpTitle: "Como usar o Otimizador",
             helpText: "Esta ferramenta utiliza um algoritmo de 'Melhor Ajuste' (Best Fit Decreasing) para organizar as peças nas barras de estoque disponíveis. Insira o comprimento total da barra que você tem em estoque e a espessura da lâmina de corte (perda). Se desejar calcular o peso total da sucata e do material, preencha o campo 'Peso Linear'.",
             errorLength: "Erro: O comprimento da peça (+ corte) não pode ser maior que a barra de estoque.",
@@ -341,7 +278,11 @@ export const pt = {
                 totalWaste: "Sobra Total",
                 barUsage: "Aproveitamento",
                 weightUsed: "Peso Material",
-                weightScrap: "Peso Sucata"
+                weightScrap: "Peso Sucata",
+                scraps: "Retalhos",
+                efficiency: "Eficiência",
+                cutPlan: "Plano de Corte",
+                hoverDetails: "Passe o mouse para ver detalhes"
             },
             table: {
                 bar: "Barra",
@@ -398,7 +339,8 @@ export const pt = {
                 length: "Comprimento",
                 weight: "Massa / Peso",
                 area: "Área",
-                pressure: "Pressão"
+                pressure: "Pressão",
+                dn: "Diâmetro Nominal"
             },
             units: {
                 mm: "Milímetros (mm)",
@@ -423,8 +365,139 @@ export const pt = {
                 to: "Para",
                 value: "Valor",
                 result: "Resultado"
-            }
+            },
+            footer: "Conversão Nominal (Tabela Pipe) - Ex: 1/2\" = 15mm | 14\" = 350mm"
         }
+    },
+    hero: {
+      slides: {
+        entressafra: {
+            title: 'Entressafra: Pare sua usina, não sua produção!',
+            subtitle: 'A entressafra é curta. Cada dia parado custa milhões.',
+            buttonText: 'Nossas Soluções'
+        },
+        trapezoidal: {
+            title: 'Telhas Trapezoidais',
+            subtitle: 'Proteção máxima, design moderno. A força que sua obra precisa.',
+            buttonText: 'Linha Trapezoidal'
+        },
+        excellence: {
+            title: 'Excelência em Aços: A confiança é o que nos conecta!',
+            subtitle: 'Chapas, Tubos, Flanges, Conexões e Aços em geral. Trazemos soluções inovadoras para desafios complexos!',
+            buttonText: 'Explorar Produtos'
+        },
+        flanges: {
+            title: 'Excelência em Aços: A confiança é o que nos conecta!',
+            subtitle: 'Chapas, Tubos, Flanges, Conexões e Aços em geral. Trazemos soluções inovadoras para desafios complexos!',
+            buttonText: 'Ver Flanges'
+        },
+        flooring: {
+            title: 'Grades de Piso e Chapas',
+            subtitle: 'Segurança e versatilidad para sua indústria. Soluções robustas e duráveis.',
+            buttonText: 'Conheça Nossos Pisos'
+        }
+      },
+      scrollText: 'Role para baixo'
+    },
+    about: {
+        title: 'A confiança é o que nos conecta!',
+        p1: 'Aços Vital destaca-se como fabricante de Flanges, Curvas de Gomos, Tubos Calandrados, Chapas Expandidas e Grades de Piso com a mais alta qualidade para atender às demandas dos segmentos da indústria e da construção.',
+        p2: 'Somos reconhecidos pela excelência e precisão de nossos produtos, além do compromisso inabalável com a qualidade e a melhoria contínua dos processos, oferecendo soluções sob medida que atendam às necessidades específicas de cada cliente, garantindo o seu alto desempenho.',
+        p3: 'Nosso processo estratégico é otimizado e executado com excelência, abrangendo desde o atendimento personalizado ao cliente até a entrega dos produtos. Contamos com profissionais capacitados e qualificados para atender aos mais diversos segmentos. Tais fatores decisivos nos colocam à frente da concorrência, pois oferecemos durabilidade, performance e confiabilidade com um prazo de entrega diferenciado.',
+        p4: 'Somos o parceiro confiável que une um time técnico de alta performance, produtos de extrema qualidade e acabamento incomparável. Aços Vital é a melhor decisão para o seu negócio.',
+        callToAction: {
+             buttonText: "FALE COM UM CONSULTOR"
+        }
+    },
+    features: {
+        list: {
+            fast_delivery: { title: "Entrega Rápida e Flexível", description: "Produção ágil e logística otimizada para cumprir seus prazos em todo o território nacional." },
+            certified_quality: { title: "Qualidade Certificada", description: "Nossos produtos seguem os mais altos padrões, com certificações ISO 9001, CRC Petrobrás e YPFB." },
+            global_reach: { title: "Alcance Global", description: "Atendemos com excelência clientes no Brasil e no exterior, levando nossas soluções além das fronteiras." },
+            satisfied_clients: { title: "+2.000 Clientes Satisfeitos", description: "A confiança de milhares de clientes anualmente, comprovando nossa dedicação e qualidade." }
+        }
+    },
+    pillars: {
+        subtitle: "QUEM SOMOS E O QUE BUSCAMOS?",
+        title: "Nossos Pilares",
+        list: {
+            mission: { title: "MISSÃO", description: "A empresa entrega produtos de aço de alta qualidade, fortalecendo parcerias, promovendo crescimento sustentável." },
+            vision: { title: "VISÃO", description: "Ser referencia nacional em produtos de aço, destacando-se pela qualidade, inovação e sustentabilidade." },
+            values: { title: "VALORES", description: "Qualidade, inovação, sustentabilidade, parceria e segurança." }
+        }
+    },
+    units: {
+        subtitle: "SOBRE NÓS",
+        title: "Onde atuamos",
+    },
+    history: {
+        title: "Uma história de superação!",
+        youtubeUrl: "https://www.youtube.com/embed/Vt8dUUSsSZA?si=HsCaIShmSAQVrNhS",
+        stats: {
+            clients: { value: "+2K", label: "Clientes Anualmente" },
+            factory_area: { value: "36K m²", label: "Área Total Fabril" },
+            employees: { value: "+200", label: "Colaboradores" },
+            factories: { value: "4", label: "Fábricas Próprias" }
+        }
+    },
+    aboutPage: {
+        hero: {
+            title: 'Quem Somos',
+        }
+    },
+    featuredProducts: {
+        title: 'Produtos em Destaque',
+        items: {
+            plates: 'Chapas de Aço',
+            tubes: 'Tubos de Aço',
+            flanges: 'Flanges de Aço',
+            valves: 'Válvulas Industriais',
+            meshes: 'Telas de Aço',
+            profiles: 'Perfis de Aço',
+            gratings: 'Grades de Piso',
+            fittings: 'Conexões de Aço',
+            bars: 'Barras de Aço',
+            tanks: 'Tanques Industriais',
+            piping: 'Tubulação Industrial',
+            boilermaking: 'Caldeiraria Industrial',
+            grooved: 'Linha Grooved'
+        },
+        viewDetails: 'Ver detalhes',
+        onRequest: 'Sob consulta'
+    },
+    productsPage: {
+      title: 'Catálogo de Produtos',
+      description: 'Conheça nosso catálogo completo de produtos, desenvolvido para atender com excelência as demandas dos segmentos da indústria e da construção, com qualidade garantida. Prontos para fortalecer seus projetos com segurança, resistência e precisão. Seguimos os mais rigorosos padrões de fabricação, desde a aquisição da matéria-prima, recebimento, armazenagem, corte, beneficiamento e inspeção.',
+      buttonText: 'Ver Produto',
+      categories: {
+        flanges: 'FLANGES',
+        tubes: 'TUBOS',
+        fittings: 'CONEXIONES',
+        valves: 'VÁLVULAS',
+        profiles: 'PERFILES LAMINADOS E DOBRADOS',
+        plates: 'CHAPAS',
+        gratings: 'GRADES DE PISO',
+        tiles: 'TELHA TRAPEZOIDAL',
+        civil: 'CONSTRUÇÃO CIVIL',
+        boilermaking: 'CALDEIRARIA INDUSTRIAL',
+        cutting: 'OXICORTE',
+        conduits: 'ELETRODUTOS',
+        grooved: 'LINHA GROOVED',
+        tanks: 'TANQUE DE COMBUSTÍVEL E GLP',
+      },
+      catalogPdfUrl: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/pdf/Catalogo%201%20-%20Flanges,%20Conexoes,%20Valvulas%20e%20Tubos%20-%20Acos%20Vital%20Ed.4.pdf?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9wZGYvQ2F0YWxvZ28gMSAtIEZsYW5nZXMsIENvbmV4b2VzLCBWYWx2dWxhcyBlIFR1Ym9zIC0gQWNvcyBWaXRhbCBFZC40LnBkZiIsImlhdCI6MTc2NDg3MTE5OCwiZXhwIjoxNzk2NDA3MTk4fQ.k4RWJgWBKsu5Rq6jP0RJv2wzJ-M8tGCMvmtV2YRU8E0"
+    },
+    catalogPage: {
+      links: {
+        products: {
+            title: "Conheça nossa linha de produtos",
+            buttonText: "Ver Produtos",
+        },
+        tables: {
+            title: "Acesse as tabelas de medidas",
+            buttonText: "Acessar Tabelas",
+        }
+      }
     },
     tablesPage: {
         title: "Tabelas Técnicas e Especificações",
@@ -802,7 +875,13 @@ export const pt = {
             interest: "Assunto",
             interests: ["Cotação de Materiais", "Dúvidas Técnicas", "Financeiro", "RH", "Outros"],
             message: "Mensagem",
-            sendButton: "Enviar Mensagem"
+            sendButton: "Enviar Mensagem",
+            successTitle: "Mensagem Enviada!",
+            successMsg: "Obrigado por entrar em contato. Nossa equipe técnica recebeu sua solicitação e retornará em breve.",
+            sendAnother: "Enviar outra mensagem",
+            errorMsg: "Não foi possível enviar sua mensagem automaticamente. Por favor, tente via WhatsApp ou e-mail.",
+            whatsappButton: "Enviar no WhatsApp",
+            whatsappHint: "* Se preferir, utilize o botão do WhatsApp para um atendimento imediato."
         },
         map: {
             title: "Nossa Localização"

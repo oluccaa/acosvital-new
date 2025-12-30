@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useI18n } from '../../../context/I18nContext';
 import { Phone, MapPin, Mail, User, Building, MessageSquare, Send, ArrowRight, Loader2, CheckCircle } from 'lucide-react';
@@ -146,7 +147,7 @@ const Contact: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-dark via-brand-blue-dark/60 to-transparent"></div>
                 
                 <div className="relative z-10 container mx-auto px-6 sm:px-12 lg:px-24 h-full flex flex-col justify-center pt-12 pb-32">
-                    <span className="text-brand-orange font-bold tracking-widest uppercase mb-4 animate-slide-in">Fale Conosco</span>
+                    <span className="text-brand-orange font-bold tracking-widest uppercase mb-4 animate-slide-in">{t('header.mobileLinks.contact')}</span>
                     <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 max-w-3xl leading-tight animate-slide-in" style={{ animationDelay: '0.1s' }}>
                         {hero.title}
                     </h1>
@@ -186,7 +187,7 @@ const Contact: React.FC = () => {
 
                                 {/* Phone & WhatsApp */}
                                 <ContactInfoItem icon={<Phone size={22} />} title={t('contactPage.options.cards.phone.title')}>
-                                    <p className="mb-2">Seg - Sex: 08:00 - 18:00</p>
+                                    <p className="mb-2">{t('layout.schedule')}</p>
                                     <div className="flex flex-col space-y-2">
                                         <a href={`tel:${phoneCardData?.phone?.replace(/\D/g, '')}`} className="hover:text-brand-orange transition-colors font-medium text-lg">
                                             {phoneCardData?.phone}
@@ -223,15 +224,15 @@ const Contact: React.FC = () => {
                                 <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center text-green-500 mb-6 shadow-lg shadow-green-100">
                                     <CheckCircle size={48} strokeWidth={2.5} />
                                 </div>
-                                <h3 className="text-3xl font-bold text-brand-blue-dark mb-4">Mensagem Enviada!</h3>
+                                <h3 className="text-3xl font-bold text-brand-blue-dark mb-4">{t('contactPage.form.successTitle')}</h3>
                                 <p className="text-gray-600 max-w-md mb-8 text-lg">
-                                    Obrigado por entrar em contato. Nossa equipe técnica recebeu sua solicitação e retornará em breve.
+                                    {t('contactPage.form.successMsg')}
                                 </p>
                                 <button 
                                     onClick={resetForm}
                                     className="bg-brand-blue-dark text-white font-bold py-3 px-8 rounded-lg hover:bg-brand-blue-light transition-all duration-300 shadow-md uppercase tracking-wider text-sm flex items-center"
                                 >
-                                    Enviar outra mensagem <ArrowRight size={16} className="ml-2" />
+                                    {t('contactPage.form.sendAnother')} <ArrowRight size={16} className="ml-2" />
                                 </button>
                             </div>
                         ) : (
@@ -253,7 +254,7 @@ const Contact: React.FC = () => {
                                                     value={formState.name}
                                                     onChange={handleInputChange}
                                                     className={`${inputClasses} pl-12`} 
-                                                    placeholder="Seu nome" 
+                                                    placeholder={t('contactPage.form.name')} 
                                                     required
                                                 />
                                             </div>
@@ -270,7 +271,7 @@ const Contact: React.FC = () => {
                                                     value={formState.company}
                                                     onChange={handleInputChange}
                                                     className={`${inputClasses} pl-12`} 
-                                                    placeholder="Nome da empresa" 
+                                                    placeholder={t('contactPage.form.company')} 
                                                 />
                                             </div>
                                         </div>
@@ -289,7 +290,7 @@ const Contact: React.FC = () => {
                                                     value={formState.email}
                                                     onChange={handleInputChange}
                                                     className={`${inputClasses} pl-12`} 
-                                                    placeholder="exemplo@empresa.com" 
+                                                    placeholder="nome@empresa.com.br" 
                                                     required
                                                 />
                                             </div>
@@ -319,11 +320,13 @@ const Contact: React.FC = () => {
                                             name="interest"
                                             value={formState.interest}
                                             onChange={handleInputChange}
-                                            className={inputClasses} 
+                                            className={inputClasses}
                                             required
                                         >
-                                            <option value="" disabled>Selecione uma opção</option>
-                                            {interests.map(item => <option key={item} value={item}>{item}</option>)}
+                                            <option value="" disabled>Selecione um assunto...</option>
+                                            {interests && interests.map((interest, index) => (
+                                                <option key={index} value={interest}>{interest}</option>
+                                            ))}
                                         </select>
                                     </div>
 
@@ -337,58 +340,46 @@ const Contact: React.FC = () => {
                                                 name="message"
                                                 value={formState.message}
                                                 onChange={handleInputChange}
-                                                rows={4} 
-                                                className={`${inputClasses} pl-12`} 
-                                                placeholder="Descreva sua necessidade..."
+                                                className={`${inputClasses} pl-12 min-h-[150px]`} 
+                                                placeholder={t('contactPage.form.message')} 
                                                 required
                                             ></textarea>
                                         </div>
                                     </div>
 
-                                    {status === 'error' && (
-                                        <div className="bg-red-50 text-red-700 p-4 rounded-lg border border-red-200 text-sm">
-                                            Não foi possível enviar sua mensagem automaticamente. Por favor, tente via WhatsApp ou e-mail.
-                                        </div>
-                                    )}
-
-                                    <div className="pt-4 flex flex-col sm:flex-row gap-4">
+                                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
                                         <button 
                                             type="submit" 
+                                            className="flex-1 bg-brand-orange text-white font-bold py-4 px-8 rounded-lg hover:bg-brand-orange-dark transition-all duration-300 shadow-lg hover:shadow-brand-orange/30 active:scale-[0.98] uppercase tracking-wider text-sm flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed"
                                             disabled={status === 'loading'}
-                                            className={`
-                                                flex-1 flex items-center justify-center bg-brand-orange text-white font-bold py-4 px-6 rounded-lg 
-                                                transition-all duration-300 transform shadow-lg shadow-brand-orange/20 uppercase tracking-wider text-sm
-                                                ${status === 'loading' ? 'opacity-80 cursor-wait' : 'hover:bg-brand-orange-dark hover:scale-[1.02]'}
-                                            `}
                                         >
                                             {status === 'loading' ? (
-                                                <>
-                                                    <Loader2 size={18} className="animate-spin mr-2" />
-                                                    Enviando...
-                                                </>
+                                                <Loader2 size={20} className="animate-spin mr-2" />
                                             ) : (
                                                 <>
-                                                    {t('contactPage.form.sendButton')} <Send size={18} className="ml-2" />
+                                                    {t('contactPage.form.sendButton')} <Send size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                                                 </>
                                             )}
                                         </button>
-
+                                        
                                         <button 
-                                            type="button"
+                                            type="button" 
                                             onClick={handleWhatsAppSubmit}
-                                            className="
-                                                flex-1 sm:flex-none flex items-center justify-center bg-white text-brand-whatsapp border-2 border-brand-whatsapp font-bold py-4 px-6 rounded-lg 
-                                                transition-all duration-300 transform hover:bg-brand-whatsapp hover:text-white hover:scale-[1.02] uppercase tracking-wider text-sm
-                                            "
+                                            className="flex-1 bg-[#25D366] text-white font-bold py-4 px-8 rounded-lg hover:bg-[#128C7E] transition-all duration-300 shadow-lg hover:shadow-green-500/30 active:scale-[0.98] uppercase tracking-wider text-sm flex items-center justify-center group"
                                         >
-                                            <WhatsappIcon size={20} className="mr-2" />
-                                            Enviar no WhatsApp
+                                            {t('contactPage.form.whatsappButton')} <WhatsappIcon size={20} className="ml-2" />
                                         </button>
                                     </div>
                                     
-                                    <p className="text-xs text-gray-400 text-center mt-4">
-                                        * Se preferir, utilize o botão do WhatsApp para um atendimento imediato.
+                                    <p className="text-xs text-gray-500 text-center mt-4">
+                                        {t('contactPage.form.whatsappHint')}
                                     </p>
+
+                                    {status === 'error' && (
+                                        <div className="p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm text-center">
+                                            {t('contactPage.form.errorMsg')}
+                                        </div>
+                                    )}
                                 </form>
                             </>
                         )}
@@ -396,24 +387,19 @@ const Contact: React.FC = () => {
                 </div>
             </div>
 
-            {/* 3. MAP SECTION */}
-            <div className="w-full h-[400px] bg-gray-200 grayscale hover:grayscale-0 transition-all duration-700 relative">
-                 <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-brand-off-white to-transparent z-10 pointer-events-none"></div>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.736005431649!2d-46.220605824671594!3d-23.506016478837843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cdd9da018d3e89%3A0xd00c7b12fdd20384!2sA%C3%A7os%20Vital!5e0!3m2!1spt-BR!2sbr!4v1764099861350!5m2!1spt-BR!2sbr"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen={true}
-                    loading="lazy"
+            {/* 3. GOOGLE MAPS FULL WIDTH */}
+            <div className="w-full h-[400px] bg-gray-200 relative">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.0772023594833!2d-46.24838632369651!3d-23.53173166042371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cdd7e108605c31%3A0xc34661009139046c!2sRod.%20Pedro%20Eroles%2C%201855%20-%20Jardim%20Aracy%2C%20Mogi%20das%20Cruzes%20-%20SP%2C%2008770-490!5e0!3m2!1spt-BR!2sbr!4v1709149955364!5m2!1spt-BR!2sbr" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0, filter: 'grayscale(0%)' }} 
+                    allowFullScreen 
+                    loading="lazy" 
                     referrerPolicy="no-referrer-when-downgrade"
-                    title={t('contactPage.map.title')}
+                    title="Localização Aços Vital"
+                    className="absolute inset-0"
                 ></iframe>
-                {/* Map Overlay Card */}
-                <div className="absolute bottom-6 right-6 bg-white p-4 rounded-lg shadow-xl max-w-xs hidden md:block">
-                     <p className="text-brand-blue-dark font-bold text-sm">Aços Vital Indústria</p>
-                     <p className="text-gray-600 text-xs mt-1">Rod. Pedro Eroles, nº 1855</p>
-                </div>
             </div>
 
         </div>

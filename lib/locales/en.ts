@@ -7,6 +7,21 @@ import { pt } from './pt';
 
 export const en = {
     // ... existing translations ...
+    layout: {
+        schedule: "Mon - Fri: 08:00 - 18:00",
+        menu: "Main Menu",
+        searchPlaceholder: "Search products, tables...",
+        departments: "Departments",
+        viewAll: "View All",
+        viewSpecs: "View specifications",
+        catalogCall: "Complete Technical Catalog",
+        catalogDesc: "Access all measurement tables, standards, and specifications in a single PDF document.",
+        downloadNow: "Download Now",
+        updated: "Updated 2025",
+        close: "Close",
+        list: "List",
+        navigation: "Navigation"
+    },
     header: {
       navLinks: {
         home: 'HOME',
@@ -18,14 +33,353 @@ export const en = {
         certifications: 'CERTIFICATIONS',
         contact: 'CONTACT',
       },
-      whatsapp: 'WHATSAPP'
+      whatsapp: 'WHATSAPP',
+      mobileGroups: {
+          tubular: "Piping & Lines",
+          tubularDesc: "Tubes, Conduits and Grooved",
+          connections: "Fittings & Valves",
+          connectionsDesc: "Flanges, Fittings and Valves",
+          structural: "Structural & Civil Steel",
+          structuralDesc: "Profiles, Plates, Gratings and Tiles",
+          industrial: "Industrial Solutions",
+          industrialDesc: "Cutting, Tanks and Boilermaking"
+      },
+      mobileLinks: {
+          downloadCatalog: "Download Full Catalog",
+          calculatorTitle: "Steel Calculator",
+          calculatorDesc: "Tool",
+          tablesTitle: "Technical Tables",
+          tablesDesc: "Standards & Measurements",
+          contact: "Contact Us",
+          whatsappSupport: "WhatsApp Support"
+      }
     },
+    // ... (CONTINUATION)
+    // ...
+    calculatorPage: {
+        title: "Vital Steel Suite",
+        subtitle: "Engineering Workstation v5.0",
+        tabs: {
+            calculator: "Steel Calculator",
+            nesting: "Cutting Optimizer",
+            sheetMetal: "Unfolding",
+            bending: "Bending Calc",
+            welding: "Welding Estimator",
+            converter: "Unit Converter"
+        },
+        common: {
+            selection: "Selection",
+            console: "Engineering Console",
+            telemetry: "Telemetry",
+            presets: "Measurement Presets",
+            presetsHelp: "Select a field above and click a preset to apply.",
+            surfaceArea: "Surface Area",
+            density: "Density",
+            totalWeight: "Total Weight",
+            unitWeight: "Unit Weight",
+            totalArea: "Total Area",
+            addToList: "Add to List",
+            materialList: "Material List",
+            print: "Print",
+            share: "Share",
+            clear: "Clear",
+            emptyList: "No items added.",
+            projectTotal: "Project Total",
+            requestQuote: "Request Quote",
+            waiting: "Waiting for Calculation",
+            selectItem: "Select an item to calculate"
+        },
+        toolDescriptions: {
+            calculator: "Calculate theoretical weight of plates, tubes, bars, and complex profiles. Essential for material planning, budgeting, and logistics.",
+            nesting: "Optimize linear cutting of bars and profiles. Reduce material waste (scrap) by calculating the best usage of stock bars.",
+            sheetMetal: "Calculate the unfolding (blank) of plates for cone manufacturing. Essential tool for boilermaking.",
+            bending: "Calculate the exact cut size (blank) considering bend deduction, K-factor, and tolerances for bent plates.",
+            welding: "Estimate the amount of welding consumable required for different joint types. Ideal for welding cost planning.",
+            converter: "Quickly convert common industrial engineering measurement units (mm, in, kg, lb, psi, bar) to ease your daily work."
+        },
+        sheetMetal: {
+            title: "Cone Unfolding",
+            subtitle: "Development calculation for boilermaking",
+            dimensions: "Cone Dimensions",
+            results: "Unfolding Result",
+            memory: "Calculation Memory",
+            theory: "Calculation based on Euclidean geometry for development of solids of revolution (Concentric Cones).",
+            inputs: {
+                D: "Larger Ø (D)",
+                d: "Smaller Ø (d)",
+                H: "Height (H)",
+                T: "Thickness (T)"
+            },
+            outputs: {
+                radiusLarge: "Large Radius (Compass)",
+                radiusSmall: "Small Radius",
+                angle: "Sector Angle",
+                slantHeight: "Slant Height",
+                chordLarge: "Large Chord (Layout)"
+            },
+            formulas: {
+                title: "Unfolding Math",
+                slantHeight: "Slant Height (g)",
+                slantDesc: "Calculated via Pythagoras using height and radius difference.",
+                patternRadius: "Pattern Radius (R_pad)",
+                angle: "Sector Angle (θ)",
+                angleDesc: "The proportion of the base circumference relative to the development circle.",
+                formulaG: "g = √[H² + (R - r)²]",
+                formulaTheta: "θ = 360° × (R / g)"
+            }
+        },
+        bending: {
+            title: "Bending Calculator",
+            subtitle: "Bend deduction and K-Factor",
+            params: "Bending Parameters",
+            blankSize: "Blank Size (Cut)",
+            theory: "Theory",
+            inputs: {
+                thickness: "Thickness (T)",
+                radius: "Int. Radius (R)",
+                angle: "Angle (°)",
+                kFactor: "K-Factor",
+                leg1: "Leg 1",
+                leg2: "Leg 2"
+            },
+            outputs: {
+                deduction: "Deduction (BD)",
+                allowance: "Allowance (BA)"
+            }
+        },
+        formulas: {
+            title: "Understand the Calculation",
+            general: "Weight is calculated by multiplying material volume by its specific density.",
+            plate: "Weight = Width × Length × Thickness × Density",
+            barRound: "Weight = π × (Radius)² × Length × Density",
+            barSquare: "Weight = Side² × Length × Density",
+            tube: "Weight = π × (R_out² - R_in²) × Length × Density",
+            grating: "Weight = (Bar Weight + 15% Crossbars) × Area",
+            variables: {
+                density: "Density (ρ)",
+                volume: "Volume (V)",
+                area: "Cross-sectional Area (A)"
+            }
+        },
+        calendering: {
+            title: "Manufacturing (Unfolding)",
+            devLength: "Plate Length (Development)",
+            sheetWidth: "Plate Width",
+            explanation: "Plate development is calculated based on the material's neutral axis (Mean Diameter).",
+            formula: "L = (OD - T) × π",
+            neutralAxis: "Neutral Axis",
+            logistics: "Logistics Data"
+        },
+        selectProduct: "Select Operation",
+        selectMaterial: "Material",
+        categories: {
+            raw: "Raw Material",
+            piping: "Boilermaking & Piping",
+            structural: "Industrial & Structural"
+        },
+        inputs: {
+            thickness: "Thickness",
+            width: "Width",
+            length: "Length",
+            outerDiameter: "Outer Diameter",
+            innerDiameter: "Inner Diameter",
+            wallThickness: "Wall",
+            height: "Height",
+            diameter: "Diameter",
+            quantity: "Quantity",
+            angle: "Angle (°)",
+            pitch: "Mesh Pitch",
+            strandWidth: "Strand",
+            meshSWD: "Mesh SWD",
+            radius: "Center Radius",
+            side: "Side",
+            barHeight: "Bar Height",
+            barThickness: "Bar Thickness",
+            mesh: "Mesh",
+            gap: "Gap"
+        },
+        products: {
+            plate: "Plate",
+            tubeRound: "Industrial Tube",
+            barRound: "Round Bar",
+            barSquare: "Square Bar",
+            flangeSquare: "Ring (Plate Cut)",
+            grating: "Floor Grating",
+            tubeCalendered: "Calendered Tube",
+            expandedMetal: "Expanded Metal",
+            fittingElbow: "Elbow/Miter",
+            fittingReducer: "Reducer",
+            fittingTee: "Tee"
+        },
+        materials: {
+            carbon: "Carbon Steel (7.85)",
+            inox304: "Stainless 304 (7.93)",
+            inox316: "Stainless 316 (7.98)",
+            aluminum: "Aluminum (2.70)"
+        },
+        painting: {
+            title: "Painting and Coating",
+            coverage: "Coverage (m²/L)",
+            coats: "Coats",
+            density: "Paint Density (kg/L)",
+            volume: "Paint Vol.",
+            weight: "Paint Weight"
+        },
+        result: {
+            weightPerPiece: "Unit Weight",
+            totalWeight: "Total Weight",
+            developedLength: "Development (L)",
+            unit: "kg",
+            surfaceArea: "Paint Area",
+            grossWeight: "Gross Weight (Plate)",
+            netWeight: "Net Weight (Ring)",
+            scrap: "Scrap Rate",
+            arcOuter: "Outer Arc",
+            arcCenter: "Center Arc",
+            arcInner: "Inner Arc",
+            projectData: "PROJECT DATA",
+            material: "MATERIAL",
+            density: "DENSITY",
+            date: "DATE"
+        },
+        calculate: "CALCULATE",
+        clear: "CLEAR FIELDS",
+        project: {
+            title: "Bill of Materials (BOM)",
+            empty: "No items added to project.",
+            add: "Add to Project",
+            total: "Project Total Weight",
+            export: "Print List",
+            quoteButton: "Quote on WhatsApp",
+            pdfButton: "Generate PDF / Print",
+            clear: "Clear Project",
+            item: "Item",
+            qty: "Qty",
+            weight: "Weight",
+            actions: "Actions"
+        },
+        nesting: {
+            title: "Linear Cutting Optimizer",
+            barLength: "Standard Bar Length",
+            bladeWidth: "Cutting Width / Kerf",
+            linearWeight: "Linear Weight (kg/m) - Optional",
+            cutList: "Cut List",
+            length: "Piece Length",
+            qty: "Qty",
+            add: "Add",
+            addPieces: "Add Pieces",
+            calculateBtn: "Calculate Optimization",
+            params: "Stock Parameters",
+            waiting: "Waiting for Calculation",
+            waitingDesc: "Add the pieces you want to cut to the list and define your stock bar size.",
+            helpTitle: "How to use the Optimizer",
+            helpText: "This tool uses a 'Best Fit Decreasing' algorithm to organize pieces into available stock bars. Enter the total length of the stock bar you have and the cutting blade thickness (loss). If you wish to calculate total scrap and material weight, fill in the 'Linear Weight' field.",
+            errorLength: "Error: Piece length (+ cut) cannot be greater than stock bar.",
+            results: {
+                totalBars: "Total Bars",
+                totalWaste: "Total Waste",
+                barUsage: "Usage",
+                weightUsed: "Material Weight",
+                weightScrap: "Scrap Weight",
+                scraps: "Scraps",
+                efficiency: "Efficiency",
+                cutPlan: "Cut Plan",
+                hoverDetails: "Hover to see details"
+            },
+            table: {
+                bar: "Bar",
+                cuts: "Cuts in this bar (mm)",
+                waste: "Leftover (Scrap)"
+            },
+            explanation: {
+                title: "Understand Optimization Calculation",
+                concept: "The calculation uses a heuristic algorithm (Best Fit Decreasing) to solve the one-dimensional 'Cutting Stock Problem'. The goal is to minimize the number of bars used and material waste.",
+                glossary: {
+                    stock: { title: "Bar Size", desc: "Total length of virgin bar available in stock (e.g., 6000mm or 12000mm)." },
+                    blade: { title: "Cutting Width", desc: "Material lost at each cut due to blade or saw thickness (kerf). Usually between 3mm and 5mm." },
+                    waste: { title: "Leftover (Scrap)", desc: "Final piece of the bar not sufficient to produce new pieces. Calculated as: Total Bar - (Sum of Pieces + Cutting Losses)." },
+                    weight: { title: "Linear Weight", desc: "Mass of the bar per meter (kg/m). Allows calculating total purchased material weight and wasted scrap weight." }
+                }
+            }
+        },
+        welding: {
+            title: "Welding Calculator",
+            helpTitle: "Estimation Parameters",
+            helpText: "This tool estimates the required consumable amount based on cross-sectional area and selected material density. Deposition efficiency is not considered, providing the net weight of deposited metal.",
+            jointType: "Joint Type",
+            types: {
+                fillet: "Fillet",
+                buttV: "V-Butt (Single V)",
+                buttX: "X-Butt (Double V)"
+            },
+            inputs: {
+                legSize: "Fillet Leg (z)",
+                thickness: "Plate Thickness (t)",
+                length: "Weld Length",
+                gap: "Root Opening (g)",
+                angle: "Bevel Angle (α)",
+                reinforcement: "Reinforcement / Over-metal"
+            },
+            results: {
+                weight: "Estimated Weight",
+                volume: "Weld Volume"
+            },
+            explanation: {
+                title: "Welding Technical Guide",
+                concept: "Weld metal weight is calculated by determining the volume of the bead cross-sectional area multiplied by its length and steel density (approx. 7.85 g/cm³).",
+                glossary: {
+                    z: { title: "Leg (z)", desc: "Length of the triangle side in a fillet weld. Determines joint strength." },
+                    g: { title: "Root Opening (g)", desc: "Minimum distance between pieces to be welded. Allows full weld penetration." },
+                    alpha: { title: "Bevel Angle (α)", desc: "Opening angle between prepared plates. Usually 60° for V-joints." },
+                    r: { title: "Reinforcement", desc: "Over-metal or convexity of the weld bead above the plate surface, expressed as a percentage (usually 10-20%)." }
+                }
+            }
+        },
+        converter: {
+            title: "Universal Converter",
+            categories: {
+                length: "Length",
+                weight: "Mass / Weight",
+                area: "Area",
+                pressure: "Pressure",
+                dn: "Nominal Diameter" // ADDED
+            },
+            units: {
+                mm: "Millimeters (mm)",
+                cm: "Centimeters (cm)",
+                m: "Meters (m)",
+                in: "Inches (in)",
+                ft: "Feet (ft)",
+                kg: "Kilograms (kg)",
+                lb: "Pounds (lb)",
+                ton: "Tons (t)",
+                m2: "Square Meters (m²)",
+                cm2: "Square Centimeters (cm²)",
+                ft2: "Square Feet (ft²)",
+                in2: "Square Inches (in²)",
+                bar: "Bar",
+                psi: "PSI (lbf/in²)",
+                mpa: "MegaPascal (MPa)",
+                kgfcm2: "kgf/cm²"
+            },
+            labels: {
+                from: "From",
+                to: "To",
+                value: "Value",
+                result: "Result"
+            },
+            footer: "Nominal Conversion (Pipe Table) - Ex: 1/2\" = 15mm | 14\" = 350mm"
+        }
+    },
+    // ... (REST OF THE FILE)
+    // ...
+    // NOTE: Keep all previous content exactly as it was, just injecting the DN translation in converter.categories.
     footer: {
         slogan: "Trust is what connects us!",
         pagesTitle: "Pages",
         followUsTitle: "Follow Us"
     },
-    // ... (KEEP PREVIOUS TRANSLATIONS)
+    // ...
     hero: {
       slides: {
         entressafra: {
@@ -156,189 +510,7 @@ export const en = {
         }
       }
     },
-    calculatorPage: {
-        title: "Vital Steel Suite",
-        subtitle: "Engineering Workstation v5.0",
-        tabs: {
-            calculator: "Steel Calculator",
-            nesting: "Cutting Optimizer",
-            sheetMetal: "Unfolding",
-            bending: "Bending Calc",
-            welding: "Welding Estimator",
-            converter: "Unit Converter"
-        },
-        // ... (KEEP THE REST)
-        toolDescriptions: {
-            calculator: "Calculate theoretical weight of plates, tubes, bars, and profiles. Essential for material planning, budgeting, and logistics.",
-            nesting: "Optimize linear cutting of bars and profiles. Reduce material waste (scrap) by calculating the best usage of stock bars.",
-            sheetMetal: "Calculate sheet metal development (blank) for cone fabrication. Essential tool for boilermaking.",
-            bending: "Calculate the exact blank length considering bend deduction, K-factor, and tolerances for bent plates.",
-            welding: "Estimate the amount of welding consumable needed for different joint types. Ideal for welding cost planning.",
-            converter: "Quickly convert common industrial engineering units (mm, in, kg, lb, psi, bar) to streamline your daily workflow."
-        },
-        sheetMetal: {
-            title: "Cone Unfolding",
-            subtitle: "Development Calculation"
-        },
-        bending: {
-            title: "Bending Calculator",
-            subtitle: "Bend Deduction & K-Factor"
-        },
-        selectProduct: "Select Product",
-        selectMaterial: "Material",
-        categories: {
-            raw: "Raw Material",
-            piping: "Piping & Boilermaking",
-            structural: "Industrial & Structural"
-        },
-        inputs: {
-            thickness: "Thickness (mm)",
-            width: "Width (mm)",
-            length: "Length (mm)",
-            outerDiameter: "Outer Diameter (mm)",
-            innerDiameter: "Inner Diameter (mm)",
-            wallThickness: "Wall (mm)",
-            height: "Height (mm)",
-            diameter: "Diameter (mm)",
-            quantity: "Quantity",
-            angle: "Angle (°)",
-            pitch: "Pitch (mm)",
-            strandWidth: "Strand (mm)",
-            meshSWD: "SWD (mm)",
-            radius: "Center Radius (mm)",
-            side: "Square Side (mm)"
-        },
-        products: {
-            plate: "Plate",
-            tubeRound: "Round Tube",
-            barRound: "Round Bar",
-            barSquare: "Square Bar",
-            flangeSquare: "Ring (Cut Plate)",
-            grating: "Floor Grating",
-            tubeCalendered: "Calendered Tube",
-            expandedMetal: "Expanded Metal",
-            fittingElbow: "Elbow/Miter"
-        },
-        materials: {
-            carbon: "Carbon Steel (7.85)",
-            inox304: "Stainless 304 (7.93)",
-            inox316: "Stainless 316 (7.98)",
-            aluminum: "Aluminum (2.70)"
-        },
-        painting: {
-            title: "Painting & Coating",
-            coverage: "Coverage (m²/L)",
-            coats: "Coats",
-            density: "Paint Density (kg/L)",
-            volume: "Paint Vol.",
-            weight: "Paint Weight"
-        },
-        result: {
-            weightPerPiece: "Weight per Piece",
-            totalWeight: "Total Weight",
-            developedLength: "Developed Length (L)",
-            unit: "kg",
-            surfaceArea: "Paint Area",
-            grossWeight: "Gross Weight",
-            netWeight: "Net Weight",
-            scrap: "Scrap Rate",
-            arcOuter: "Outer Arc",
-            arcCenter: "Center Arc",
-            arcInner: "Inner Arc",
-            projectData: "PROJECT DATA",
-            material: "MATERIAL",
-            density: "DENSIDADE",
-            date: "DATE"
-        },
-        calculate: "CALCULAR",
-        clear: "CLEAR FIELDS",
-        project: {
-            title: "Bill of Materials (BOM)",
-            empty: "No items added to the project.",
-            add: "Add to Project",
-            total: "Project Total Weight",
-            export: "Print List",
-            clear: "Clear Project",
-            item: "Item",
-            qty: "Qty",
-            weight: "Weight",
-            actions: "Actions"
-        },
-        nesting: {
-            title: "Linear Cut Optimizer",
-            barLength: "Standard Bar Length",
-            bladeWidth: "Kerf/Blade Width (mm)",
-            cutList: "Cut List",
-            length: "Length (mm)",
-            qty: "Qty",
-            add: "Add",
-            results: {
-                totalBars: "Total Bars",
-                totalWaste: "Total Scrap",
-                barUsage: "Bar Usage"
-            },
-            table: {
-                bar: "Bar",
-                cuts: "Cuts in this bar (mm)",
-                waste: "Waste"
-            }
-        },
-        welding: {
-            title: "Welding Calculator",
-            jointType: "Joint Type",
-            types: {
-                fillet: "Fillet",
-                buttV: "Single V Butt",
-                buttX: "Double V Butt (X)"
-            },
-            inputs: {
-                legSize: "Fillet Leg Size (z)",
-                thickness: "Plate Thickness (t)",
-                length: "Weld Length (m)",
-                gap: "Root Gap (g)",
-                angle: "Bevel Angle (°)",
-                reinforcement: "Reinforcement (%)"
-            },
-            results: {
-                weight: "Consumable Weight",
-                volume: "Weld Volume"
-            }
-        },
-        converter: {
-            title: "Universal Converter",
-            categories: {
-                length: "Length",
-                weight: "Mass / Weight",
-                area: "Area",
-                pressure: "Pressure"
-            },
-            units: {
-                mm: "Millimeters (mm)",
-                cm: "Centimeters (cm)",
-                m: "Meters (m)",
-                in: "Inches (in)",
-                ft: "Feet (ft)",
-                kg: "Kilograms (kg)",
-                lb: "Pounds (lb)",
-                ton: "Tons (t)",
-                m2: "Square Meters (m²)",
-                cm2: "Square Centimeters (cm²)",
-                ft2: "Square Feet (ft²)",
-                in2: "Square Inches (in²)",
-                bar: "Bar",
-                psi: "PSI (lbf/in²)",
-                mpa: "MegaPascal (MPa)",
-                kgfcm2: "kgf/cm²"
-            },
-            labels: {
-                from: "From",
-                to: "To",
-                value: "Value",
-                result: "Result"
-            }
-        }
-    },
-    // ... (KEEP THE REST)
+    // ... (REST OF CALCULATOR PAGE IS SAME AS ABOVE)
     tablesPage: {
         title: "Technical Tables and Specifications",
         subtitle: "Consult measurements, weights, and technical standards of our main products.",
@@ -346,7 +518,7 @@ export const en = {
         search: {
             label: "Search Tables",
             placeholder: "Name, dimension, standard...",
-            results: "resultados",
+            results: "results",
             helper: "Searching in titles and table content...",
             noResultsTitle: "No tables found",
             noResultsText: "Try another search term.",
@@ -496,7 +668,13 @@ export const en = {
             interest: "Subject",
             interests: ["Material Quote", "Technical Questions", "Finance", "HR", "Other"],
             message: "Message",
-            sendButton: "Send Message"
+            sendButton: "Send Message",
+            successTitle: "Message Sent!",
+            successMsg: "Thank you for contacting us. Our technical team has received your request and will return shortly.",
+            sendAnother: "Send another message",
+            errorMsg: "Could not send your message automatically. Please try via WhatsApp or email.",
+            whatsappButton: "Send on WhatsApp",
+            whatsappHint: "* If you prefer, use the WhatsApp button for immediate service."
         },
         map: {
             title: "Our Location"
