@@ -50,6 +50,13 @@ export interface ProjectItem {
     meta?: ProjectItemMeta;
 }
 
+// Interface para itens de corte do Otimizador
+export interface NestingItem {
+    id: string;
+    length: number;
+    quantity: number;
+}
+
 interface NestingPayload {
     items: { length: number; quantity: number }[];
 }
@@ -71,6 +78,12 @@ interface EngineeringContextType {
     removeFromProject: (id: string) => void;
     clearProject: () => void;
 
+    // Nesting Persistence
+    nestingItems: NestingItem[];
+    addNestingItem: (item: NestingItem) => void;
+    removeNestingItem: (id: string) => void;
+    clearNestingItems: () => void;
+    
     nestingPayload: NestingPayload | null;
     sendToNesting: (payload: NestingPayload) => void;
     clearNestingPayload: () => void;
@@ -82,9 +95,10 @@ interface EngineeringContextType {
 
 const EngineeringContext = createContext<EngineeringContextType | undefined>(undefined);
 
-const STORAGE_KEY_CALC_STATE = 'acosvital_master_state_v4';
-const STORAGE_KEY_PROJECT = 'acosvital_project_v4';
-const STORAGE_KEY_ACTIVE_TAB = 'acosvital_active_tab_v4';
+const STORAGE_KEY_CALC_STATE = 'acosvital_master_state_v5';
+const STORAGE_KEY_PROJECT = 'acosvital_project_v5';
+const STORAGE_KEY_NESTING_ITEMS = 'acosvital_nesting_items_v5';
+const STORAGE_KEY_ACTIVE_TAB = 'acosvital_active_tab_v5';
 
 const DEFAULT_CALC_STATE: CalculatorState = {
     width: '',
@@ -125,6 +139,11 @@ export const EngineeringProvider: React.FC<{ children: ReactNode }> = ({ childre
         const raw = localStorage.getItem(STORAGE_KEY_PROJECT);
         return raw ? JSON.parse(raw) : [];
     });
+
+    const [nestingItems, setNestingItems] = useState<NestingItem[]>(() => {
+        const raw = localStorage.getItem(STORAGE_KEY_NESTING_ITEMS);
+        return raw ? JSON.parse(raw) : [];
+    });
     
     const [nestingPayload, setNestingPayload] = useState<NestingPayload | null>(null);
     const [weldingPayload, setWeldingPayload] = useState<WeldingPayload | null>(null);
@@ -139,6 +158,10 @@ export const EngineeringProvider: React.FC<{ children: ReactNode }> = ({ childre
     }, [projectItems]);
 
     useEffect(() => {
+        localStorage.setItem(STORAGE_KEY_NESTING_ITEMS, JSON.stringify(nestingItems));
+    }, [nestingItems]);
+
+    useEffect(() => {
         localStorage.setItem(STORAGE_KEY_ACTIVE_TAB, activeTab);
     }, [activeTab]);
 
@@ -149,6 +172,11 @@ export const EngineeringProvider: React.FC<{ children: ReactNode }> = ({ childre
     const addToProject = (item: ProjectItem) => setProjectItems(prev => [item, ...prev]);
     const removeFromProject = (id: string) => setProjectItems(prev => prev.filter(i => i.id !== id));
     const clearProject = () => setProjectItems([]);
+
+    // Nesting Actions
+    const addNestingItem = (item: NestingItem) => setNestingItems(prev => [...prev, item]);
+    const removeNestingItem = (id: string) => setNestingItems(prev => prev.filter(i => i.id !== id));
+    const clearNestingItems = () => setNestingItems([]);
 
     const sendToNesting = (payload: NestingPayload) => {
         setNestingPayload(payload);
@@ -165,6 +193,7 @@ export const EngineeringProvider: React.FC<{ children: ReactNode }> = ({ childre
             activeTab, setActiveTab,
             calculatorState, updateCalculatorField,
             projectItems, addToProject, removeFromProject, clearProject,
+            nestingItems, addNestingItem, removeNestingItem, clearNestingItems,
             nestingPayload, sendToNesting, clearNestingPayload: () => setNestingPayload(null),
             weldingPayload, sendToWelding, clearWeldingPayload: () => setWeldingPayload(null)
         }}>
