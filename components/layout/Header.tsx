@@ -82,35 +82,30 @@ const Header: React.FC = () => {
 
                 {/* Main Header Content */}
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1920px] relative">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center gap-4">
                         {/* Logo */}
                         <a href="#/" aria-label="Aços Vital Home" className="flex-shrink-0 z-10 transition-transform hover:scale-105">
                             <Logo className={isScrolled ? "h-[40px] md:h-[45px]" : "h-[50px] md:h-[60px]"} />
                         </a>
                         
-                        {/* Desktop Nav */}
-                        <div className="hidden lg:flex flex-1 justify-center px-4 xl:px-8">
-                            <NavLinks links={navLinksData} />
+                        {/* Desktop Nav - Using Flex-1 to take available space but prevent overflow */}
+                        <div className="hidden lg:flex flex-1 justify-center px-2">
+                            <NavLinks links={navLinksData} isScrolled={isScrolled} />
                         </div>
                         
                         {/* Actions */}
-                        <div className="flex items-center gap-3 z-10">
+                        <div className="flex items-center gap-2 sm:gap-3 z-10 flex-shrink-0">
+                            {/* Search Trigger - Minimalist Icon */}
                             <button 
                                 onClick={() => setIsSearchOpen(true)}
-                                className="hidden md:flex items-center gap-2 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-3 py-2 rounded-lg transition-all text-sm group border border-transparent hover:border-white/10"
-                                aria-label="Pesquisar"
+                                className="p-2 text-white hover:text-brand-orange transition-colors rounded-full hover:bg-white/10"
+                                aria-label="Pesquisar (Ctrl+K)"
+                                title="Pesquisar (Ctrl+K)"
                             >
-                                <Search size={18} />
-                                <span className="text-xs text-gray-400 group-hover:text-white/70 hidden xl:inline">Ctrl+K</span>
-                            </button>
-                            <button 
-                                onClick={() => setIsSearchOpen(true)}
-                                className="md:hidden p-2 text-white hover:text-brand-orange transition-colors"
-                            >
-                                <Search size={22} />
+                                <Search size={20} />
                             </button>
 
-                            <a href="#" className="hidden lg:flex items-center bg-brand-whatsapp hover:bg-brand-whatsapp-dark text-white text-sm font-bold py-2.5 px-5 rounded-full transition-all shadow-lg hover:shadow-brand-whatsapp/30 transform hover:-translate-y-0.5">
+                            <a href="#" className="hidden lg:flex items-center bg-brand-whatsapp hover:bg-brand-whatsapp-dark text-white text-sm font-bold py-2.5 px-5 rounded-full transition-all shadow-lg hover:shadow-brand-whatsapp/30 transform hover:-translate-y-0.5 whitespace-nowrap">
                                 <WhatsappIcon size={18} className="mr-2" />
                                 <span className="hidden xl:inline">{t('header.whatsapp')}</span>
                                 <span className="xl:hidden">WhatsApp</span>

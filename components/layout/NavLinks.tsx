@@ -14,9 +14,10 @@ interface NavLinksProps {
   links: NavLinkData[];
   onLinkClick?: () => void;
   isMobile?: boolean;
+  isScrolled?: boolean;
 }
 
-export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLinkClick, isMobile = false }) => {
+export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLinkClick, isMobile = false, isScrolled = false }) => {
     const currentHash = useRouter();
     const [hoveredLink, setHoveredLink] = useState<string | null>(null);
     const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
@@ -59,12 +60,12 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
                             onClick={(e) => handleMobileToggle(link.key, e)}
                             aria-current={active ? 'page' : undefined}
                             className={`
-                                relative px-4 py-4 lg:py-6 flex items-center justify-between lg:justify-start gap-1 text-sm font-bold tracking-wide transition-all duration-300
+                                relative px-3 py-4 lg:py-6 flex items-center justify-between lg:justify-start gap-1 text-sm font-bold tracking-wide transition-all duration-300 whitespace-nowrap
                                 ${isMobile ? 'w-full border-b border-white/5 hover:bg-white/5 rounded-lg' : ''}
                                 ${active ? 'text-brand-orange' : 'text-gray-300 hover:text-white'}
                             `}
                         >
-                            <span className="flex items-center gap-2">
+                            <span className="flex items-center gap-1.5">
                                 {link.text}
                             </span>
                             {isProducts && (
@@ -76,22 +77,22 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
                             
                             {/* Desktop Hover Underline */}
                             {!isMobile && (
-                                <span className={`absolute bottom-4 left-4 right-4 h-0.5 bg-brand-orange transform origin-left transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+                                <span className={`absolute bottom-4 left-3 right-3 h-0.5 bg-brand-orange transform origin-left transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
                             )}
                         </a>
 
-                        {/* DESKTOP MEGA MENU */}
+                        {/* DESKTOP MEGA MENU - FIXED POSITIONING */}
                         {!isMobile && isProducts && (
                             <div 
                                 className={`
-                                    absolute top-full left-1/2 -translate-x-1/2 w-[90vw] max-w-6xl 
+                                    fixed left-0 right-0 mx-auto w-[95vw] max-w-6xl 
                                     bg-white rounded-xl shadow-2xl border-t-4 border-brand-orange 
                                     transition-all duration-300 origin-top z-50 overflow-hidden
+                                    ${isScrolled ? 'top-[70px]' : 'top-[90px]'}
                                     ${isMegaMenuOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible pointer-events-none'}
                                 `}
-                                style={{ marginTop: '-10px' }}
                             >
-                                <div className="flex">
+                                <div className="flex h-full max-h-[70vh] overflow-y-auto">
                                     {/* Sidebar */}
                                     <div className="w-1/4 bg-gray-50 p-6 border-r border-gray-100">
                                         <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Categorias</h4>
@@ -112,7 +113,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
                                     </div>
 
                                     {/* Main Grid */}
-                                    <div className="w-3/4 p-8">
+                                    <div className="w-3/4 p-8 flex flex-col">
                                         <div className="flex justify-between items-end mb-6">
                                             <div>
                                                 <h3 className="text-xl font-bold text-brand-blue-dark">Nossos Produtos</h3>
@@ -131,15 +132,17 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
                                                 </a>
                                             ))}
                                         </div>
-                                        <div className="mt-8 bg-brand-blue-dark/5 rounded-lg p-4 flex items-center justify-between border border-brand-blue-dark/10">
-                                            <div className="flex items-center gap-3">
-                                                <div className="bg-brand-blue-dark text-white p-2 rounded-lg"><FileText size={20} /></div>
-                                                <div>
-                                                    <p className="text-sm font-bold text-brand-blue-dark">Catálogo Digital Completo</p>
-                                                    <p className="text-xs text-gray-500">Baixe nosso PDF técnico.</p>
+                                        <div className="mt-auto pt-8">
+                                            <div className="bg-brand-blue-dark/5 rounded-lg p-4 flex items-center justify-between border border-brand-blue-dark/10">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="bg-brand-blue-dark text-white p-2 rounded-lg"><FileText size={20} /></div>
+                                                    <div>
+                                                        <p className="text-sm font-bold text-brand-blue-dark">Catálogo Digital Completo</p>
+                                                        <p className="text-xs text-gray-500">Baixe nosso PDF técnico.</p>
+                                                    </div>
                                                 </div>
+                                                <a href="#/catalog" onClick={() => setHoveredLink(null)} className="text-xs font-bold bg-white border border-gray-200 px-4 py-2 rounded-lg hover:bg-brand-orange hover:text-white hover:border-brand-orange transition-all shadow-sm">Acessar</a>
                                             </div>
-                                            <a href="#/catalog" onClick={() => setHoveredLink(null)} className="text-xs font-bold bg-white border border-gray-200 px-4 py-2 rounded-lg hover:bg-brand-orange hover:text-white hover:border-brand-orange transition-all shadow-sm">Acessar</a>
                                         </div>
                                     </div>
                                 </div>
