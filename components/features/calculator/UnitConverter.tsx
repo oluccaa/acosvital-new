@@ -12,59 +12,32 @@ const UnitConverter: React.FC = () => {
     const [fromUnit, setFromUnit] = useState<string>('mm');
     const [toUnit, setToUnit] = useState<string>('in');
 
-    // Conversion Factors relative to a base unit (Length: mm, Weight: kg, Area: m², Pressure: bar)
     const factors: Record<Category, Record<string, number>> = {
-        length: {
-            mm: 1,
-            cm: 10,
-            m: 1000,
-            in: 25.4,
-            ft: 304.8
-        },
-        weight: {
-            kg: 1,
-            lb: 0.453592,
-            ton: 1000
-        },
-        area: {
-            m2: 1,
-            cm2: 0.0001,
-            ft2: 0.092903,
-            in2: 0.00064516
-        },
-        pressure: {
-            bar: 1,
-            psi: 0.0689476,
-            mpa: 10,
-            kgfcm2: 0.980665
-        }
+        length: { mm: 1, cm: 10, m: 1000, in: 25.4, ft: 304.8 },
+        weight: { kg: 1, lb: 0.453592, ton: 1000 },
+        area: { m2: 1, cm2: 0.0001, ft2: 0.092903, in2: 0.00064516 },
+        pressure: { bar: 1, psi: 0.0689476, mpa: 10, kgfcm2: 0.980665 }
     };
 
-    // Icons map
     const icons = {
-        length: <Ruler size={18} />,
-        weight: <Weight size={18} />,
-        area: <Box size={18} />,
-        pressure: <Gauge size={18} />
+        length: <Ruler size={16} />,
+        weight: <Weight size={16} />,
+        area: <Box size={16} />,
+        pressure: <Gauge size={16} />
     };
 
-    // Calculate Result
     const calculateResult = () => {
         const baseValue = amount * factors[category][fromUnit];
-        const result = baseValue / factors[category][toUnit];
-        return result;
+        return baseValue / factors[category][toUnit];
     };
 
-    // Handle Category Change
     const handleCategoryChange = (cat: Category) => {
         setCategory(cat);
-        // Set defaults for new category
         const keys = Object.keys(factors[cat]);
         setFromUnit(keys[0]);
         setToUnit(keys[1] || keys[0]);
     };
 
-    // Swap Units
     const handleSwap = () => {
         setFromUnit(toUnit);
         setToUnit(fromUnit);
@@ -73,109 +46,91 @@ const UnitConverter: React.FC = () => {
     const result = calculateResult();
 
     return (
-        <div className="max-w-4xl mx-auto bg-[#0f172a] border border-white/10 rounded-2xl p-6 sm:p-10 shadow-2xl">
-            <h3 className="text-white/80 font-bold mb-8 text-center text-lg uppercase tracking-widest">
+        <div className="max-w-2xl mx-auto bg-[#0f172a] border border-white/10 rounded-xl p-5 shadow-xl">
+            <h3 className="text-white/80 font-bold mb-4 text-center text-sm uppercase tracking-widest border-b border-white/5 pb-2">
                 {t('calculatorPage.converter.title')}
             </h3>
 
-            {/* Category Selector */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+            {/* Category Selector Compacto */}
+            <div className="grid grid-cols-4 gap-2 mb-6">
                 {(Object.keys(factors) as Category[]).map((cat) => (
                     <button
                         key={cat}
                         onClick={() => handleCategoryChange(cat)}
                         className={`
-                            flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 uppercase tracking-wide
+                            flex flex-col items-center justify-center gap-1 py-2 px-1 rounded-lg font-bold text-[10px] transition-all duration-200 uppercase
                             ${category === cat 
-                                ? 'bg-brand-orange text-white shadow-lg shadow-brand-orange/20 transform scale-105' 
+                                ? 'bg-brand-orange text-white shadow-md' 
                                 : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                             }
                         `}
                     >
                         {icons[cat]}
-                        {t(`calculatorPage.converter.categories.${cat}`)}
+                        <span>{t(`calculatorPage.converter.categories.${cat}`)}</span>
                     </button>
                 ))}
             </div>
 
             {/* Converter Form */}
-            <div className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-6 items-end">
+            <div className="flex flex-col md:flex-row gap-4 items-end">
                 
                 {/* FROM Section */}
-                <div className="space-y-4">
-                    <div>
-                        <label className="block text-xs text-brand-blue-light uppercase font-bold mb-2">
-                            {t('calculatorPage.converter.labels.value')}
-                        </label>
+                <div className="flex-1 w-full space-y-2">
+                    <label className="block text-[10px] text-gray-400 uppercase font-bold">
+                        {t('calculatorPage.converter.labels.value')} & {t('calculatorPage.converter.labels.from')}
+                    </label>
+                    <div className="flex gap-2">
                         <input 
                             type="number" 
                             value={amount} 
                             onChange={(e) => setAmount(parseFloat(e.target.value) || 0)} 
-                            className="w-full bg-[#1e293b] border border-white/10 rounded-xl p-4 text-white font-mono text-lg focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-all outline-none"
+                            className="w-1/2 bg-[#1e293b] border border-white/10 rounded-lg p-2 text-white font-mono text-sm outline-none h-10"
                         />
-                    </div>
-                    <div>
-                        <label className="block text-xs text-gray-500 uppercase font-bold mb-2">
-                            {t('calculatorPage.converter.labels.from')}
-                        </label>
                         <select 
                             value={fromUnit} 
                             onChange={(e) => setFromUnit(e.target.value)}
-                            className="w-full bg-[#1e293b] border border-white/10 rounded-xl p-4 text-white cursor-pointer hover:bg-[#243248] transition-colors outline-none appearance-none"
+                            className="w-1/2 bg-[#1e293b] border border-white/10 rounded-lg p-2 text-white text-xs outline-none h-10"
                         >
                             {Object.keys(factors[category]).map((unit) => (
-                                <option key={unit} value={unit}>
-                                    {t(`calculatorPage.converter.units.${unit}`)}
-                                </option>
+                                <option key={unit} value={unit}>{t(`calculatorPage.converter.units.${unit}`)}</option>
                             ))}
                         </select>
                     </div>
                 </div>
 
                 {/* Swap Button */}
-                <div className="flex justify-center md:pb-4">
-                    <button 
-                        onClick={handleSwap}
-                        className="p-3 rounded-full bg-white/5 text-brand-orange hover:bg-brand-orange hover:text-white transition-all duration-300 transform hover:rotate-180 shadow-lg"
-                        aria-label="Swap units"
-                    >
-                        <ArrowLeftRight size={24} />
-                    </button>
-                </div>
+                <button 
+                    onClick={handleSwap}
+                    className="p-2 mb-0.5 rounded-full bg-white/5 text-brand-orange hover:bg-brand-orange hover:text-white transition-all shadow-md flex-shrink-0"
+                >
+                    <ArrowLeftRight size={16} />
+                </button>
 
                 {/* TO Section */}
-                <div className="space-y-4">
-                    <div>
-                        <label className="block text-xs text-brand-blue-light uppercase font-bold mb-2">
-                            {t('calculatorPage.converter.labels.result')}
-                        </label>
-                        <div className="w-full bg-brand-blue-dark/50 border border-brand-blue-light/20 rounded-xl p-4 text-brand-orange font-mono text-xl font-bold flex items-center overflow-hidden">
+                <div className="flex-1 w-full space-y-2">
+                    <label className="block text-[10px] text-brand-blue-light uppercase font-bold">
+                        {t('calculatorPage.converter.labels.result')} & {t('calculatorPage.converter.labels.to')}
+                    </label>
+                    <div className="flex gap-2">
+                        <div className="w-1/2 bg-brand-blue-dark/50 border border-brand-blue-light/20 rounded-lg p-2 text-brand-orange font-mono text-sm font-bold flex items-center h-10 overflow-hidden">
                             {result.toLocaleString(undefined, { maximumFractionDigits: 4 })}
                         </div>
-                    </div>
-                    <div>
-                         <label className="block text-xs text-gray-500 uppercase font-bold mb-2">
-                            {t('calculatorPage.converter.labels.to')}
-                        </label>
                         <select 
                             value={toUnit} 
                             onChange={(e) => setToUnit(e.target.value)}
-                            className="w-full bg-[#1e293b] border border-white/10 rounded-xl p-4 text-white cursor-pointer hover:bg-[#243248] transition-colors outline-none appearance-none"
+                            className="w-1/2 bg-[#1e293b] border border-white/10 rounded-lg p-2 text-white text-xs outline-none h-10"
                         >
                             {Object.keys(factors[category]).map((unit) => (
-                                <option key={unit} value={unit}>
-                                    {t(`calculatorPage.converter.units.${unit}`)}
-                                </option>
+                                <option key={unit} value={unit}>{t(`calculatorPage.converter.units.${unit}`)}</option>
                             ))}
                         </select>
                     </div>
                 </div>
             </div>
-
-            {/* Formula Display (Simple) */}
-            <div className="mt-10 text-center">
-                <p className="text-xs text-gray-500 font-mono">
-                    1 {t(`calculatorPage.converter.units.${fromUnit}`)} = {(factors[category][fromUnit] / factors[category][toUnit]).toExponential(4)} {t(`calculatorPage.converter.units.${toUnit}`)}
+            
+            <div className="mt-4 pt-3 border-t border-white/5 text-center">
+                 <p className="text-[10px] text-gray-500 font-mono">
+                    1 {fromUnit} ≈ {(factors[category][fromUnit] / factors[category][toUnit]).toExponential(2)} {toUnit}
                 </p>
             </div>
         </div>

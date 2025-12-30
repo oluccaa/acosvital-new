@@ -16,7 +16,7 @@ const TablesPage = React.lazy(() => import('./pages/TablesPage'));
 const CalculatorPage = React.lazy(() => import('./pages/CalculatorPage'));
 
 const routes: { [key: string]: React.ComponentType } = {
-    '#/': HomePage,
+    '#/': CalculatorPage,
     '#/home': HomePage,
     '#/about': AboutPage,
     '#/products': ProductsPage,

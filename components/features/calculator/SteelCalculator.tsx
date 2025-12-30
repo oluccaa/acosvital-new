@@ -1,12 +1,14 @@
+
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
     Calculator, Circle, Square, Box, Layers, Disc, Grid, LayoutGrid, 
-    Cylinder, CornerDownRight, Package, Hammer, Construction, ChevronDown,
-    Printer, ShoppingCart, BoxSelect, RefreshCcw, Plus, Trash2, Ruler
+    Cylinder, CornerDownRight, ShoppingCart, BoxSelect, RefreshCcw, Plus, Trash2, Info, ChevronDown,
+    Filter, Split, Package, Printer, Share2, Copy
 } from 'lucide-react';
 import WhatsappIcon from '../../common/icons/WhatsappIcon';
-import MeasurementInput from '../../common/MeasurementInput';
+import MeasurementInput, { ForcedUnit } from '../../common/MeasurementInput';
+import Tooltip from '../../common/Tooltip';
 import { useSteelCalculator, ProductType } from '../../../hooks/useSteelCalculator';
 import { useEngineering, ProjectItem } from '../../../context/EngineeringContext';
 
@@ -17,33 +19,63 @@ const safeParseUI = (val: string | number): number => {
     return parseFloat(val.toString().replace(',', '.')) || 0;
 };
 
-// --- MAPA DE NORMAS TÉCNICAS ---
-const MATERIAL_SPECS: Record<string, string> = {
-    carbon: "Aço Carbono ASTM A36 / SAE 1020",
-    inox304: "Aço Inox AISI 304 / ASTM A276",
-    inox316: "Aço Inox AISI 316 / ASTM A276",
-    aluminum: "Alumínio Liga 5052 H34"
+// --- PRESETS DE ESPESSURA ---
+const COMMON_THICKNESSES = [
+    { label: '1/8"', val: '3,17' },
+    { label: '3/16"', val: '4,76' },
+    { label: '1/4"', val: '6,35' },
+    { label: '3/8"', val: '9,52' },
+    { label: '1/2"', val: '12,7' }
+];
+
+// --- DICIONÁRIO DE DESCRIÇÕES (TOOLTIPS) ---
+const DESCRIPTIONS: Record<string, string> = {
+    // Produtos
+    'plate': 'Chapas planas de aço (xadrez, lisas, perfuradas).',
+    'bar_round': 'Barras sólidas de seção circular.',
+    'bar_square': 'Barras sólidas de seção quadrada.',
+    'tube_round': 'Tubos industriais com costura ou sem costura.',
+    'fitting_elbow': 'Curvas de gomo (segmentadas) ou curvas prontas.',
+    'fitting_reducer': 'Peça de caldeiraria para união de diâmetros diferentes (Cone).',
+    'fitting_tee': 'Conexão em formato de T para derivação.',
+    'flange_square': 'Anéis cortados de chapas ou flanges planos.',
+    'tube_calendered': 'Tubo fabricado a partir do curvamento de chapas.',
+    'grating': 'Grades de piso para passarelas e plataformas.',
+    'expanded_metal': 'Chapa metálica cortada e esticada (losangos).',
+    
+    // Campos
+    'swd': 'Short Way of Design: Diagonal menor do losango.',
+    'strand': 'Largura do cordão (fio) da malha.',
+    'pitch': 'Distância entre centros das barras.',
+    'radius': 'Raio de centro da curva.',
+    'angle': 'Grau de abertura da curva ou gomo.'
 };
 
-// --- BIBLIOTECA DE PADRÕES DE CHAPA EXPANDIDA ---
+// --- CONSTANTES ---
+const MATERIAL_SPECS: Record<string, string> = {
+    carbon: "Aço Carbono",
+    inox304: "Inox 304",
+    inox316: "Inox 316",
+    aluminum: "Alumínio"
+};
+
 const EXPANDED_PATTERNS = [
-    { id: "xp-13", label: "XP-13 (Micro)", swd: 13, strand: 1.5, thickness: 1.5 },
-    { id: "gme-13", label: "GME-13 (Padrão)", swd: 13, strand: 2.0, thickness: 2.0 },
-    { id: "gme-20", label: "GME-20 (Industrial)", swd: 25, strand: 3.0, thickness: 2.65 },
-    { id: "gme-38", label: "GME-38 (Médio)", swd: 38, strand: 3.5, thickness: 3.0 },
-    { id: "gr-500", label: "GR-500 (Pesado)", swd: 50, strand: 5.0, thickness: 4.75 },
-    { id: "gr-700", label: "GR-700 (Extra Pesado)", swd: 70, strand: 6.0, thickness: 6.35 },
-    { id: "custom", label: "Personalizado / Outra Medida", swd: 0, strand: 0, thickness: 0 }
+    { id: "xp-13", label: "XP-13", swd: 13, strand: 1.5, thickness: 1.5 },
+    { id: "gme-13", label: "GME-13", swd: 13, strand: 2.0, thickness: 2.0 },
+    { id: "gme-20", label: "GME-20", swd: 25, strand: 3.0, thickness: 2.65 },
+    { id: "gme-38", label: "GME-38", swd: 38, strand: 3.5, thickness: 3.0 },
+    { id: "gr-500", label: "GR-500", swd: 50, strand: 5.0, thickness: 4.75 },
+    { id: "custom", label: "Outro", swd: 0, strand: 0, thickness: 0 }
 ];
 
 type TubeField = 'outerDiameter' | 'innerDiameter' | 'thickness';
 
 const MESH_OPTIONS = [
-    { id: "25-100", pitch: "25", label: "25x100mm - Leve (Econômica)" },
-    { id: "30-100", pitch: "30", label: "30x100mm - Padrão (Industrial)" },
-    { id: "30-50",  pitch: "30", label: "30x50mm - Reforçada (Tráfego)" },
-    { id: "34-38",  pitch: "34", label: "34x38mm - Malha Fechada (Segurança)" },
-    { id: "custom", pitch: "",   label: "Outra / Personalizada" }
+    { id: "25-100", pitch: "25", label: "25x100mm" },
+    { id: "30-100", pitch: "30", label: "30x100mm" },
+    { id: "30-50",  pitch: "30", label: "30x50mm" },
+    { id: "34-38",  pitch: "34", label: "34x38mm" },
+    { id: "custom", pitch: "",   label: "Outra" }
 ];
 
 const SteelCalculator: React.FC = () => {
@@ -53,8 +85,6 @@ const SteelCalculator: React.FC = () => {
         addToProject: addProjectItem, 
         removeFromProject, 
         clearProject,
-        sendToNesting,
-        sendToWelding,
         calculatorState,
         updateCalculatorField
     } = useEngineering();
@@ -66,6 +96,10 @@ const SteelCalculator: React.FC = () => {
     const [expandedPatternId, setExpandedPatternId] = useState<string>('gme-13');
     const [isCustomExpanded, setIsCustomExpanded] = useState<boolean>(false);
     const [editHistory, setEditHistory] = useState<TubeField[]>([]);
+    const [copied, setCopied] = useState(false);
+    
+    // Estado para forçar a unidade do input de espessura
+    const [thicknessUnitForce, setThicknessUnitForce] = useState<ForcedUnit | undefined>(undefined);
 
     const { 
         values, extras, totalWeight, unitWeight, engData, 
@@ -76,7 +110,7 @@ const SteelCalculator: React.FC = () => {
         calculate(selectedType);
     }, [calculatorState, extras, calculate, selectedType]);
 
-    // Lógica de Stack para Tubos (Círculo de Apollonius Simplificado)
+    // Lógica de Stack para Tubos (Cálculo automático de parede/diâmetro)
     const handleTubeInput = (field: TubeField, value: string) => {
         const currentValues = { ...calculatorState, [field]: value };
         let newHistory = editHistory.filter(f => f !== field);
@@ -145,12 +179,15 @@ const SteelCalculator: React.FC = () => {
 
     const renderTubeInput = (field: TubeField, label: string) => {
         const isAuto = calculatedField === field;
+        const isThickness = field === 'thickness';
+        
         return (
             <MeasurementInput 
                 value={values[field] || ''} 
                 onChange={(newValue) => handleTubeInput(field, newValue)}
                 label={label}
                 isAuto={isAuto}
+                forceUnit={isThickness ? thicknessUnitForce : undefined}
             />
         );
     };
@@ -187,51 +224,53 @@ const SteelCalculator: React.FC = () => {
 
     const isTubeType = ['tube_round', 'tube_calendered', 'flange_square', 'fitting_elbow'].includes(selectedType);
 
+    // Tipos que não usam espessura ou que tem lógica muito específica onde o preset não cabe
+    const typesWithoutThickness = ['bar_round', 'bar_square']; 
+
+    const handlePresetClick = (val: string) => {
+        handleInputChange('thickness', val);
+        // Força a unidade para 'mm' ao clicar no preset
+        setThicknessUnitForce({ unit: 'mm', timestamp: Date.now() });
+    };
+
     const CATEGORIES = {
-        raw: { id: 'raw', label: t('calculatorPage.categories.raw'), icon: <Package size={16} />, items: [
-            { id: 'plate', icon: <Layers size={20} />, label: t('calculatorPage.products.plate') },
-            { id: 'bar_round', icon: <Disc size={20} />, label: t('calculatorPage.products.barRound') },
-            { id: 'bar_square', icon: <Box size={20} />, label: t('calculatorPage.products.barSquare') },
+        raw: { id: 'raw', label: "Matéria Prima", items: [
+            { id: 'plate', icon: <Layers size={14} />, label: "Chapa" },
+            { id: 'bar_round', icon: <Disc size={14} />, label: "Barra Red." },
+            { id: 'bar_square', icon: <Box size={14} />, label: "Barra Quad." },
         ]},
-        piping: { id: 'piping', label: t('calculatorPage.categories.piping'), icon: <Hammer size={16} />, items: [
-            { id: 'tube_round', icon: <Circle size={20} />, label: t('calculatorPage.products.tubeRound') },
-            { id: 'fitting_elbow', icon: <CornerDownRight size={20} />, label: t('calculatorPage.products.fittingElbow') },
-            { id: 'flange_square', icon: <Square size={20} className="fill-current" />, label: t('calculatorPage.products.flangeSquare') },
-            { id: 'tube_calendered', icon: <Cylinder size={20} />, label: t('calculatorPage.products.tubeCalendered') },
+        piping: { id: 'piping', label: "Tubulação", items: [
+            { id: 'tube_round', icon: <Circle size={14} />, label: "Tubo Ind." },
+            { id: 'fitting_elbow', icon: <CornerDownRight size={14} />, label: "Curva" },
+            { id: 'fitting_reducer', icon: <Filter size={14} />, label: "Redução" },
+            { id: 'fitting_tee', icon: <Split size={14} />, label: "Tê" },
+            { id: 'flange_square', icon: <Square size={14} className="fill-current" />, label: "Anel" },
+            { id: 'tube_calendered', icon: <Cylinder size={14} />, label: "Tubo Cal." },
         ]},
-        structural: { id: 'structural', label: t('calculatorPage.categories.structural'), icon: <Construction size={16} />, items: [
-            { id: 'grating', icon: <Grid size={20} />, label: t('calculatorPage.products.grating') },
-            { id: 'expanded_metal', icon: <LayoutGrid size={20} />, label: t('calculatorPage.products.expandedMetal') },
+        structural: { id: 'structural', label: "Estrutural", items: [
+            { id: 'grating', icon: <Grid size={14} />, label: "Grade Piso" },
+            { id: 'expanded_metal', icon: <LayoutGrid size={14} />, label: "Expandida" },
         ]}
     };
 
     const generateTechnicalSpec = () => {
         const mat = MATERIAL_SPECS[values.material] || values.material;
         const fmt = (v: string, suffix: string = "mm") => v ? `${v}${suffix}` : "?";
-        let desc = "";
-        let finish = "";
-        if (extras.galvanized) finish = " | Acabamento: Galvanizado a Fogo";
-        if (extras.isFlattened && selectedType === 'expanded_metal') finish = " | Acabamento: Laminada (Achatada)";
-
+        
         switch(selectedType) {
-            case 'plate': desc = `Chapa ${mat} - Esp. ${fmt(values.thickness)} x Larg. ${fmt(values.width)} x Comp. ${fmt(values.length)}`; break;
-            case 'bar_round': desc = `Barra Redonda ${mat} - Diâmetro Ø ${fmt(values.outerDiameter)} x Comp. ${fmt(values.length)}`; break;
-            case 'bar_square': desc = `Barra Quadrada ${mat} - Bitola ${fmt(values.width)} x Comp. ${fmt(values.length)}`; break;
-            case 'tube_round': desc = `Tubo Industrial Redondo ${mat} - Ø Ext. ${fmt(values.outerDiameter)} x Parede ${fmt(values.thickness)} x Comp. ${fmt(values.length)}`; break;
-            case 'tube_calendered': desc = `Tubo Calandrado ${mat} - Ø Ext. ${fmt(values.outerDiameter)} x Parede ${fmt(values.thickness)} x Comp. ${fmt(values.length)} [Desenvolvimento: ${engData.devLength?.toFixed(1)}mm]`; break;
-            case 'flange_square': desc = `Anel/Disco de Chapa ${mat} - Ø Ext. ${fmt(values.outerDiameter)} x Ø Int. ${fmt(values.innerDiameter)} x Esp. ${fmt(values.thickness)}`; break;
-            case 'fitting_elbow': desc = `Curva de Gomo ${mat} - Ø ${fmt(values.outerDiameter)} x Parede ${fmt(values.thickness)} - Raio ${fmt(values.radius)} - Ângulo ${values.angle}°`; break;
-            case 'grating': 
-                 const meshName = meshId === 'custom' ? `Personalizada (${values.pitch}mm)` : MESH_OPTIONS.find(o => o.id === meshId)?.label.split('-')[0].trim();
-                 desc = `Grade de Piso Eletrofundida ${mat} - Malha ${meshName} - Barra Portante ${values.height}x${values.thickness}mm - Dim. Painel ${values.length}(vão) x ${values.width}mm`;
-                 break;
-            case 'expanded_metal':
-                 const patternName = isCustomExpanded ? 'Especial' : EXPANDED_PATTERNS.find(p => p.id === expandedPatternId)?.label.split('(')[0].trim();
-                 desc = `Chapa Expandida ${mat} - Padrão ${patternName} [SWD ${fmt(values.meshSWD)} x Cordão ${fmt(values.strandWidth)} x Esp. ${fmt(values.thickness)}] - Dim. ${fmt(values.width)} x ${fmt(values.length)}`;
-                 break;
-            default: desc = `Item Personalizado ${mat}`;
+            case 'plate': return `Chapa ${mat} - ${fmt(values.thickness)} x ${fmt(values.width)} x ${fmt(values.length)}`;
+            case 'bar_round': return `Barra Red. ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.length)}`;
+            case 'bar_square': return `Barra Quad. ${mat} - ${fmt(values.width)} x ${fmt(values.length)}`;
+            case 'tube_round': return `Tubo ${mat} - Ø ${fmt(values.outerDiameter)} x Parede ${fmt(values.thickness)} x ${fmt(values.length)}`;
+            case 'tube_calendered': return `Tubo Cal. ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} x ${fmt(values.length)}`;
+            case 'flange_square': return `Anel ${mat} - Ø Ext ${fmt(values.outerDiameter)} x Ø Int ${fmt(values.innerDiameter)} x ${fmt(values.thickness)}`;
+            case 'fitting_elbow': return `Curva Gomo ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} - R ${fmt(values.radius)} (${values.angle}°)`;
+            case 'fitting_reducer': return `Redução ${mat} - Ø Maior ${fmt(values.outerDiameter)} x Ø Menor ${fmt(values.innerDiameter)} x ${fmt(values.thickness)} x H ${fmt(values.length)}`;
+            case 'fitting_tee': return `Tê ${mat} - Ø ${fmt(values.outerDiameter)} x ${fmt(values.thickness)} - Corpo ${fmt(values.length)} / Deriv. ${fmt(values.height)}`;
+            case 'grating': return `Grade ${mat} - ${values.length}x${values.width} - Barra ${values.height}x${values.thickness}`;
+            case 'expanded_metal': return `Chapa Exp. ${mat} - ${values.width}x${values.length}`;
+            default: return `Item ${mat}`;
         }
-        return desc + finish;
     };
 
     const addItem = () => {
@@ -253,235 +292,379 @@ const SteelCalculator: React.FC = () => {
 
     const handleWhatsAppQuote = () => {
         if (projectItems.length === 0) return;
-        let message = "*Cotação Técnica - Aços Vital*\n\n";
+        let message = "*Cotação Aços Vital*\n\n";
         projectItems.forEach((item, index) => {
-            message += `*Item ${index + 1}:* ${item.specs}\n`;
-            message += `Qtd: ${item.quantity} | Peso Aprox: ${item.totalWeight > 0 ? item.totalWeight.toFixed(2) + ' kg' : '-'}\n\n`;
+            message += `*${index + 1}.* ${item.specs}\nQtd: ${item.quantity} | Peso: ${item.totalWeight.toFixed(2)}kg\n\n`;
         });
-        const grandTotal = projectItems.reduce((acc, i) => acc + i.totalWeight, 0);
-        if (grandTotal > 0) message += `*Peso Total do Projeto: ${grandTotal.toFixed(2)} kg*`;
+        message += `*Total: ${projectItems.reduce((acc, i) => acc + i.totalWeight, 0).toFixed(2)} kg*`;
         window.open(`https://wa.me/551147972352?text=${encodeURIComponent(message)}`, '_blank');
     };
 
-    const handleContextAction = (item: ProjectItem) => {
-        const isLinear = ['tube_round', 'bar_round', 'bar_square', 'tube_calendered'].includes(item.type);
-        const isWeldable = ['fitting_elbow', 'flange_square', 'tube_round', 'tube_calendered'].includes(item.type);
-
-        if (isLinear && item.meta?.length) {
-            sendToNesting({ items: [{ length: item.meta.length, quantity: item.quantity }] });
-        } else if (isWeldable && item.meta?.outerDiameter) {
-            const perimeter = Math.PI * item.meta.outerDiameter;
-            sendToWelding({ length: parseFloat((perimeter / 1000).toFixed(3)), thickness: item.meta.thickness });
-        }
+    const copyResult = () => {
+        navigator.clipboard.writeText(`${totalWeight.toFixed(2)} kg`);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
     };
 
     return (
-        <div className="max-w-6xl mx-auto font-sans space-y-8">
-            {/* SELETOR DE PRODUTO */}
-            <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-4 sm:p-6 shadow-xl print:hidden">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-brand-orange/20 rounded-lg text-brand-orange"><BoxSelect size={20} /></div>
-                    <div>
-                        <h3 className="text-white font-bold text-sm uppercase tracking-widest">{t('calculatorPage.selectProduct')}</h3>
-                        <p className="text-xs text-gray-400">Escolha o perfil para iniciar o cálculo</p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 font-sans">
+            
+            {/* 1. PAINEL ESQUERDO (CONTROLES) */}
+            <div className="lg:col-span-4 flex flex-col gap-4">
+                
+                {/* Product Grid - LISTA AGRUPADA (Full View) */}
+                <div className="bg-[#0f172a] border border-white/5 rounded-xl p-3 shadow-xl flex flex-col max-h-[450px]">
+                    <div className="flex justify-between items-center mb-2 px-1">
+                        <h3 className="text-white text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                            <BoxSelect size={12} className="text-brand-orange" /> Seleção de Item
+                        </h3>
+                        <button onClick={reset} className="text-gray-500 hover:text-white transition-colors" title="Resetar">
+                            <RefreshCcw size={12} />
+                        </button>
+                    </div>
+                    
+                    {/* Container com Scroll para todas as categorias */}
+                    <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar space-y-4">
+                        {(Object.values(CATEGORIES) as any[]).map((cat) => (
+                            <div key={cat.id}>
+                                <div className="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-2 pl-2 border-l-2 border-brand-orange/30">
+                                    {cat.label}
+                                </div>
+                                <div className="grid grid-cols-3 gap-2">
+                                    {cat.items.map((prod: any) => (
+                                        <button
+                                            key={prod.id}
+                                            onClick={() => setSelectedType(prod.id as ProductType)}
+                                            className={`
+                                                relative flex flex-col items-center justify-center gap-1 p-2 rounded-lg border transition-all duration-200 group min-h-[60px]
+                                                ${selectedType === prod.id 
+                                                    ? 'bg-brand-blue-dark border-brand-orange text-white shadow-[0_0_10px_rgba(234,97,0,0.2)]' 
+                                                    : 'bg-[#1e293b]/50 border-white/5 text-gray-400 hover:bg-[#1e293b] hover:border-white/20 hover:text-white'
+                                                }
+                                            `}
+                                        >
+                                            <div className={`${selectedType === prod.id ? 'text-brand-orange' : 'text-gray-500 group-hover:text-white'} transition-colors transform scale-90`}>
+                                                {React.cloneElement(prod.icon, { size: 16 })}
+                                            </div>
+                                            <span className="text-[8px] font-bold uppercase text-center leading-tight w-full truncate px-0.5">
+                                                {prod.label}
+                                            </span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {(Object.values(CATEGORIES) as any[]).map((cat) => (
-                        <div key={cat.id} className="space-y-3">
-                            <div className="flex items-center gap-2 text-brand-blue-light/60 px-1">
-                                {cat.icon}
-                                <span className="text-[10px] font-bold uppercase tracking-widest">{cat.label}</span>
-                                <div className="h-px flex-1 bg-white/5"></div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-2">
-                                {cat.items.map((prod: any) => (
-                                    <button key={prod.id} onClick={() => setSelectedType(prod.id as ProductType)}
-                                        className={`group flex flex-col items-center justify-center py-3 px-2 rounded-xl border transition-all duration-200 min-h-[80px] ${selectedType === prod.id ? 'bg-brand-blue-dark border-brand-orange text-white ring-1 ring-brand-orange shadow-lg shadow-brand-blue-dark/50' : 'bg-white/5 border-transparent text-gray-400 hover:bg-white/10 hover:text-white'}`}>
-                                        <div className={`mb-1.5 transition-transform duration-200 ${selectedType === prod.id ? 'text-brand-orange scale-110' : 'group-hover:text-white'}`}>{prod.icon}</div>
-                                        <span className="text-[9px] font-bold uppercase text-center leading-tight w-full truncate px-1">{prod.label}</span>
-                                    </button>
-                                ))}
+
+                {/* Inputs Section - Compacto */}
+                <div className="bg-[#0f172a] border border-white/5 rounded-xl p-4 shadow-xl flex-1">
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-white text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                            <Calculator size={12} className="text-brand-blue-light" /> Parâmetros
+                        </h3>
+                        <div className="relative w-32">
+                             <select value={values.material} onChange={(e) => handleInputChange('material', e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded text-[9px] uppercase font-bold text-white py-1 pl-2 pr-6 outline-none appearance-none cursor-pointer hover:border-brand-orange/50 transition-colors h-7">
+                                <option value="carbon">Aço Carbono</option>
+                                <option value="inox304">Inox 304</option>
+                                <option value="inox316">Inox 316</option>
+                                <option value="aluminum">Alumínio</option>
+                            </select>
+                            <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={10} />
+                        </div>
+                    </div>
+
+                    <div className="space-y-3">
+                        <div className="grid grid-cols-2 gap-3">
+                             {(selectedType === 'plate' || selectedType === 'bar_square' || selectedType === 'flange_square') && (
+                                <MeasurementInput value={values.width} onChange={(v) => handleInputChange('width', v)} label={(selectedType === 'flange_square' || selectedType === 'bar_square') ? "Lado" : "Largura"} />
+                            )}
+
+                             {selectedType === 'grating' && (
+                                <>
+                                    <div className="col-span-2 grid grid-cols-2 gap-3 bg-[#1e293b]/50 p-2 rounded-lg border border-white/5">
+                                         <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label="Comp. (Vão)" />
+                                         <MeasurementInput value={values.width} onChange={(v) => handleInputChange('width', v)} label="Largura" />
+                                    </div>
+                                    <MeasurementInput value={values.height} onChange={(v) => handleInputChange('height', v)} label="Alt. Barra" />
+                                    <MeasurementInput 
+                                        value={values.thickness} 
+                                        onChange={(v) => handleInputChange('thickness', v)} 
+                                        label="Esp. Barra" 
+                                        forceUnit={thicknessUnitForce}
+                                    />
+                                    <div className="col-span-2">
+                                        <div className="flex items-center gap-1 mb-0.5">
+                                            <label className="text-[10px] text-gray-400 uppercase font-bold">Malha</label>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <div className="relative flex-1">
+                                                <select value={meshId} onChange={handleMeshSelect} className="w-full bg-[#1e293b] border border-white/10 rounded-md py-1.5 pl-2 text-white text-[10px] outline-none appearance-none h-8">
+                                                    {MESH_OPTIONS.map(opt => (<option key={opt.id} value={opt.id}>{opt.label}</option>))}
+                                                </select>
+                                                <ChevronDown size={10} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"/>
+                                            </div>
+                                            {meshId === 'custom' && (<MeasurementInput value={values.pitch} onChange={(v) => handleInputChange('pitch', v)} label="" placeholder="mm" className="flex-1" />)}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
+                            {selectedType === 'expanded_metal' && (
+                                <>
+                                    <div className="col-span-2">
+                                        <label className="text-[10px] text-gray-400 uppercase font-bold mb-0.5 block">Malha</label>
+                                        <div className="relative">
+                                            <select value={expandedPatternId} onChange={handleExpandedPatternSelect} className="w-full bg-[#1e293b] border border-white/10 rounded-md py-1.5 pl-2 text-white text-[10px] outline-none appearance-none mb-2 h-8">
+                                                {EXPANDED_PATTERNS.map(opt => (<option key={opt.id} value={opt.id}>{opt.label}</option>))}
+                                            </select>
+                                            <ChevronDown size={10} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none -mt-1"/>
+                                        </div>
+                                    </div>
+                                    {isCustomExpanded && (
+                                        <>
+                                            <MeasurementInput 
+                                                value={values.thickness} 
+                                                onChange={(v) => handleInputChange('thickness', v)} 
+                                                label="Espessura" 
+                                                forceUnit={thicknessUnitForce}
+                                            />
+                                            <MeasurementInput value={values.strandWidth} onChange={(v) => handleInputChange('strandWidth', v)} label="Cordão" helpText={DESCRIPTIONS['strand']} />
+                                            <MeasurementInput value={values.meshSWD} onChange={(v) => handleInputChange('meshSWD', v)} label="SWD" helpText={DESCRIPTIONS['swd']} />
+                                        </>
+                                    )}
+                                    <MeasurementInput value={values.width} onChange={(v) => handleInputChange('width', v)} label="Largura" />
+                                    <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label="Comprimento" />
+                                </>
+                            )}
+
+                             {(selectedType !== 'flange_square' && selectedType !== 'fitting_elbow' && selectedType !== 'grating' && selectedType !== 'expanded_metal' && selectedType !== 'fitting_reducer' && selectedType !== 'fitting_tee') && (
+                                <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label="Comprimento" />
+                            )}
+
+                            {isTubeType && (
+                                <div className="col-span-2 grid grid-cols-2 gap-3 bg-[#1e293b]/50 p-2 rounded-lg border border-white/5 relative">
+                                    <div className="absolute -top-1.5 right-2 text-[8px] bg-brand-orange text-white px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider">Auto Calc</div>
+                                    {renderTubeInput('outerDiameter', "Ø Externo")}{renderTubeInput('innerDiameter', "Ø Interno")}{renderTubeInput('thickness', "Parede")}
+                                </div>
+                            )}
+
+                            {selectedType === 'bar_round' && (<MeasurementInput value={values.outerDiameter} onChange={(v) => handleInputChange('outerDiameter', v)} label="Diâmetro" />)}
+                            
+                            {selectedType === 'fitting_elbow' && (
+                                <>
+                                    <MeasurementInput value={values.radius} onChange={(v) => handleInputChange('radius', v)} label="Raio Centro" helpText={DESCRIPTIONS['radius']} />
+                                    <div>
+                                        <div className="flex items-center gap-1 mb-0.5">
+                                            <label className="text-[10px] text-gray-400 uppercase font-bold">Ângulo</label>
+                                            <Tooltip text={DESCRIPTIONS['angle']} />
+                                        </div>
+                                        <input type="text" value={values.angle} onChange={(e) => handleInputChange('angle', e.target.value)} className="w-full bg-[#1e293b] border border-white/10 rounded-md py-1.5 px-2 text-white text-xs outline-none focus:border-brand-orange transition-colors h-8" />
+                                    </div>
+                                </>
+                            )}
+
+                             {selectedType === 'fitting_reducer' && (
+                                <>
+                                    <MeasurementInput value={values.outerDiameter} onChange={(v) => handleInputChange('outerDiameter', v)} label="Ø Maior (Ext)" />
+                                    <MeasurementInput value={values.innerDiameter} onChange={(v) => handleInputChange('innerDiameter', v)} label="Ø Menor (Ext)" />
+                                    <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label="Altura" />
+                                    <MeasurementInput 
+                                        value={values.thickness} 
+                                        onChange={(v) => handleInputChange('thickness', v)} 
+                                        label="Espessura" 
+                                        forceUnit={thicknessUnitForce}
+                                    />
+                                </>
+                            )}
+
+                            {selectedType === 'fitting_tee' && (
+                                <>
+                                    <MeasurementInput value={values.outerDiameter} onChange={(v) => handleInputChange('outerDiameter', v)} label="Ø Corpo (Ext)" />
+                                    <MeasurementInput 
+                                        value={values.thickness} 
+                                        onChange={(v) => handleInputChange('thickness', v)} 
+                                        label="Espessura" 
+                                        forceUnit={thicknessUnitForce}
+                                    />
+                                    <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label="Comp. Corpo" />
+                                    <MeasurementInput value={values.height} onChange={(v) => handleInputChange('height', v)} label="Comp. Derivação" />
+                                </>
+                            )}
+
+                            {(selectedType === 'plate') && (
+                                <div className="col-span-2">
+                                    <MeasurementInput 
+                                        value={values.thickness} 
+                                        onChange={(v) => handleInputChange('thickness', v)} 
+                                        label="Espessura" 
+                                        forceUnit={thicknessUnitForce}
+                                    />
+                                </div>
+                            )}
+
+                            {/* PRESETS DE ESPESSURA - EXIBIDO PARA TODOS OS TIPOS QUE USAM ESPESSURA/PAREDE */}
+                            {(!typesWithoutThickness.includes(selectedType) && !isCustomExpanded) && (
+                                <div className="col-span-2 flex gap-1.5 flex-wrap">
+                                    {COMMON_THICKNESSES.map((t) => (
+                                        <button 
+                                            key={t.label} 
+                                            onClick={() => handlePresetClick(t.val)}
+                                            className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-gray-400 hover:text-white hover:bg-white/10 hover:border-brand-orange/30 transition-all"
+                                        >
+                                            {t.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+
+                            {(selectedType !== 'plate' && !isTubeType && !typesWithoutThickness.includes(selectedType) && !['fitting_reducer', 'fitting_tee', 'grating', 'expanded_metal'].includes(selectedType)) && (
+                                <MeasurementInput 
+                                    value={values.thickness} 
+                                    onChange={(v) => handleInputChange('thickness', v)} 
+                                    label="Espessura" 
+                                    forceUnit={thicknessUnitForce}
+                                />
+                            )}
+                        </div>
+
+                        <div className="pt-3 border-t border-white/5">
+                            <label className="text-[10px] text-gray-400 uppercase font-bold mb-0.5 block">Quantidade</label>
+                            <div className="flex items-center bg-[#1e293b] border border-white/10 rounded-md p-0.5 h-8">
+                                <input type="number" value={values.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} min="1" className="flex-1 bg-transparent px-2 text-white text-xs font-bold outline-none h-full" />
+                                <span className="text-gray-500 text-[10px] px-2 border-l border-white/5 h-full flex items-center">UN</span>
                             </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
             </div>
 
-            {/* ÁREA DE CÁLCULO */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 print:hidden">
-                <div className="lg:col-span-7 space-y-6">
-                    <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-4 sm:p-6 shadow-xl h-full">
-                        <div className="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
-                             <h3 className="text-white font-bold text-sm uppercase tracking-widest flex items-center gap-2">
-                                <Calculator size={16} className="text-brand-blue-light" /> Parâmetros
-                            </h3>
-                             <button onClick={reset} className="text-xs text-gray-500 hover:text-white flex items-center gap-1 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5">
-                                <RefreshCcw size={12} /> {t('calculatorPage.clear')}
-                            </button>
-                        </div>
-                        
-                        <div className="space-y-6">
-                            <div>
-                                <label className="input-label-lg">{t('calculatorPage.selectMaterial')}</label>
-                                <div className="relative">
-                                    <select value={values.material} onChange={(e) => handleInputChange('material', e.target.value)} className="input-field-lg w-full appearance-none cursor-pointer">
-                                        <option value="carbon">{t('calculatorPage.materials.carbon')}</option>
-                                        <option value="inox304">{t('calculatorPage.materials.inox304')}</option>
-                                        <option value="inox316">{t('calculatorPage.materials.inox316')}</option>
-                                        <option value="aluminum">{t('calculatorPage.materials.aluminum')}</option>
-                                    </select>
-                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={16} />
+            {/* 2. PAINEL DIREITO (RESULTADOS E LISTA) */}
+            <div className="lg:col-span-8 flex flex-col gap-4">
+                
+                {/* Cartão "Digital Twin" de Resultado - Compacto */}
+                <div className="bg-brand-blue-dark rounded-xl p-5 relative overflow-hidden shadow-2xl border border-white/5 group min-h-[160px] flex flex-col justify-between">
+                    
+                    {/* Background Effects */}
+                    <div className="absolute right-0 top-0 w-48 h-48 bg-brand-orange/10 rounded-full blur-3xl -mr-12 -mt-12 pointer-events-none"></div>
+                    <div className="absolute left-0 bottom-0 w-32 h-32 bg-brand-blue-light/10 rounded-full blur-3xl -ml-8 -mb-8 pointer-events-none"></div>
+
+                    <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-4">
+                        <div className="w-full">
+                             <div className="flex justify-between items-start">
+                                 <div>
+                                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-brand-orange text-[9px] font-bold uppercase tracking-widest mb-2 backdrop-blur-sm">
+                                        <Info size={10} /> Estimativa
+                                    </span>
+                                    <div className="flex items-baseline gap-2 group/weight cursor-pointer" onClick={copyResult} title="Clique para copiar">
+                                        <span className="text-5xl md:text-6xl font-mono font-bold text-white tracking-tighter tabular-nums leading-none">
+                                            {totalWeight > 0 ? totalWeight.toFixed(2) : '0.00'}
+                                        </span>
+                                        <span className="text-lg md:text-xl text-white/50 font-medium">kg</span>
+                                        {copied && <span className="text-xs text-green-400 font-bold animate-pulse ml-2">Copiado!</span>}
+                                    </div>
+                                 </div>
+                             </div>
+
+                            <div className="mt-3 flex flex-wrap gap-3 text-[10px] font-medium text-blue-200/60">
+                                <div className="flex items-center gap-1.5 bg-black/20 px-2 py-1 rounded border border-white/5">
+                                    <span className="text-brand-orange uppercase">Unit:</span> {unitWeight.toFixed(2)} kg
                                 </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {(selectedType === 'plate' || selectedType === 'bar_square' || selectedType === 'flange_square') && (
-                                    <MeasurementInput 
-                                        value={values.width} 
-                                        onChange={(v) => handleInputChange('width', v)} 
-                                        label={(selectedType === 'flange_square' || selectedType === 'bar_square') ? t('calculatorPage.inputs.side') : t('calculatorPage.inputs.width')}
-                                    />
-                                )}
-                                
-                                {selectedType === 'grating' && (
-                                    <>
-                                        <div className="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/5 p-4 rounded-xl border border-white/5 mb-2">
-                                             <div className="col-span-1 sm:col-span-2 text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-[-10px] flex items-center gap-1">
-                                                <Ruler size={12} /> Dimensões da Peça
-                                             </div>
-                                             <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label="Comprimento (Vão/Portante)" />
-                                             <MeasurementInput value={values.width} onChange={(v) => handleInputChange('width', v)} label="Largura (Sentido Travessa)" />
-                                        </div>
-                                        <MeasurementInput value={values.height} onChange={(v) => handleInputChange('height', v)} label="Altura da Barra (h)" />
-                                        <MeasurementInput value={values.thickness} onChange={(v) => handleInputChange('thickness', v)} label="Espessura da Barra (e)" />
-                                        <div className="col-span-1 sm:col-span-2">
-                                            <label className="input-label">Passo da Malha</label>
-                                            <div className="grid grid-cols-2 gap-2">
-                                                <div className="relative">
-                                                    <select value={meshId} onChange={handleMeshSelect} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-3 pl-3 pr-8 text-white text-sm outline-none appearance-none">
-                                                        {MESH_OPTIONS.map(opt => (<option key={opt.id} value={opt.id}>{opt.label}</option>))}
-                                                    </select>
-                                                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={14} />
-                                                </div>
-                                                {meshId === 'custom' && (<MeasurementInput value={values.pitch} onChange={(v) => handleInputChange('pitch', v)} label="" placeholder="mm" />)}
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
-                                
-                                {selectedType === 'expanded_metal' && (
-                                    <>
-                                        <div className="col-span-1 sm:col-span-2">
-                                            <label className="input-label-lg">Malha / Modelo</label>
-                                            <div className="relative">
-                                                <select value={expandedPatternId} onChange={handleExpandedPatternSelect} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-3 pl-3 pr-8 text-white text-sm outline-none appearance-none cursor-pointer">
-                                                    {EXPANDED_PATTERNS.map(opt => (<option key={opt.id} value={opt.id}>{opt.label}</option>))}
-                                                </select>
-                                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={14} />
-                                            </div>
-                                        </div>
-                                        {isCustomExpanded ? (
-                                                <><MeasurementInput value={values.thickness} onChange={(v) => handleInputChange('thickness', v)} label="Espessura (e)" /><MeasurementInput value={values.strandWidth} onChange={(v) => handleInputChange('strandWidth', v)} label="Cordão (c)" /><MeasurementInput value={values.meshSWD} onChange={(v) => handleInputChange('meshSWD', v)} label="Passo SWD (Centro)" /></>
-                                            ) : (
-                                                <div className="col-span-1 sm:col-span-2 grid grid-cols-3 gap-3">
-                                                    <div className="opacity-70"><label className="text-[10px] text-gray-500 font-bold uppercase block mb-1">Espessura</label><div className="bg-black/20 p-2 rounded-lg text-white text-xs">{values.thickness} mm</div></div>
-                                                    <div className="opacity-70"><label className="text-[10px] text-gray-500 font-bold uppercase block mb-1">Cordão</label><div className="bg-black/20 p-2 rounded-lg text-white text-xs">{values.strandWidth} mm</div></div>
-                                                    <div className="opacity-70"><label className="text-[10px] text-gray-500 font-bold uppercase block mb-1">Passo SWD</label><div className="bg-black/20 p-2 rounded-lg text-white text-xs">{values.meshSWD} mm</div></div>
-                                                </div>
-                                            )}
-                                        <MeasurementInput value={values.width} onChange={(v) => handleInputChange('width', v)} label="Largura da Peça" />
-                                        <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label="Comprimento" />
-                                    </>
-                                )}
-                                
-                                {(selectedType !== 'flange_square' && selectedType !== 'fitting_elbow' && selectedType !== 'grating' && selectedType !== 'expanded_metal') && (
-                                    <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label={t('calculatorPage.inputs.length')} />
-                                )}
-
-                                {isTubeType && (
-                                    <div className="col-span-1 sm:col-span-2 space-y-4 bg-white/5 p-4 rounded-xl border border-white/5">
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{renderTubeInput('outerDiameter', t('calculatorPage.inputs.outerDiameter'))}{renderTubeInput('innerDiameter', t('calculatorPage.inputs.innerDiameter'))}</div>
-                                        {renderTubeInput('thickness', t('calculatorPage.inputs.thickness'))}
+                                {engData.surfaceArea && (
+                                    <div className="flex items-center gap-1.5 bg-black/20 px-2 py-1 rounded border border-white/5">
+                                        <span className="text-brand-orange uppercase">Área:</span> {engData.surfaceArea.toFixed(2)} m²
                                     </div>
                                 )}
-
-                                {selectedType === 'bar_round' && (<MeasurementInput value={values.outerDiameter} onChange={(v) => handleInputChange('outerDiameter', v)} label={t('calculatorPage.inputs.outerDiameter')} />)}
-                                {selectedType === 'fitting_elbow' && (
-                                    <>
-                                        <MeasurementInput value={values.radius} onChange={(v) => handleInputChange('radius', v)} label={t('calculatorPage.inputs.radius')} />
-                                        <div><label className="input-label">{t('calculatorPage.inputs.angle')}</label><input type="text" value={values.angle} onChange={(e) => handleInputChange('angle', e.target.value)} className="input-field" /></div>
-                                    </>
-                                )}
-                                {selectedType === 'plate' && (<MeasurementInput value={values.thickness} onChange={(v) => handleInputChange('thickness', v)} label={t('calculatorPage.inputs.thickness')} />)}
-                                
-                                <div className="col-span-1 sm:col-span-2">
-                                    <label className="input-label">{t('calculatorPage.inputs.quantity')}</label>
-                                    <input type="number" value={values.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} min="1" className="input-field py-3 text-lg" />
-                                </div>
                             </div>
                         </div>
+
+                        <button 
+                            type="button" 
+                            onClick={addItem} 
+                            disabled={totalWeight <= 0}
+                            className="w-full md:w-auto bg-brand-orange hover:bg-white hover:text-brand-orange text-white font-bold py-3 px-6 rounded-lg shadow-lg shadow-brand-orange/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase tracking-wider text-xs whitespace-nowrap"
+                        >
+                            <Plus size={16} /> Adicionar
+                        </button>
                     </div>
                 </div>
 
-                <div className="lg:col-span-5 space-y-6">
-                    <div className="bg-brand-blue-dark rounded-2xl p-6 border border-brand-blue-light/20 shadow-lg">
-                         <span className="text-[10px] text-brand-blue-light uppercase font-bold mb-1 block">Peso Total Estimado</span>
-                         <div className="flex items-baseline gap-2 mb-4">
-                             <span className="text-4xl font-mono font-bold text-white">{totalWeight > 0 ? totalWeight.toFixed(2) : '0.00'}</span>
-                             <span className="text-lg text-white/50 font-medium">kg</span>
-                         </div>
+                {/* Lista de Materiais - Data Grid Compacto */}
+                <div className="bg-[#0f172a] border border-white/5 rounded-xl shadow-xl flex-1 flex flex-col overflow-hidden min-h-[300px]">
+                    <div className="px-4 py-3 border-b border-white/5 bg-[#1e293b]/50 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div>
+                            <h3 className="font-bold text-white flex items-center gap-2 uppercase text-xs tracking-wide">
+                                <ShoppingCart size={14} className="text-brand-orange" /> Lista de Materiais
+                            </h3>
+                        </div>
+                        <div className="flex gap-1.5">
+                             <button className="text-gray-400 hover:text-white p-1.5 rounded hover:bg-white/10 transition-colors" title="Imprimir">
+                                <Printer size={14} />
+                             </button>
+                             <button className="text-gray-400 hover:text-white p-1.5 rounded hover:bg-white/10 transition-colors" title="Compartilhar">
+                                <Share2 size={14} />
+                             </button>
+                             <div className="w-px h-5 bg-white/10 mx-1 self-center"></div>
+                             <button onClick={clearProject} className="text-red-400 hover:text-red-300 flex items-center gap-1 px-2 py-1 rounded hover:bg-red-500/10 transition-colors text-[10px] font-bold uppercase">
+                                <Trash2 size={12} /> Limpar
+                            </button>
+                        </div>
                     </div>
-                    <button type="button" onClick={addItem} disabled={totalWeight <= 0}
-                        className="w-full bg-brand-orange text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:bg-brand-orange-dark transition-all disabled:opacity-30 flex items-center justify-center gap-2 text-sm uppercase">
-                        <Plus size={18} /> {t('calculatorPage.project.add')}
-                    </button>
-                </div>
-            </div>
 
-            {/* LISTA DE PROJETO */}
-            <div className="bg-[#0f172a] border border-white/10 rounded-2xl shadow-lg overflow-hidden">
-                <div className="p-5 border-b border-white/10 bg-white/5 flex items-center justify-between">
-                    <h3 className="font-bold text-white flex items-center gap-2 uppercase text-sm"><ShoppingCart size={18} /> {t('calculatorPage.project.title')}</h3>
-                    <button onClick={clearProject} className="text-white/50 hover:text-red-400"><Trash2 size={18} /></button>
-                </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm min-w-[500px]">
-                        <thead className="bg-white/5 text-xs uppercase text-white font-bold border-b border-white/10">
-                            <tr><th className="p-4">Item</th><th className="p-4 text-center">Qtd</th><th className="p-4 text-right">Peso (kg)</th><th className="p-4 text-center">Ação</th></tr>
-                        </thead>
-                        <tbody className="divide-y divide-white/5">
-                            {projectItems.length === 0 ? (
-                                <tr><td colSpan={4} className="p-12 text-center text-gray-500 italic">{t('calculatorPage.project.empty')}</td></tr>
-                            ) : (
-                                projectItems.map((item) => (
-                                    <tr key={item.id} className="hover:bg-white/5 transition-colors group">
-                                        <td className="p-4">
-                                            <div className="font-bold text-white">{item.specs}</div>
-                                            <div className="flex gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button onClick={() => handleContextAction(item)} className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-1 rounded border border-blue-500/30">Otimizar/Estimar</button>
-                                            </div>
-                                        </td>
-                                        <td className="p-4 text-center text-gray-300 font-bold">{item.quantity}</td>
-                                        <td className="p-4 text-right font-mono font-bold text-white">{item.totalWeight.toFixed(2)}</td>
-                                        <td className="p-4 text-center"><button onClick={() => removeFromProject(item.id)} className="text-gray-500 hover:text-red-500"><Trash2 size={16} /></button></td>
+                    <div className="flex-1 overflow-auto max-h-[400px] scrollbar-thin scrollbar-thumb-gray-600 p-0">
+                        {projectItems.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center h-48 text-gray-500">
+                                <Package size={32} className="mb-2 opacity-20" />
+                                <p className="text-xs font-medium">Nenhum item adicionado.</p>
+                            </div>
+                        ) : (
+                            <table className="w-full text-left border-collapse">
+                                <thead className="bg-[#1e293b] text-gray-400 font-bold text-[9px] uppercase tracking-wider sticky top-0 z-10 shadow-sm">
+                                    <tr>
+                                        <th className="px-4 py-2 border-b border-white/5">Item</th>
+                                        <th className="px-4 py-2 border-b border-white/5 text-center">Qtd</th>
+                                        <th className="px-4 py-2 border-b border-white/5 text-right">Peso</th>
+                                        <th className="px-4 py-2 border-b border-white/5 w-8"></th>
                                     </tr>
-                                ))
-                            )}
-                        </tbody>
-                        {projectItems.length > 0 && (
-                            <tfoot>
-                                <tr><td colSpan={2} className="p-4 text-right text-gray-400 uppercase text-xs">Total</td><td className="p-4 text-right text-brand-orange text-xl font-bold">{projectItems.reduce((acc, i) => acc + i.totalWeight, 0).toFixed(2)} kg</td><td></td></tr>
-                            </tfoot>
+                                </thead>
+                                <tbody className="divide-y divide-white/5">
+                                    {projectItems.map((item, idx) => (
+                                        <tr key={item.id} className="hover:bg-white/5 transition-colors group">
+                                            <td className="px-4 py-2.5">
+                                                <div className="font-bold text-gray-200 text-[11px] leading-tight">{idx + 1}. {item.type.toUpperCase().replace('_', ' ')}</div>
+                                                <div className="text-[9px] text-gray-500 mt-0.5 font-mono leading-tight">{item.specs}</div>
+                                            </td>
+                                            <td className="px-4 py-2.5 text-center text-xs font-medium text-gray-400">{item.quantity}</td>
+                                            <td className="px-4 py-2.5 text-right font-mono text-xs font-bold text-brand-blue-light">
+                                                {item.totalWeight.toFixed(2)} <span className="text-[9px] text-gray-600 font-normal">kg</span>
+                                            </td>
+                                            <td className="px-4 py-2.5 text-center">
+                                                <button onClick={() => removeFromProject(item.id)} className="text-gray-600 hover:text-red-400 transition-colors p-1 rounded hover:bg-red-500/10">
+                                                    <Trash2 size={12} />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         )}
-                    </table>
-                </div>
-                {projectItems.length > 0 && (
-                    <div className="p-4 border-t border-white/10 flex flex-col sm:flex-row gap-4 justify-center">
-                        <button onClick={handleWhatsAppQuote} className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2"><WhatsappIcon size={20} /> Cotar no WhatsApp</button>
-                        <button onClick={() => window.print()} className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2"><Printer size={20} /> Imprimir</button>
                     </div>
-                )}
+
+                    {projectItems.length > 0 && (
+                        <div className="p-4 bg-[#1e293b]/30 border-t border-white/5 flex justify-between items-center gap-4">
+                            <div>
+                                <span className="text-[9px] text-gray-500 uppercase font-bold tracking-widest block">Total</span>
+                                <div className="text-2xl font-bold text-white leading-none">
+                                    {projectItems.reduce((acc, i) => acc + i.totalWeight, 0).toFixed(2)} <span className="text-xs text-gray-500 font-medium">kg</span>
+                                </div>
+                            </div>
+                            <button onClick={handleWhatsAppQuote} className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-2 px-4 rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-1.5 text-xs uppercase tracking-wide">
+                                <WhatsappIcon size={16} /> <span className="hidden sm:inline">Solicitar Cotação</span>
+                            </button>
+                        </div>
+                    )}
+                </div>
+
             </div>
         </div>
     );

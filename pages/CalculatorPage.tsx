@@ -1,10 +1,11 @@
+
 import React from 'react';
 import SteelCalculator from '../components/features/calculator/SteelCalculator';
 import UnitConverter from '../components/features/calculator/UnitConverter';
 import LinearNesting from '../components/features/calculator/LinearNesting';
 import WeldingCalculator from '../components/features/calculator/WeldingCalculator';
 import { useTranslation } from 'react-i18next';
-import { Calculator, ArrowLeftRight, Scissors, Flame, Info } from 'lucide-react';
+import { Calculator, ArrowLeftRight, Scissors, Flame, Settings, Box } from 'lucide-react';
 import { EngineeringProvider, useEngineering, TabType } from '../context/EngineeringContext';
 
 // Componente Interno para consumir o contexto
@@ -13,10 +14,10 @@ const CalculatorPageContent: React.FC = () => {
     const { activeTab, setActiveTab } = useEngineering();
 
     const tabs = [
-        { id: 'calculator', label: t('calculatorPage.tabs.calculator'), icon: <Calculator size={18} /> },
-        { id: 'nesting', label: t('calculatorPage.tabs.nesting'), icon: <Scissors size={18} /> },
-        { id: 'welding', label: t('calculatorPage.tabs.welding'), icon: <Flame size={18} /> },
-        { id: 'converter', label: t('calculatorPage.tabs.converter'), icon: <ArrowLeftRight size={18} /> },
+        { id: 'calculator', label: t('calculatorPage.tabs.calculator'), icon: <Calculator size={18} />, desc: "Cálculo de Peso Teórico" },
+        { id: 'nesting', label: t('calculatorPage.tabs.nesting'), icon: <Scissors size={18} />, desc: "Otimização de Corte" },
+        { id: 'welding', label: t('calculatorPage.tabs.welding'), icon: <Flame size={18} />, desc: "Consumíveis de Solda" },
+        { id: 'converter', label: t('calculatorPage.tabs.converter'), icon: <ArrowLeftRight size={18} />, desc: "Conversor Universal" },
     ];
 
     const renderContent = () => {
@@ -29,74 +30,80 @@ const CalculatorPageContent: React.FC = () => {
         }
     };
 
-    const activeDescription = t(`calculatorPage.toolDescriptions.${activeTab}` as any);
-
     return (
-        <div className="bg-brand-midnight min-h-screen relative overflow-hidden">
+        <div className="bg-[#0b1121] min-h-screen relative overflow-x-hidden text-slate-200 font-sans selection:bg-brand-orange selection:text-white">
             
-            {/* Background Grid */}
+            {/* Background Grid - High Tech Feel */}
             <div 
-                className="absolute inset-0 opacity-10 pointer-events-none"
+                className="absolute inset-0 opacity-[0.05] pointer-events-none"
                 style={{ 
-                    backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
+                    backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
                     backgroundSize: '40px 40px'
                 }}
             ></div>
+
+            {/* Ambient Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-brand-blue-light/10 rounded-full blur-[120px] pointer-events-none"></div>
             
-            {/* Radial Glow */}
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-brand-blue-dark/50 to-brand-midnight pointer-events-none"></div>
-            
-            <div className="container mx-auto px-4 sm:px-6 lg:px-24 pt-32 pb-24 relative z-10">
-                <header className="text-center mb-10">
-                    <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-mono text-xs tracking-widest uppercase backdrop-blur-md">
-                        <Calculator size={12} /> Engineering Tools v4.1
+            {/* Container Principal - Full Width com Margens Inteligentes */}
+            <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
+                
+                {/* Header da Workstation */}
+                <header className="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-6">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 bg-brand-blue-dark border border-white/10 rounded-xl shadow-2xl shadow-brand-blue-light/5">
+                            <Box size={24} className="text-brand-orange" />
+                        </div>
+                        <div>
+                            <h1 className="text-2xl font-bold text-white tracking-tight">
+                                {t('calculatorPage.title')}
+                            </h1>
+                            <p className="text-slate-400 text-xs uppercase tracking-widest font-semibold mt-1">
+                                Engineering Workstation v4.2
+                            </p>
+                        </div>
                     </div>
-                    <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-                        {t('calculatorPage.title')}
-                    </h1>
-                    <p className="text-blue-200/60 text-base md:text-lg max-w-2xl mx-auto">
-                        {t('calculatorPage.subtitle')}
-                    </p>
+
+                    {/* Barra de Ferramentas (Tabs) */}
+                    <div className="flex overflow-x-auto pb-2 lg:pb-0 gap-2 no-scrollbar">
+                        {tabs.map(tab => {
+                            const isActive = activeTab === tab.id;
+                            return (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id as TabType)}
+                                    className={`
+                                        relative group flex items-center gap-3 px-5 py-3 rounded-xl border transition-all duration-300 min-w-max
+                                        ${isActive 
+                                            ? 'bg-brand-blue-light/10 border-brand-orange/50 shadow-[0_0_20px_rgba(234,97,0,0.15)]' 
+                                            : 'bg-[#1e293b]/50 border-white/5 hover:bg-[#1e293b] hover:border-white/10'
+                                        }
+                                    `}
+                                >
+                                    <div className={`transition-colors duration-300 ${isActive ? 'text-brand-orange' : 'text-slate-400 group-hover:text-white'}`}>
+                                        {tab.icon}
+                                    </div>
+                                    <div className="text-left">
+                                        <span className={`block text-xs font-bold uppercase tracking-wide ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`}>
+                                            {tab.label}
+                                        </span>
+                                        <span className="block text-[10px] text-slate-500 font-medium">
+                                            {tab.desc}
+                                        </span>
+                                    </div>
+                                    {isActive && (
+                                        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-brand-orange rounded-b-xl shadow-[0_-2px_10px_rgba(234,97,0,0.5)]"></div>
+                                    )}
+                                </button>
+                            );
+                        })}
+                    </div>
                 </header>
 
-                {/* Tool Switcher / Tabs */}
-                <div className="flex flex-col items-center mb-12">
-                    <div className="bg-[#0f172a] p-1.5 rounded-2xl border border-white/10 inline-flex shadow-xl relative z-20 whitespace-nowrap overflow-x-auto max-w-full scrollbar-hide">
-                        {tabs.map(tab => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id as TabType)}
-                                className={`
-                                    flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl text-sm font-bold uppercase tracking-wide transition-all duration-300
-                                    ${activeTab === tab.id 
-                                        ? 'bg-brand-orange text-white shadow-lg shadow-brand-orange/20 scale-105' 
-                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                    }
-                                `}
-                            >
-                                {tab.icon}
-                                <span className="hidden sm:inline">{tab.label}</span>
-                            </button>
-                        ))}
-                    </div>
-                    
-                    {/* Contextual Description */}
-                    <div className="mt-6 max-w-3xl text-center px-4 animate-in fade-in slide-in-from-top-2 duration-300" key={activeTab}>
-                        <div className="inline-flex items-center gap-2 text-brand-blue-light text-xs font-bold uppercase tracking-widest mb-2">
-                            <Info size={14} /> Sobre esta ferramenta
-                        </div>
-                        <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                            {activeDescription}
-                        </p>
-                    </div>
-                </div>
-
-                {/* Tab Content with Transition */}
-                <div className="transition-all duration-500 ease-in-out min-h-[600px]">
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500" key={activeTab}>
-                        {renderContent()}
-                    </div>
-                </div>
+                {/* Área de Conteúdo */}
+                <main className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    {renderContent()}
+                </main>
             </div>
         </div>
     );

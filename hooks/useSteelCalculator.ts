@@ -2,7 +2,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useEngineering, ProjectItemMeta, CalculatorState } from '../context/EngineeringContext';
 
-export type ProductType = 'plate' | 'tube_round' | 'bar_round' | 'bar_square' | 'flange_square' | 'grating' | 'tube_calendered' | 'expanded_metal' | 'fitting_elbow';
+export type ProductType = 'plate' | 'tube_round' | 'bar_round' | 'bar_square' | 'flange_square' | 'grating' | 'tube_calendered' | 'expanded_metal' | 'fitting_elbow' | 'fitting_reducer' | 'fitting_tee';
 export type MaterialType = 'carbon' | 'inox304' | 'inox316' | 'aluminum';
 
 export interface ExtraConfig {
@@ -138,6 +138,36 @@ export const useSteelCalculator = () => {
                 volume = area_el * arc_el;
                 surfaceArea = (Math.PI * rawOD * (arc_el * 10)) / 1000000;
                 break;
+            case 'fitting_reducer':
+                // Redução Concêntrica (Tronco de Cone)
+                // Volume = (pi * h / 3) * (R^2 + Rr + r^2) - Parte Oca
+                const R_out = rawOD / 20; // D Maior Externo
+                const r_out = rawID / 20; // D Menor Externo (Usando campo InnerDiameter como D2)
+                const R_in = Math.max(0, R_out - (rawT/10));
+                const r_in = Math.max(0, r_out - (rawT/10));
+                
+                const vol_outer = (Math.PI * (rawL/10) / 3) * (Math.pow(R_out, 2) + R_out*r_out + Math.pow(r_out, 2));
+                const vol_inner = (Math.PI * (rawL/10) / 3) * (Math.pow(R_in, 2) + R_in*r_in + Math.pow(r_in, 2));
+                
+                volume = Math.max(0, vol_outer - vol_inner);
+                surfaceArea = (Math.PI * (rawOD + rawID) * Math.sqrt(Math.pow((rawOD-rawID)/2, 2) + Math.pow(rawL, 2))) / 1000000; // Lateral aprox
+                break;
+            case 'fitting_tee':
+                // Tê (Aproximação: Cilindro Corpo + Cilindro Derivação)
+                // Corpo: rawOD (D), rawL (Comprimento Corpo)
+                // Derivação: rawOD (D - assumindo igual), rawH (Comprimento Derivação)
+                const r_tee_out = rawOD / 20;
+                const r_tee_in = Math.max(0, r_tee_out - (rawT/10));
+                const area_tee_sect = Math.PI * (Math.pow(r_tee_out, 2) - Math.pow(r_tee_in, 2));
+                
+                // Volume Corpo + Volume Derivação (Descontando a interseção aprox)
+                const vol_body = area_tee_sect * (rawL/10);
+                // Derivação começa do centro ou da parede? Assumindo rawH é do centro
+                const vol_branch = area_tee_sect * (Math.max(0, (rawH/10) - r_tee_out)); 
+                
+                volume = vol_body + vol_branch;
+                surfaceArea = (Math.PI * rawOD * (rawL + rawH)) / 1000000;
+                break;
         }
 
         let uWeight = Math.max(0, (volume * density) / 1000);
@@ -161,6 +191,8 @@ export const useSteelCalculator = () => {
         updateCalculatorField('outerDiameter', '');
         updateCalculatorField('innerDiameter', '');
         updateCalculatorField('quantity', '1');
+        updateCalculatorField('radius', '');
+        updateCalculatorField('angle', '');
     }, [updateCalculatorField]);
 
     return { 

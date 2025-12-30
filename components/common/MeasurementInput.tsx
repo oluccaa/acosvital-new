@@ -1,7 +1,14 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Wand2, AlertCircle } from 'lucide-react';
+import { ChevronDown, Wand2 } from 'lucide-react';
+import Tooltip from './Tooltip';
 
 export type MeasurementUnit = 'mm' | 'cm' | 'm' | 'pol';
+
+export interface ForcedUnit {
+    unit: MeasurementUnit;
+    timestamp: number;
+}
 
 interface MeasurementInputProps {
     value: string;
@@ -10,25 +17,35 @@ interface MeasurementInputProps {
     placeholder?: string;
     isAuto?: boolean;
     hasError?: boolean;
+    helpText?: string;
     className?: string;
+    forceUnit?: ForcedUnit; // Prop para forçar a mudança de unidade externamente
 }
 
 const MeasurementInput: React.FC<MeasurementInputProps> = ({
-    value, onChange, label, placeholder = "0.00", isAuto = false, hasError = false, className = ""
+    value, onChange, label, placeholder = "0.00", isAuto = false, hasError = false, helpText, className = "", forceUnit
 }) => {
     const [unit, setUnit] = useState<MeasurementUnit>('mm');
     
     const factors: Record<MeasurementUnit, number> = { mm: 1, cm: 10, m: 1000, pol: 25.4 };
+
+    // Observa mudanças no forceUnit para atualizar a unidade localmente
+    useEffect(() => {
+        if (forceUnit) {
+            setUnit(forceUnit.unit);
+        }
+    }, [forceUnit]);
 
     const convertFromMm = (mmValue: string, targetUnit: MeasurementUnit): string => {
         if (!mmValue) return '';
         const mm = parseFloat(mmValue.replace(',', '.'));
         if (isNaN(mm)) return '';
         const val = mm / factors[targetUnit];
+        
+        // Se for polegada, tenta manter até 4 casas decimais para precisão
         return val.toLocaleString('pt-BR', { maximumFractionDigits: 4 });
     };
 
-    // Inicializa o estado de exibição com base no valor vindo das props (LocalStorage)
     const [displayValue, setDisplayValue] = useState<string>(() => value ? convertFromMm(value, unit) : '');
     const [isFocused, setIsFocused] = useState(false);
     const lastEmittedValue = useRef<string>(value);
@@ -36,31 +53,47 @@ const MeasurementInput: React.FC<MeasurementInputProps> = ({
     const parseInput = (input: string): number | null => {
         if (!input) return null;
         let clean = input.trim();
-        // Suporte para frações polegadas (ex: 1 1/2)
-        if (clean.includes('/') && !clean.includes(',')) {
+        
+        // Lógica robusta para frações (ex: "1/2", "2 1/2", "2-1/2")
+        if (clean.includes('/')) {
             try {
-                const parts = clean.split(' ');
+                // Substitui traço por espaço para padronizar "2-1/2" -> "2 1/2"
+                clean = clean.replace('-', ' ');
+                const parts = clean.split(' ').filter(p => p.trim() !== '');
+                
                 let total = 0;
                 for (const part of parts) {
                     if (part.includes('/')) {
                         const [n, d] = part.split('/');
-                        total += parseFloat(n) / parseFloat(d);
-                    } else total += parseFloat(part);
+                        const num = parseFloat(n);
+                        const den = parseFloat(d);
+                        if (den !== 0) total += num / den;
+                    } else {
+                        total += parseFloat(part);
+                    }
                 }
-                return total;
+                return isNaN(total) ? null : total;
             } catch { return null; }
         }
+
+        // Parse normal numérico
         clean = clean.replace(/\s/g, '').replace(/\.(?=[^,]*$)/g, '').replace(',', '.');
         const num = parseFloat(clean);
         return isNaN(num) ? null : num;
     };
 
     const handleInputChange = (text: string) => {
-        const sanitized = text.replace(/[^0-9,./ ]/g, '');
+        // Permite números, vírgula, ponto, barra e espaço (para frações)
+        const sanitized = text.replace(/[^0-9,./\- ]/g, '');
         setDisplayValue(sanitized);
+        
         const num = parseInput(sanitized);
+        
         if (num !== null) {
-            const mmString = (num * factors[unit]).toFixed(4).replace('.', ','); 
+            // Converte o valor inserido (na unidade atual) para mm
+            const mmValue = num * factors[unit];
+            const mmString = mmValue.toFixed(4).replace('.', ','); 
+            
             lastEmittedValue.current = mmString;
             onChange(mmString);
         } else if (text === '') {
@@ -69,43 +102,49 @@ const MeasurementInput: React.FC<MeasurementInputProps> = ({
         }
     };
 
-    // Sincroniza quando o valor global muda (refresh ou troca de ferramenta)
+    // Atualiza o display quando o valor externo (mm) ou a unidade muda
     useEffect(() => {
-        if (value !== lastEmittedValue.current) {
+        if (value !== lastEmittedValue.current && !isFocused) {
              setDisplayValue(value ? convertFromMm(value, unit) : '');
              lastEmittedValue.current = value;
+        } else if (value && !isFocused) {
+            // Força atualização se a unidade mudou e não estamos digitando
+             setDisplayValue(convertFromMm(value, unit));
         }
-    }, [value, unit]);
+    }, [value, unit, isFocused]);
 
     return (
         <div className={`relative group ${className}`}>
-            <div className="flex justify-between items-end mb-1">
-                <label className={`text-[10px] uppercase font-bold flex items-center gap-1 ${hasError ? 'text-red-400' : isAuto ? 'text-brand-orange' : 'text-gray-400'}`}>
-                    {label.replace(/\(mm\)/gi, `(${unit})`)}
-                    {isAuto && <span className="flex items-center gap-0.5 text-[9px] bg-brand-orange/10 px-1 rounded animate-pulse"><Wand2 size={10} /> Auto</span>}
-                    {hasError && <AlertCircle size={10} className="animate-bounce" />}
+            {/* Label Compacto */}
+            <div className="flex justify-between items-center mb-0.5">
+                <label className={`text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 ${hasError ? 'text-red-400' : isAuto ? 'text-brand-orange' : 'text-gray-400'}`}>
+                    {label.replace(/\(mm\)/gi, ``)}
+                    {isAuto && <Wand2 size={10} className="text-brand-orange animate-pulse" />}
+                    {helpText && <Tooltip text={helpText} />}
                 </label>
             </div>
 
-            <div className={`flex items-center bg-[#1e293b] border rounded-lg transition-all ${hasError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]' : isAuto ? 'border-brand-orange/50' : isFocused ? 'border-brand-orange' : 'border-white/10'}`}>
+            {/* Input Super Compacto (h-8) */}
+            <div className={`flex items-center bg-[#0f172a] border rounded transition-all h-8 ${hasError ? 'border-red-500' : isAuto ? 'border-brand-orange/50' : isFocused ? 'border-brand-orange' : 'border-white/10 hover:border-white/20'}`}>
                 <input 
                     type="text" 
                     value={displayValue} 
                     onChange={e => handleInputChange(e.target.value)} 
                     onFocus={() => setIsFocused(true)} 
                     onBlur={() => setIsFocused(false)} 
-                    className={`w-full bg-transparent py-3 pl-3 pr-2 text-sm outline-none font-medium ${isAuto ? 'text-brand-orange font-bold' : 'text-white'}`} 
+                    className={`w-full bg-transparent px-2 text-xs font-mono outline-none ${isAuto ? 'text-brand-orange font-bold' : 'text-white'}`} 
                     placeholder={placeholder} 
                 />
-                <div className="relative h-full border-l border-white/5">
+                
+                {/* Seletor de Unidade Micro */}
+                <div className="relative h-full border-l border-white/5 flex items-center bg-white/5">
                     <select 
                         value={unit} 
                         onChange={e => setUnit(e.target.value as MeasurementUnit)} 
-                        className="h-full bg-transparent pl-2 pr-6 text-xs font-bold uppercase cursor-pointer outline-none appearance-none py-3 text-gray-400 hover:text-white"
+                        className="h-full bg-transparent pl-1.5 pr-3 text-[9px] font-bold uppercase cursor-pointer outline-none appearance-none text-gray-400 hover:text-white"
                     >
-                        {['mm','cm','m','pol'].map(u => <option key={u} value={u} className="bg-[#1e293b]">{u}</option>)}
+                        {['mm','cm','m','pol'].map(u => <option key={u} value={u} className="bg-[#1e293b] text-gray-300">{u}</option>)}
                     </select>
-                    <ChevronDown size={12} className="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600" />
                 </div>
             </div>
         </div>
