@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
@@ -49,20 +48,6 @@ const MESH_OPTIONS = [
     { id: "34-38",  pitch: "34", label: "34x38mm - Malha Fechada (Segurança)" },
     { id: "custom", pitch: "",   label: "Outra / Personalizada" }
 ];
-
-const FormulaExplainer: React.FC<{ type: ProductType, materialName: string, density: number }> = ({ type, materialName, density }) => {
-    return (
-        <div className="bg-[#1e293b] rounded-xl p-5 border border-white/5 mt-4 shadow-inner">
-           <div className="flex items-center gap-2 mb-4 pb-2 border-b border-white/5">
-                <BookOpen size={16} className="text-brand-orange" />
-                <h4 className="text-xs font-bold text-white uppercase tracking-widest">Fórmula de Cálculo</h4>
-            </div>
-            <div className="text-xs text-gray-400 italic">
-                Cálculo baseado na geometria selecionada e densidade do material ({density.toFixed(2)} g/cm³).
-            </div>
-        </div>
-    );
-};
 
 const SteelCalculator: React.FC = () => {
     const { t } = useTranslation();
@@ -298,7 +283,7 @@ const SteelCalculator: React.FC = () => {
     return (
         <div className="max-w-6xl mx-auto font-sans space-y-8">
             {/* SELETOR DE PRODUTO */}
-            <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-6 shadow-xl print:hidden">
+            <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-4 sm:p-6 shadow-xl print:hidden">
                 <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-brand-orange/20 rounded-lg text-brand-orange"><BoxSelect size={20} /></div>
                     <div>
@@ -317,9 +302,9 @@ const SteelCalculator: React.FC = () => {
                             <div className="grid grid-cols-2 gap-2">
                                 {cat.items.map((prod: any) => (
                                     <button key={prod.id} onClick={() => setSelectedType(prod.id as ProductType)}
-                                        className={`group flex flex-col items-center justify-center py-3 px-2 rounded-xl border transition-all duration-200 ${selectedType === prod.id ? 'bg-brand-blue-dark border-brand-orange text-white ring-1 ring-brand-orange shadow-lg shadow-brand-blue-dark/50' : 'bg-white/5 border-transparent text-gray-400 hover:bg-white/10 hover:text-white'}`}>
+                                        className={`group flex flex-col items-center justify-center py-3 px-2 rounded-xl border transition-all duration-200 min-h-[80px] ${selectedType === prod.id ? 'bg-brand-blue-dark border-brand-orange text-white ring-1 ring-brand-orange shadow-lg shadow-brand-blue-dark/50' : 'bg-white/5 border-transparent text-gray-400 hover:bg-white/10 hover:text-white'}`}>
                                         <div className={`mb-1.5 transition-transform duration-200 ${selectedType === prod.id ? 'text-brand-orange scale-110' : 'group-hover:text-white'}`}>{prod.icon}</div>
-                                        <span className="text-[9px] font-bold uppercase text-center leading-tight w-full truncate">{prod.label}</span>
+                                        <span className="text-[9px] font-bold uppercase text-center leading-tight w-full truncate px-1">{prod.label}</span>
                                     </button>
                                 ))}
                             </div>
@@ -331,12 +316,12 @@ const SteelCalculator: React.FC = () => {
             {/* ÁREA DE CÁLCULO */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 print:hidden">
                 <div className="lg:col-span-7 space-y-6">
-                    <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-6 shadow-xl h-full">
+                    <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-4 sm:p-6 shadow-xl h-full">
                         <div className="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
                              <h3 className="text-white font-bold text-sm uppercase tracking-widest flex items-center gap-2">
                                 <Calculator size={16} className="text-brand-blue-light" /> Parâmetros
                             </h3>
-                             <button onClick={reset} className="text-xs text-gray-500 hover:text-white flex items-center gap-1 transition-colors">
+                             <button onClick={reset} className="text-xs text-gray-500 hover:text-white flex items-center gap-1 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5">
                                 <RefreshCcw size={12} /> {t('calculatorPage.clear')}
                             </button>
                         </div>
@@ -355,7 +340,7 @@ const SteelCalculator: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 {(selectedType === 'plate' || selectedType === 'bar_square' || selectedType === 'flange_square') && (
                                     <MeasurementInput 
                                         value={values.width} 
@@ -366,8 +351,8 @@ const SteelCalculator: React.FC = () => {
                                 
                                 {selectedType === 'grating' && (
                                     <>
-                                        <div className="col-span-2 grid grid-cols-2 gap-4 bg-white/5 p-4 rounded-xl border border-white/5 mb-2">
-                                             <div className="col-span-2 text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-[-10px] flex items-center gap-1">
+                                        <div className="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/5 p-4 rounded-xl border border-white/5 mb-2">
+                                             <div className="col-span-1 sm:col-span-2 text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-[-10px] flex items-center gap-1">
                                                 <Ruler size={12} /> Dimensões da Peça
                                              </div>
                                              <MeasurementInput value={values.length} onChange={(v) => handleInputChange('length', v)} label="Comprimento (Vão/Portante)" />
@@ -375,7 +360,7 @@ const SteelCalculator: React.FC = () => {
                                         </div>
                                         <MeasurementInput value={values.height} onChange={(v) => handleInputChange('height', v)} label="Altura da Barra (h)" />
                                         <MeasurementInput value={values.thickness} onChange={(v) => handleInputChange('thickness', v)} label="Espessura da Barra (e)" />
-                                        <div className="col-span-2">
+                                        <div className="col-span-1 sm:col-span-2">
                                             <label className="input-label">Passo da Malha</label>
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div className="relative">
@@ -392,7 +377,7 @@ const SteelCalculator: React.FC = () => {
                                 
                                 {selectedType === 'expanded_metal' && (
                                     <>
-                                        <div className="col-span-2">
+                                        <div className="col-span-1 sm:col-span-2">
                                             <label className="input-label-lg">Malha / Modelo</label>
                                             <div className="relative">
                                                 <select value={expandedPatternId} onChange={handleExpandedPatternSelect} className="w-full bg-[#1e293b] border border-white/10 rounded-lg py-3 pl-3 pr-8 text-white text-sm outline-none appearance-none cursor-pointer">
@@ -404,7 +389,7 @@ const SteelCalculator: React.FC = () => {
                                         {isCustomExpanded ? (
                                                 <><MeasurementInput value={values.thickness} onChange={(v) => handleInputChange('thickness', v)} label="Espessura (e)" /><MeasurementInput value={values.strandWidth} onChange={(v) => handleInputChange('strandWidth', v)} label="Cordão (c)" /><MeasurementInput value={values.meshSWD} onChange={(v) => handleInputChange('meshSWD', v)} label="Passo SWD (Centro)" /></>
                                             ) : (
-                                                <div className="col-span-2 grid grid-cols-3 gap-3">
+                                                <div className="col-span-1 sm:col-span-2 grid grid-cols-3 gap-3">
                                                     <div className="opacity-70"><label className="text-[10px] text-gray-500 font-bold uppercase block mb-1">Espessura</label><div className="bg-black/20 p-2 rounded-lg text-white text-xs">{values.thickness} mm</div></div>
                                                     <div className="opacity-70"><label className="text-[10px] text-gray-500 font-bold uppercase block mb-1">Cordão</label><div className="bg-black/20 p-2 rounded-lg text-white text-xs">{values.strandWidth} mm</div></div>
                                                     <div className="opacity-70"><label className="text-[10px] text-gray-500 font-bold uppercase block mb-1">Passo SWD</label><div className="bg-black/20 p-2 rounded-lg text-white text-xs">{values.meshSWD} mm</div></div>
@@ -420,8 +405,8 @@ const SteelCalculator: React.FC = () => {
                                 )}
 
                                 {isTubeType && (
-                                    <div className="col-span-2 space-y-4 bg-white/5 p-4 rounded-xl border border-white/5">
-                                        <div className="grid grid-cols-2 gap-4">{renderTubeInput('outerDiameter', t('calculatorPage.inputs.outerDiameter'))}{renderTubeInput('innerDiameter', t('calculatorPage.inputs.innerDiameter'))}</div>
+                                    <div className="col-span-1 sm:col-span-2 space-y-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{renderTubeInput('outerDiameter', t('calculatorPage.inputs.outerDiameter'))}{renderTubeInput('innerDiameter', t('calculatorPage.inputs.innerDiameter'))}</div>
                                         {renderTubeInput('thickness', t('calculatorPage.inputs.thickness'))}
                                     </div>
                                 )}
@@ -435,9 +420,9 @@ const SteelCalculator: React.FC = () => {
                                 )}
                                 {selectedType === 'plate' && (<MeasurementInput value={values.thickness} onChange={(v) => handleInputChange('thickness', v)} label={t('calculatorPage.inputs.thickness')} />)}
                                 
-                                <div className="col-span-2">
+                                <div className="col-span-1 sm:col-span-2">
                                     <label className="input-label">{t('calculatorPage.inputs.quantity')}</label>
-                                    <input type="number" value={values.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} min="1" className="input-field" />
+                                    <input type="number" value={values.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} min="1" className="input-field py-3 text-lg" />
                                 </div>
                             </div>
                         </div>
@@ -466,7 +451,7 @@ const SteelCalculator: React.FC = () => {
                     <button onClick={clearProject} className="text-white/50 hover:text-red-400"><Trash2 size={18} /></button>
                 </div>
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm">
+                    <table className="w-full text-left text-sm min-w-[500px]">
                         <thead className="bg-white/5 text-xs uppercase text-white font-bold border-b border-white/10">
                             <tr><th className="p-4">Item</th><th className="p-4 text-center">Qtd</th><th className="p-4 text-right">Peso (kg)</th><th className="p-4 text-center">Ação</th></tr>
                         </thead>
@@ -497,9 +482,9 @@ const SteelCalculator: React.FC = () => {
                     </table>
                 </div>
                 {projectItems.length > 0 && (
-                    <div className="p-4 border-t border-white/10 flex gap-4 justify-center">
-                        <button onClick={handleWhatsAppQuote} className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3 px-6 rounded-xl flex items-center gap-2"><WhatsappIcon size={20} /> Cotar no WhatsApp</button>
-                        <button onClick={() => window.print()} className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl flex items-center gap-2"><Printer size={20} /> Imprimir</button>
+                    <div className="p-4 border-t border-white/10 flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onClick={handleWhatsAppQuote} className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2"><WhatsappIcon size={20} /> Cotar no WhatsApp</button>
+                        <button onClick={() => window.print()} className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2"><Printer size={20} /> Imprimir</button>
                     </div>
                 )}
             </div>

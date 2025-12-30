@@ -181,7 +181,11 @@ const Hero: React.FC = () => {
       <style>{animationStyles}</style>
       <section 
         onClick={handleClickOnSlider}
-        className="relative h-[75vh] min-h-[500px] md:h-[80vh] text-white overflow-hidden cursor-pointer"
+        // Responsive Height: 
+        // - Mobile: min-h-[500px] or 85vh to fit content.
+        // - Desktop: 80vh to show fold.
+        // - Large Screens: max-h-[1080px] to prevent it being too tall on 4K.
+        className="relative h-[85vh] min-h-[500px] md:h-[80vh] 2xl:max-h-[1080px] text-white overflow-hidden cursor-pointer"
         style={{ '--slide-duration': `${SLIDE_DURATION_MS}ms` } as React.CSSProperties}
         aria-roledescription="carousel"
         aria-live={isPaused ? "polite" : "off"}
@@ -199,18 +203,25 @@ const Hero: React.FC = () => {
               ${isPaused ? 'animation-paused' : ''}`}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/70 via-brand-blue-dark/40 to-transparent"></div>
+        
+        {/* Gradient Overlay optimized for readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/90 via-brand-blue-dark/60 md:via-brand-blue-dark/40 to-transparent"></div>
         
         {ripple.key !== 0 && <span key={ripple.key} className="ripple-effect" style={{ top: ripple.y, left: ripple.x }} aria-hidden="true" />}
         {pulse.key !== 0 && <span key={pulse.key} className="pulse-effect" style={{ top: pulse.y, left: pulse.x }} aria-hidden="true" />}
 
         <div className="relative z-10 flex h-full items-center">
-          <div className="container mx-auto px-6 sm:px-12 lg:px-24">
-            <div className="max-w-xl text-center md:text-left">
+          <div className="container mx-auto px-6 sm:px-12 lg:px-24 max-w-[1920px]">
+            <div className="max-w-xl md:max-w-2xl lg:max-w-3xl text-center md:text-left mx-auto md:mx-0">
               <div key={currentIndex} role="group" aria-roledescription="slide">
-                <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-4 animate-slide-in" style={{ animationDelay: '0.2s' }}>{currentSlide.title}</h1>
-                <p className="text-lg lg:text-xl mb-8 animate-slide-in" style={{ animationDelay: '0.4s' }}>{currentSlide.subtitle}</p>
-                <button onClick={(e) => e.stopPropagation()} className="bg-brand-orange text-white font-bold py-3 px-8 rounded-md hover:bg-brand-orange-dark transition-all duration-300 transform hover:scale-105 text-sm uppercase tracking-wider animate-slide-in" style={{ animationDelay: '0.6s' }}>
+                {/* Responsive Typography */}
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold leading-tight mb-4 sm:mb-6 animate-slide-in text-shadow-lg" style={{ animationDelay: '0.2s' }}>
+                    {currentSlide.title}
+                </h1>
+                <p className="text-base sm:text-lg lg:text-xl 2xl:text-2xl mb-8 sm:mb-10 text-gray-100 animate-slide-in font-medium max-w-lg md:max-w-none mx-auto md:mx-0" style={{ animationDelay: '0.4s' }}>
+                    {currentSlide.subtitle}
+                </p>
+                <button onClick={(e) => e.stopPropagation()} className="bg-brand-orange text-white font-bold py-3.5 px-8 sm:px-10 rounded-lg hover:bg-brand-orange-dark transition-all duration-300 transform hover:scale-105 text-sm sm:text-base uppercase tracking-wider animate-slide-in shadow-lg shadow-brand-orange/30" style={{ animationDelay: '0.6s' }}>
                   {currentSlide.buttonText}
                 </button>
               </div>
@@ -218,7 +229,8 @@ const Hero: React.FC = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 flex space-x-4" role="tablist" aria-label="Slides">
+        {/* Dots - Bottom Center */}
+        <div className="absolute bottom-20 md:bottom-12 left-1/2 -translate-x-1/2 z-10 flex space-x-4" role="tablist" aria-label="Slides">
             {slides.map((_, slideIndex) => (
                 <ProgressDot key={slideIndex} slideIndex={slideIndex} isActive={currentIndex === slideIndex} isPaused={isPaused}
                     onClick={(e) => { e.stopPropagation(); goToSlide(slideIndex); }}
@@ -229,7 +241,7 @@ const Hero: React.FC = () => {
         <a href="#features" onClick={(e) => { e.stopPropagation(); handleScrollDown(e); }}
           className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center cursor-pointer group"
           aria-label="Scroll to next section">
-          <span className="text-xs uppercase tracking-wider mb-1 text-white/80 group-hover:text-white transition-colors">{t('hero.scrollText')}</span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-wider mb-1 text-white/80 group-hover:text-white transition-colors">{t('hero.scrollText')}</span>
           <ChevronDown size={24} className="animate-bounce-down text-white/80 group-hover:text-white transition-colors" />
         </a>
       </section>

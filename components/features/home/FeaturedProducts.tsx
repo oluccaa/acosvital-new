@@ -11,8 +11,8 @@ interface Product {
 }
 
 const ProductCard: React.FC<{ product: Product, viewDetailsText: string, onRequestText: string }> = ({ product, viewDetailsText, onRequestText }) => (
-    <li className="snap-center flex-shrink-0 w-[80%] sm:w-[45%] md:w-[30%] lg:w-[23.5%]">
-        <a href={product.href} className="block group relative aspect-[4/3] rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 ease-in-out"
+    <li className="snap-center flex-shrink-0 w-[85%] sm:w-[45%] md:w-[30%] lg:w-[23.5%] 2xl:w-[18%]">
+        <a href={product.href} className="block group relative aspect-[4/3] rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 ease-in-out h-full"
             aria-label={`Ver detalhes de ${product.alt}`}
         >
             <div
@@ -23,7 +23,7 @@ const ProductCard: React.FC<{ product: Product, viewDetailsText: string, onReque
             />
             <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/90 via-brand-blue-dark/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out flex flex-col justify-end p-6 text-white">
                 <div className="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
-                    <h3 className="font-bold text-xl mb-2">{product.alt}</h3>
+                    <h3 className="font-bold text-xl mb-2 leading-tight">{product.alt}</h3>
                     <p className="text-brand-orange font-semibold text-lg mb-4">{onRequestText}</p>
                     <span className="inline-block bg-brand-orange text-white font-bold py-2 px-5 rounded-md text-xs uppercase tracking-wider hover:bg-brand-orange-dark transition-colors">
                         {viewDetailsText}
@@ -54,7 +54,7 @@ const FeaturedProducts: React.FC = () => {
 
     return (
         <section className="py-16 md:py-24 bg-brand-off-white overflow-hidden" aria-labelledby="featured-products-title">
-            <div className="container mx-auto px-6 sm:px-12 lg:px-24">
+            <div className="container mx-auto px-6 sm:px-12 lg:px-24 max-w-[1920px]">
                 <div className="max-w-7xl mx-auto text-center">
                      <h2 id="featured-products-title" className="text-3xl md:text-4xl font-bold text-brand-blue-dark mb-12">
                         {t('featuredProducts.title')}
@@ -62,7 +62,7 @@ const FeaturedProducts: React.FC = () => {
                 </div>
             </div>
             
-            <div className="relative">
+            <div className="relative max-w-[1920px] mx-auto">
                 <ul
                     ref={sliderRef}
                     className="flex gap-4 md:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide -mb-4 pb-4 px-6 sm:px-12 lg:px-24"
