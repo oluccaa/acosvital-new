@@ -1,5 +1,4 @@
 
-
 // ==========================================================================
 // ARQUIVO DE TRADUÇÃO: PORTUGUÊS (PT)
 // ==========================================================================
@@ -100,7 +99,7 @@ export const pt = {
         title: "Nossos Pilares",
         list: {
             mission: { title: "MISSÃO", description: "A empresa entrega produtos de aço de alta qualidade, fortalecendo parcerias, promovendo crescimento sustentável." },
-            vision: { title: "VISÃO", description: "Ser referência nacional em produtos de aço, destacando-se pela qualidade, inovação e sustentabilidade." },
+            vision: { title: "VISÃO", description: "Ser referencia nacional em produtos de aço, destacando-se pela qualidade, inovação e sustentabilidade." },
             values: { title: "VALORES", description: "Qualidade, inovação, sustentabilidade, parceria e segurança." }
         }
     },
@@ -156,12 +155,12 @@ export const pt = {
         tubes: 'TUBOS',
         fittings: 'CONEXÕES',
         valves: 'VÁLVULAS',
-        profiles: 'PERFIS LAMINADOS E DOBRADOS',
+        profiles: 'PERFILES LAMINADOS E DOBRADOS',
         plates: 'CHAPAS',
         gratings: 'GRADES DE PISO',
         tiles: 'TELHA TRAPEZOIDAL',
         civil: 'CONSTRUÇÃO CIVIL',
-        boilermaking: 'CALDERERÍA INDUSTRIAL',
+        boilermaking: 'CALDEIRARIA INDUSTRIAL',
         cutting: 'OXICORTE',
         conduits: 'ELETRODUTOS',
         grooved: 'LINHA GROOVED',
@@ -185,15 +184,13 @@ export const pt = {
     // CALCULATOR PAGE
     // -------------------------------------------------------------------------
     calculatorPage: {
-        title: "Ferramentas de Engenharia v4.1",
-        subtitle: "Workstation de precisão para caldeiraria, orçamento e fabricação.",
+        title: "Vital Steel Suite",
+        subtitle: "Workstation de Engenharia v5.0",
         tabs: {
-            calculator: "Calculadora de Aço",
-            nesting: "Otimizador de Corte",
-            sheetMetal: "Planificação",
-            bending: "Cálculo de Dobra",
-            welding: "Estimativa de Solda",
-            converter: "Conversor de Medidas"
+            calculator: "Calculadora",
+            nesting: "Otimização",
+            welding: "Estimativa",
+            converter: "Conversor"
         },
         toolDescriptions: {
             calculator: "Calcule o peso teórico de chapas, tubos, barras e perfis complexos. Essencial para planejamento de materiais, orçamentos e logística.",
@@ -203,6 +200,7 @@ export const pt = {
             welding: "Estime a quantidade de consumível de solda necessária para diferentes tipos de juntas. Ideal para planejamento de custos de soldagem.",
             converter: "Converta rapidamente unidades de medida comuns na engenharia industrial (mm, pol, kg, lb, psi, bar) para facilitar seu dia a dia."
         },
+        // ... (MANTENHA O RESTO DO ARQUIVO IGUAL)
         sheetMetal: {
             title: "Planificação de Cone",
             subtitle: "Cálculo de desenvolvimento para caldeiraria",
@@ -248,7 +246,7 @@ export const pt = {
         selectMaterial: "Material",
         categories: {
             raw: "Matéria Prima",
-            piping: "Caldeiraria & Tubulação",
+            piping: "Calderiaria & Tubulação",
             structural: "Industrial & Estrutural"
         },
         inputs: {
@@ -428,7 +426,6 @@ export const pt = {
             }
         }
     },
-    // ... (MANTENHA tablesPage E O RESTO DO ARQUIVO)
     tablesPage: {
         title: "Tabelas Técnicas e Especificações",
         subtitle: "Consulte as medidas, pesos e normas técnicas dos nossos principais produtos.",
@@ -479,7 +476,7 @@ export const pt = {
         subcategories: {
             tubular: "Tubulares (Solda)",
             forged: "Forjadas (Alta Pressão)",
-            coupling: "Acoplamientos (Tipo K)"
+            coupling: "Acoplamento K"
         },
         items: {
             tubes: {
@@ -492,7 +489,7 @@ export const pt = {
                 din5580: "Tubo (antiga norma DIN) - NBR 5580",
                 nbr5590: "Tubo SCH 40 e 80 - NBR 5590",
                 mechanical: "Tubos Mecânicos Laminados",
-                calendered: "Tubos Calandrados Grandes Diámetros"
+                calendered: "Tubos Calandrados Grandes Diâmetros"
             },
             valves: {
                 ball: "Válvula da Esfera",
@@ -520,10 +517,10 @@ export const pt = {
                 forgedElbowsEn: "Cotovelos, Te e Cruzeta EN",
                 couplingThread: "Conexões Tipo Roscado B16.11 - Dimensões em mm",
                 weldolet: "Colares (Weldolet / Elbolet)",
-                sockolet: "Collares (Sockolet / Thredolet)",
+                sockolet: "Colares (Sockolet / Thredolet)",
                 plugs: "Plugs, Buchas e Niples",
                 forgedWeights: "Pesos Aproximados para Conexões de Encaixe e Roscadas",
-                helical: "Tubos Helicoidales",
+                helical: "Tubos Helicoidais",
                 k10: "Modelo K10 - Flexível",
                 relation: "Relação entre Tubos-Acoplamento"
             },
@@ -551,7 +548,7 @@ export const pt = {
                 checker: "Chapa Para Piso (Xadrez)",
                 galvanized: "Chapa Zincada (Galvanizada)",
                 expanded: "Chapa Expandida",
-                perforated: "Chapa Perforada - Furo Redondo"
+                perforated: "Chapa Perfurada - Furo Redondo"
             },
             civil: {
                 gratings: "Grades de Piso",

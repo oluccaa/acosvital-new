@@ -1,5 +1,4 @@
 
-
 // ==========================================================================
 // ARQUIVO DE TRADUÇÃO: INGLÊS (EN)
 // ==========================================================================
@@ -158,8 +157,8 @@ export const en = {
       }
     },
     calculatorPage: {
-        title: "Steel Calculator",
-        subtitle: "Precision tool for theoretical weight estimation.",
+        title: "Vital Steel Suite",
+        subtitle: "Engineering Workstation v5.0",
         tabs: {
             calculator: "Steel Calculator",
             nesting: "Cutting Optimizer",
@@ -168,6 +167,7 @@ export const en = {
             welding: "Welding Estimator",
             converter: "Unit Converter"
         },
+        // ... (KEEP THE REST)
         toolDescriptions: {
             calculator: "Calculate theoretical weight of plates, tubes, bars, and profiles. Essential for material planning, budgeting, and logistics.",
             nesting: "Optimize linear cutting of bars and profiles. Reduce material waste (scrap) by calculating the best usage of stock bars.",

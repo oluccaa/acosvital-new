@@ -1,5 +1,4 @@
 
-
 // ==========================================================================
 // ARQUIVO DE TRADUÇÃO: ESPANHOL (ES)
 // ==========================================================================
@@ -69,7 +68,7 @@ export const es = {
     },
     features: {
         list: {
-            fast_delivery: { title: "Entrega Rápida y Flexible", description: "Producción ágil y logística optimizada para cumplir sus plazos en todo el territorio nacional." },
+            fast_delivery: { title: "Entrega Rápida y Flexible", description: "Producción ágil e logística optimizada para cumplir sus plazos en todo el territorio nacional." },
             certified_quality: { title: "Calidad Certificada", description: "Nuestros productos siguen los más altos estándares, con certificaciones ISO 9001, CRC Petrobras e YPFB." },
             global_reach: { title: "Alcance Global", description: "Atendemos con excelencia a clientes en Brasil y en el exterior, llevando nuestras soluciones más allá de las fronteras." },
             satisfied_clients: { title: "+2.000 Clientes Satisfechos", description: "La confianza de miles de clientes anualmente, comprobando nuestra dedicación y calidad." }
@@ -158,16 +157,17 @@ export const es = {
       }
     },
     calculatorPage: {
-        title: "Herramientas de Ingeniería v4.0",
-        subtitle: "Estación de trabajo de precisión para calderería, presupuesto y fabricación.",
+        title: "Vital Steel Suite",
+        subtitle: "Engineering Workstation v5.0",
         tabs: {
-            calculator: "Calculadora de Acero",
-            nesting: "Optimizador de Corte",
-            sheetMetal: "Desarrollo de Chapa",
-            bending: "Cálculo de Doblado",
-            welding: "Estimación de Soldadura",
-            converter: "Conversor de Unidades"
+            calculator: "Calculadora",
+            nesting: "Optimizador",
+            sheetMetal: "Desarrollo",
+            bending: "Cálculo",
+            welding: "Estimación",
+            converter: "Conversor"
         },
+        // ... (KEEP THE REST)
         toolDescriptions: {
             calculator: "Calcule el peso teórico de chapas, tubos, barras y perfiles. Esencial para la planificación de materiales, presupuestos y logística.",
             nesting: "Optimice el corte lineal de barras y perfiles. Reduzca el desperdicio de material (chatarra) calculando el mejor uso de las barras de stock.",

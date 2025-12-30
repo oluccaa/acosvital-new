@@ -49,23 +49,23 @@ const CalculatorPageContent: React.FC = () => {
             <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
                 
                 {/* Header da Workstation */}
-                <header className="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-6">
+                <header className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-brand-blue-dark border border-white/10 rounded-xl shadow-2xl shadow-brand-blue-light/5">
-                            <Box size={24} className="text-brand-orange" />
+                            <Box size={32} className="text-brand-orange" />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold text-white tracking-tight">
+                            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight uppercase">
                                 {t('calculatorPage.title')}
                             </h1>
-                            <p className="text-slate-400 text-xs uppercase tracking-widest font-semibold mt-1">
-                                Engineering Workstation v4.2
+                            <p className="text-slate-400 text-xs md:text-sm uppercase tracking-widest font-semibold mt-1">
+                                {t('calculatorPage.subtitle')}
                             </p>
                         </div>
                     </div>
 
-                    {/* Barra de Ferramentas (Tabs) */}
-                    <div className="flex overflow-x-auto pb-2 lg:pb-0 gap-2 no-scrollbar">
+                    {/* Barra de Ferramentas (Tabs) - GRID LAYOUT */}
+                    <div className="w-full lg:w-auto grid grid-cols-2 md:grid-cols-4 gap-3">
                         {tabs.map(tab => {
                             const isActive = activeTab === tab.id;
                             return (
@@ -73,26 +73,26 @@ const CalculatorPageContent: React.FC = () => {
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id as TabType)}
                                     className={`
-                                        relative group flex items-center gap-3 px-5 py-3 rounded-xl border transition-all duration-300 min-w-max
+                                        relative group flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 px-4 py-3 rounded-xl border transition-all duration-300 w-full
                                         ${isActive 
-                                            ? 'bg-brand-blue-light/10 border-brand-orange/50 shadow-[0_0_20px_rgba(234,97,0,0.15)]' 
+                                            ? 'bg-brand-blue-light/10 border-brand-orange shadow-[0_0_15px_rgba(234,97,0,0.2)]' 
                                             : 'bg-[#1e293b]/50 border-white/5 hover:bg-[#1e293b] hover:border-white/10'
                                         }
                                     `}
                                 >
-                                    <div className={`transition-colors duration-300 ${isActive ? 'text-brand-orange' : 'text-slate-400 group-hover:text-white'}`}>
-                                        {tab.icon}
+                                    <div className={`mt-1 transition-colors duration-300 ${isActive ? 'text-brand-orange' : 'text-slate-400 group-hover:text-white'}`}>
+                                        {React.cloneElement(tab.icon as React.ReactElement<{ size: number }>, { size: 20 })}
                                     </div>
-                                    <div className="text-left">
-                                        <span className={`block text-xs font-bold uppercase tracking-wide ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`}>
+                                    <div className="text-center sm:text-left overflow-hidden">
+                                        <span className={`block text-[11px] sm:text-xs font-bold uppercase tracking-wide truncate ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`}>
                                             {tab.label}
                                         </span>
-                                        <span className="block text-[10px] text-slate-500 font-medium">
+                                        <span className="block text-[9px] text-slate-500 font-medium truncate">
                                             {tab.desc}
                                         </span>
                                     </div>
                                     {isActive && (
-                                        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-brand-orange rounded-b-xl shadow-[0_-2px_10px_rgba(234,97,0,0.5)]"></div>
+                                        <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-brand-orange rounded-full m-1.5 animate-pulse"></div>
                                     )}
                                 </button>
                             );

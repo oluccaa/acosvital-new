@@ -20,10 +20,12 @@ interface MeasurementInputProps {
     helpText?: string;
     className?: string;
     forceUnit?: ForcedUnit; // Prop para forçar a mudança de unidade externamente
+    onFocus?: () => void; // Novo prop para notificar o pai quando focado
+    isActiveField?: boolean; // Novo prop para indicar visualmente que este campo receberá o preset
 }
 
 const MeasurementInput: React.FC<MeasurementInputProps> = ({
-    value, onChange, label, placeholder = "0.00", isAuto = false, hasError = false, helpText, className = "", forceUnit
+    value, onChange, label, placeholder = "0.00", isAuto = false, hasError = false, helpText, className = "", forceUnit, onFocus, isActiveField
 }) => {
     const [unit, setUnit] = useState<MeasurementUnit>('mm');
     
@@ -113,11 +115,16 @@ const MeasurementInput: React.FC<MeasurementInputProps> = ({
         }
     }, [value, unit, isFocused]);
 
+    const handleFocus = () => {
+        setIsFocused(true);
+        if (onFocus) onFocus();
+    };
+
     return (
         <div className={`relative group ${className}`}>
             {/* Label Compacto */}
             <div className="flex justify-between items-center mb-0.5">
-                <label className={`text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 ${hasError ? 'text-red-400' : isAuto ? 'text-brand-orange' : 'text-gray-400'}`}>
+                <label className={`text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 ${hasError ? 'text-red-400' : isAuto ? 'text-brand-orange' : isActiveField ? 'text-brand-orange' : 'text-gray-400'}`}>
                     {label.replace(/\(mm\)/gi, ``)}
                     {isAuto && <Wand2 size={10} className="text-brand-orange animate-pulse" />}
                     {helpText && <Tooltip text={helpText} />}
@@ -125,12 +132,15 @@ const MeasurementInput: React.FC<MeasurementInputProps> = ({
             </div>
 
             {/* Input Super Compacto (h-8) */}
-            <div className={`flex items-center bg-[#0f172a] border rounded transition-all h-8 ${hasError ? 'border-red-500' : isAuto ? 'border-brand-orange/50' : isFocused ? 'border-brand-orange' : 'border-white/10 hover:border-white/20'}`}>
+            <div className={`
+                flex items-center bg-[#0f172a] border rounded transition-all h-8 
+                ${hasError ? 'border-red-500' : isAuto ? 'border-brand-orange/50' : isActiveField ? 'border-brand-orange ring-1 ring-brand-orange/20' : 'border-white/10 hover:border-white/20'}
+            `}>
                 <input 
                     type="text" 
                     value={displayValue} 
                     onChange={e => handleInputChange(e.target.value)} 
-                    onFocus={() => setIsFocused(true)} 
+                    onFocus={handleFocus} 
                     onBlur={() => setIsFocused(false)} 
                     className={`w-full bg-transparent px-2 text-xs font-mono outline-none ${isAuto ? 'text-brand-orange font-bold' : 'text-white'}`} 
                     placeholder={placeholder} 
