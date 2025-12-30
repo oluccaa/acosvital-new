@@ -48,9 +48,20 @@ const App: React.FC = () => {
     const Page = routes[route] || NotFoundPage;
     
     return (
-        <div className="bg-white font-sans text-gray-800 flex flex-col min-h-screen">
+        // The outer div has bg-brand-blue-dark.
+        // The main container intentionally DOES NOT have a background color (removed bg-white).
+        // This ensures that if there's a pixel gap between header and content, it shows blue (blending with header)
+        // instead of a white line. Page components handle their own backgrounds.
+        <div className="bg-brand-blue-dark font-sans text-gray-800 flex flex-col min-h-screen">
             <Header />
-            <main className="flex-grow">
+            {/* 
+                Padding Adjustment:
+                Mobile: TopBar (~32px) + Header (~82px) = ~114px
+                Desktop: TopBar (~32px) + Header (~92px) = ~124px
+                
+                Note: We match exact pixel heights to ensure content starts exactly where header ends.
+            */}
+            <main className="flex-grow pt-[114px] lg:pt-[124px] w-full flex flex-col">
                 <React.Suspense fallback={<LoadingSpinner />}>
                     <Page />
                 </React.Suspense>

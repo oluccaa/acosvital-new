@@ -85,10 +85,10 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
                         {!isMobile && isProducts && (
                             <div 
                                 className={`
-                                    fixed left-0 right-0 mx-auto w-[95vw] max-w-6xl 
+                                    fixed left-0 right-0 mx-auto w-[95vw] max-w-7xl 
                                     bg-white rounded-xl shadow-2xl border-t-4 border-brand-orange 
                                     transition-all duration-300 origin-top z-50 overflow-hidden
-                                    ${isScrolled ? 'top-[70px]' : 'top-[90px]'}
+                                    ${isScrolled ? 'top-[65px]' : 'top-[125px]'}
                                     ${isMegaMenuOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible pointer-events-none'}
                                 `}
                             >

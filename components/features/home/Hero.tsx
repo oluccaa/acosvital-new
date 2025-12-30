@@ -181,11 +181,8 @@ const Hero: React.FC = () => {
       <style>{animationStyles}</style>
       <section 
         onClick={handleClickOnSlider}
-        // Responsive Height: 
-        // - Mobile: min-h-[500px] or 85vh to fit content.
-        // - Desktop: 80vh to show fold.
-        // - Large Screens: max-h-[1080px] to prevent it being too tall on 4K.
-        className="relative h-[85vh] min-h-[500px] md:h-[80vh] 2xl:max-h-[1080px] text-white overflow-hidden cursor-pointer"
+        // Removed negative margin. The container ensures alignment.
+        className="relative h-[85vh] min-h-[500px] md:h-[80vh] 2xl:max-h-[1080px] text-white overflow-hidden cursor-pointer w-full"
         style={{ '--slide-duration': `${SLIDE_DURATION_MS}ms` } as React.CSSProperties}
         aria-roledescription="carousel"
         aria-live={isPaused ? "polite" : "off"}
@@ -230,7 +227,7 @@ const Hero: React.FC = () => {
         </div>
         
         {/* Dots - Bottom Center */}
-        <div className="absolute bottom-20 md:bottom-12 left-1/2 -translate-x-1/2 z-10 flex space-x-4" role="tablist" aria-label="Slides">
+        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-10 flex space-x-4" role="tablist" aria-label="Slides">
             {slides.map((_, slideIndex) => (
                 <ProgressDot key={slideIndex} slideIndex={slideIndex} isActive={currentIndex === slideIndex} isPaused={isPaused}
                     onClick={(e) => { e.stopPropagation(); goToSlide(slideIndex); }}

@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
     Calculator, Circle, Square, Box, Layers, Disc, Grid, LayoutGrid, 
-    Cylinder, CornerDownRight, PaintBucket, RefreshCcw, 
-    Plus, Trash2, ShoppingCart, BoxSelect,
-    Package, Hammer, Construction, ChevronDown, ChevronUp,
-    Printer, BookOpen, Scale, Scissors, Info, ArrowLeftRight, Wand2, Paperclip, Sparkles, Ruler, AlertTriangle, ChevronsDownUp,
-    Zap, Share2, Flame
+    Cylinder, CornerDownRight, Package, Hammer, Construction, ChevronDown,
+    Printer, ShoppingCart, BoxSelect, RefreshCcw, Plus, Trash2, Ruler
 } from 'lucide-react';
 import WhatsappIcon from '../../common/icons/WhatsappIcon';
 import MeasurementInput from '../../common/MeasurementInput';
-import { useSteelCalculator, ProductType, MaterialType, DENSITIES } from '../../../hooks/useSteelCalculator';
-import { useEngineering, ProjectItem, CalculatorState } from '../../../context/EngineeringContext';
+import { useSteelCalculator, ProductType } from '../../../hooks/useSteelCalculator';
+import { useEngineering, ProjectItem } from '../../../context/EngineeringContext';
 
 const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 const safeParseUI = (val: string | number): number => {
@@ -65,18 +62,16 @@ const SteelCalculator: React.FC = () => {
     const selectedType = (calculatorState.selectedType as ProductType) || 'plate';
     const setSelectedType = (type: ProductType) => updateCalculatorField('selectedType', type);
 
-    const [isPaintExpanded, setIsPaintExpanded] = useState(false);
     const [meshId, setMeshId] = useState<string>('30-100');
     const [expandedPatternId, setExpandedPatternId] = useState<string>('gme-13');
     const [isCustomExpanded, setIsCustomExpanded] = useState<boolean>(false);
     const [editHistory, setEditHistory] = useState<TubeField[]>([]);
 
     const { 
-        values, paintConfig, extras, totalWeight, unitWeight, engData, 
-        handleInputChange, handlePaintChange, toggleExtra, calculate, reset, setValues
+        values, extras, totalWeight, unitWeight, engData, 
+        handleInputChange, calculate, reset, setValues
     } = useSteelCalculator();
 
-    // Sincronização e recálculo
     useEffect(() => {
         calculate(selectedType);
     }, [calculatorState, extras, calculate, selectedType]);
@@ -488,12 +483,6 @@ const SteelCalculator: React.FC = () => {
                     </div>
                 )}
             </div>
-
-            <style>{`
-                .input-label-lg { display: block; font-size: 0.75rem; color: #cbd5e1; text-transform: uppercase; font-weight: 800; margin-bottom: 0.75rem; }
-                .input-field-lg { width: 100%; background-color: #1e293b; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 0.75rem; padding: 1rem; color: white; outline: none; }
-                .input-field { width: 100%; background-color: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.5rem; padding: 0.75rem; color: white; outline: none; }
-            `}</style>
         </div>
     );
 };

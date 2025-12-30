@@ -50,15 +50,27 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className={`fixed top-0 w-full z-40 transition-all duration-300 ${isScrolled ? 'bg-brand-blue-dark/95 backdrop-blur-md shadow-lg py-2' : 'bg-brand-blue-dark py-4'}`}>
-                
-                {/* Top Bar - Hidden on Mobile Scroll */}
-                <div className={`container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1920px] border-b border-white/10 pb-2 mb-2 transition-all duration-300 ${isScrolled ? 'hidden lg:flex' : 'flex'} justify-between items-center text-xs text-gray-300`}>
+            <header 
+                className={`fixed top-0 left-0 right-0 w-full z-40 transition-all duration-300 ease-in-out ${isScrolled ? 'bg-brand-blue-dark/95 backdrop-blur-md shadow-lg py-2' : 'bg-brand-blue-dark py-4'}`}
+            >
+                {/* Top Bar - Hidden on Scroll */}
+                <div 
+                    className={`
+                        container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1920px] 
+                        border-b border-white/10 
+                        transition-all duration-300 ease-in-out
+                        ${isScrolled 
+                            ? 'h-0 overflow-hidden opacity-0 mb-0 pb-0 border-none' 
+                            : 'h-auto opacity-100 mb-2 pb-2'
+                        } 
+                        flex justify-between items-center text-xs text-gray-300
+                    `}
+                >
                      <div className="flex items-center gap-4">
                         <a href="tel:1147972352" className="hover:text-brand-orange flex items-center gap-1 transition-colors">
                             <Phone size={12} /> (11) 4797-2352
                         </a>
-                        <span className="hidden sm:inline">|</span>
+                        <span className="hidden sm:inline opacity-50">|</span>
                         <span className="hidden sm:inline">Seg - Sex: 08:00 - 18:00</span>
                      </div>
                      <div className="flex items-center gap-4">
@@ -84,21 +96,21 @@ const Header: React.FC = () => {
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1920px] relative">
                     <div className="flex justify-between items-center gap-4">
                         {/* Logo */}
-                        <a href="#/" aria-label="Aços Vital Home" className="flex-shrink-0 z-10 transition-transform hover:scale-105">
+                        <a href="#/" aria-label="Aços Vital Home" className="flex-shrink-0 z-10 transition-transform hover:scale-105 origin-left">
                             <Logo className={isScrolled ? "h-[40px] md:h-[45px]" : "h-[50px] md:h-[60px]"} />
                         </a>
                         
-                        {/* Desktop Nav - Using Flex-1 to take available space but prevent overflow */}
+                        {/* Desktop Nav */}
                         <div className="hidden lg:flex flex-1 justify-center px-2">
                             <NavLinks links={navLinksData} isScrolled={isScrolled} />
                         </div>
                         
                         {/* Actions */}
-                        <div className="flex items-center gap-2 sm:gap-3 z-10 flex-shrink-0">
-                            {/* Search Trigger - Minimalist Icon */}
+                        <div className="flex items-center gap-3 z-10 flex-shrink-0">
+                            {/* Search Trigger */}
                             <button 
                                 onClick={() => setIsSearchOpen(true)}
-                                className="p-2 text-white hover:text-brand-orange transition-colors rounded-full hover:bg-white/10"
+                                className="p-2 text-white hover:text-brand-orange transition-colors rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-brand-orange/50"
                                 aria-label="Pesquisar (Ctrl+K)"
                                 title="Pesquisar (Ctrl+K)"
                             >
@@ -116,7 +128,7 @@ const Header: React.FC = () => {
                                 <button 
                                     onClick={toggleMobileMenu} 
                                     className="p-2 focus:outline-none text-white hover:text-brand-orange transition-colors"
-                                    aria-label="Menu"
+                                    aria-label={isMobileMenuOpen ? "Fechar Menu" : "Abrir Menu"}
                                 >
                                     {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
                                 </button>
