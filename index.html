@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <!--
+      ========================================================================
+      PRIMARY META TAGS
+      ========================================================================
+      These tags provide essential information for search engines and browsers.
+      - charset: Specifies the character encoding for the document. UTF-8 is standard.
+      - viewport: Ensures the page is responsive and scales correctly on all devices.
+      - title: The main title of the page, crucial for SEO and browser tabs.
+      - description: A brief summary of the page's content, used by search engines.
+      - keywords: Helps search engines understand the page's topic.
+      - author/copyright: Defines ownership.
+      - robots: Instructs search engine crawlers on how to index the page.
+    -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aços Vital | Soluções em Aço para a Indústria e Construção</title>
+    <meta name="description" content="Aços Vital: Excelência em soluções de aço. Fornecemos chapas, tubos, flanges e conexões com qualidade certificada para a sua indústria. Entrega em todo o Brasil." />
+    <meta name="keywords" content="aços, aço vital, chapas de aço, tubos de aço, flanges, conexões de aço, indústria siderúrgica, construção civil, caldeiraria, oxicorte, aço, siderúrgica, metalúrgica" />
+    <meta name="author" content="Aços Vital" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="copyright" content="© 2025 Aços Vital" />
+
+    <!--
+      ========================================================================
+      FAVICON AND THEME
+      ========================================================================
+      These tags define the site's icon for browser tabs and bookmarks,
+      as well as the theme color for the browser UI on mobile devices.
+      - CUSTOMIZATION: Replace the href values to use your own favicons.
+        Update the `theme-color` content to match your brand's primary color.
+    -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#081437" />
+
+    <!--
+      ========================================================================
+      CANONICAL URL
+      ========================================================================
+      Specifies the preferred version of a URL to prevent duplicate content
+      issues in search engine indexing, which is very important for SEO.
+    -->
+    <link rel="canonical" href="https://www.acosvital.com.br/" />
+
+    <!--
+      ========================================================================
+      OPEN GRAPH / FACEBOOK META TAGS
+      ========================================================================
+      These tags control how your content is displayed when shared on social
+      media platforms like Facebook, LinkedIn, etc.
+      - CUSTOMIZATION: Update `og:title`, `og:description`, and `og:image`
+        to control the preview shown on social media. The image should
+        ideally be 1200x630 pixels.
+    -->
+    <meta property="og:title" content="Aços Vital | Soluções em Aço para a Indústria" />
+    <meta property="og:description" content="Fornecemos chapas, tubos, flanges e conexões com qualidade certificada. Soluções inovadoras para desafios complexos." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.acosvital.com.br/" />
+    <meta property="og:site_name" content="Aços Vital" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:image" content="https://images.builderservices.io/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-hostgator-brasil-v1-0-0%2F850%2F1911850%2FCU3jUjet%2F37c99b09f73f4fc8933f4fc45cc035ab&methods=resize%2C1200%2C630" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Trabalhador industrial em uma fábrica da Aços Vital" />
+    
+    <!--
+      ========================================================================
+      TWITTER CARD META TAGS
+      ========================================================================
+      These tags are similar to Open Graph but are specific to Twitter,
+      controlling how content previews appear when shared on Twitter.
+      - CUSTOMIZATION: Update `twitter:title`, `twitter:description`, and
+        `twitter:image` to customize the Twitter card.
+    -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Aços Vital | Soluções em Aço para a Indústria" />
+    <meta name="twitter:description" content="Fornecemos chapas, tubos, flanges e conexões com qualidade certificada. Soluções inovadoras para desafios complexos." />
+    <meta name="twitter:image" content="https://images.builderservices.io/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-hostgator-brasil-v1-0-0%2F850%2F1911850%2FCU3jUjet%2F37c99b09f73f4fc8933f4fc45cc035ab&methods=resize%2C1200%2C630" />
+    <meta name="twitter:image:alt" content="Trabalhador industrial em uma fábrica da Aços Vital" />
+
+    <!--
+      ========================================================================
+      PERFORMANCE AND STYLING
+      ========================================================================
+    -->
+    <!-- Preload LCP (Largest Contentful Paint) image: This is a performance
+         optimization that tells the browser to download the main hero image
+         with high priority, making the page appear to load faster. -->
+    <link rel="preload" fetchpriority="high" as="image" href="https://images.builderservices.io/s/cdn/v1.0/i/m?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-hostgator-brasil-v1-0-0%2F850%2F1911850%2FCU3jUjet%2F37c99b09f73f4fc8933f4fc45cc035ab&methods=resize%2C900%2C5000">
+    
+    <!-- Tailwind CSS from CDN for rapid prototyping. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 
+         NOTE: PDF.js scripts have been removed from here to optimize initial page load.
+         They are now dynamically loaded in CatalogFlipbook.tsx only when needed.
+    -->
+    
+    <!--
+      Tailwind CSS Configuration: This script block allows for customizing
+      the default Tailwind theme directly in the HTML.
+      - CUSTOMIZATION: You can add or override colors, fonts, spacing, etc.,
+        in the `theme.extend` object. For example, to change the primary orange
+        color, modify the value of 'brand-orange'.
+    -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-blue-dark': '#081437',
+              'brand-blue-light': '#387fd9',
+              'brand-midnight': '#050c21',
+              'brand-orange': '#ea6100',
+              'brand-orange-dark': '#cc5500',
+              'brand-off-white': '#F4F6F9',
+              'brand-text': '#333333',
+              'brand-whatsapp': '#075E54',
+              'brand-whatsapp-dark': '#054D44',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+
+    <!--
+      Inlined CSS for critical styles.
+      - FONT-FACE: Loading the main font ('Inter') this way prevents a
+        render-blocking request, improving perceived load time.
+      - SMOOTH SCROLL: `scroll-behavior: smooth;` enables smooth scrolling
+        for all anchor links on the page.
+      - SR-ONLY: A utility class to hide content visually while keeping it
+        accessible to screen readers.
+    -->
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        font-style:  normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url("https://rsms.me/inter/font-files/Inter-var.woff2?v=3.19") format("woff2");
+      }
+    </style>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      /* For screen-reader only content */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+    </style>
+
+  <!-- Import Map for ES modules. This tells the browser where to find
+       the React and Lucide libraries, avoiding the need for a build step
+       like Webpack in this simple setup. -->
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "i18next": "https://esm.sh/i18next@23.10.0",
+    "react-i18next": "https://esm.sh/react-i18next@15.4.1?external=react,react-dom",
+    "i18next-browser-languagedetector": "https://esm.sh/i18next-browser-languagedetector@8.0.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "recharts": "https://esm.sh/recharts@^3.6.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-white">
+    <!-- The root DOM element where the entire React application will be mounted. -->
+    <div id="root"></div>
+    <!-- The main script file for the React application. `type="module"` enables ES module syntax. -->
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
