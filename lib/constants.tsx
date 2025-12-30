@@ -209,7 +209,6 @@ export const FEATURED_PRODUCTS_LIST = [
     { id: 'grooved', imageUrl: ASSETS.HOME_FEATURED.GROOVED, href: '#/products/grooved' },
 ];
 
-  // Capas das Categorias (Página /products)
 export const PRODUCTS = {
     FLANGES: 'https://storage.googleapis.com/production-hostgator-brasil-v1-0-0/850/1911850/CU3jUjet/1b023f67b1e9414ea1952f0d9c144952',
     TUBOS: 'https://storage.googleapis.com/production-hostgator-brasil-v1-0-0/850/1911850/CU3jUjet/32796067427343a480188b691405b848',
@@ -227,7 +226,6 @@ export const PRODUCTS = {
     TANQUES: 'https://storage.googleapis.com/production-hostgator-brasil-v1-0-0/850/1911850/CU3jUjet/e47b0b14644e4244a3ce7c0eb6440b70'
 };
 
-  // Páginas Internas de Produtos (Sliders e Modelos)
 export const PRODUCT_PAGES = {
     FLANGES: {
       SLIDES: [
