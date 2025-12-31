@@ -330,7 +330,8 @@ const SteelCalculator: React.FC = () => {
                 
                 {/* 1. SELECTION (Left) */}
                 <div className="lg:col-span-3 h-full">
-                    <div className="bg-[#0f172a] border border-white/5 rounded-xl p-3 shadow-xl flex flex-col h-full max-h-[600px] overflow-hidden">
+                    {/* Alteração: Removido max-h e overflow para mostrar tudo */}
+                    <div className="bg-[#0f172a] border border-white/5 rounded-xl p-3 shadow-xl flex flex-col">
                         <div className="flex justify-between items-center mb-4 px-1 pb-2 border-b border-white/5">
                             <h3 className="text-white text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
                                 <BoxSelect size={12} className="text-brand-orange" /> {t('calculatorPage.common.selection')}
@@ -340,7 +341,8 @@ const SteelCalculator: React.FC = () => {
                             </button>
                         </div>
                         
-                        <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar space-y-4">
+                        {/* Alteração: Removido overflow-y-auto e flex-1 para crescimento natural */}
+                        <div className="space-y-4">
                             {(Object.values(CATEGORIES) as any[]).map((cat) => (
                                 <div key={cat.id}>
                                     <div className="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-2 pl-2 border-l-2 border-brand-orange/30">
@@ -403,7 +405,7 @@ const SteelCalculator: React.FC = () => {
                              
                              {/* COLUNA ESQUERDA: INPUTS */}
                              <div className="flex-1 space-y-4">
-                                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
                                      {/* Lógica de Renderização de Inputs */}
                                      {(selectedType === 'plate' || selectedType === 'bar_square' || selectedType === 'flange_square') && (
                                         renderInput('width', (selectedType === 'flange_square' || selectedType === 'bar_square') ? t('calculatorPage.inputs.side') : t('calculatorPage.inputs.width'))
@@ -411,14 +413,14 @@ const SteelCalculator: React.FC = () => {
 
                                      {selectedType === 'grating' && (
                                         <>
-                                            <div className="col-span-2 grid grid-cols-2 gap-4 bg-[#1e293b]/30 p-2 rounded-lg border border-white/5">
+                                            <div className="col-span-1 sm:col-span-2 grid grid-cols-2 gap-4 bg-[#1e293b]/30 p-2 rounded-lg border border-white/5">
                                                  {renderInput('length', t('calculatorPage.inputs.length') + " (" + t('calculatorPage.inputs.gap') + ")")}
                                                  {renderInput('width', t('calculatorPage.inputs.width'))}
                                             </div>
                                             {renderInput('height', t('calculatorPage.inputs.barHeight'))}
                                             {renderInput('thickness', t('calculatorPage.inputs.barThickness'))}
                                             
-                                            <div className="col-span-2">
+                                            <div className="col-span-1 sm:col-span-2">
                                                 <div className="flex items-center gap-1 mb-0.5">
                                                     <label className="text-[10px] text-gray-400 uppercase font-bold">{t('calculatorPage.inputs.mesh')}</label>
                                                 </div>
@@ -437,7 +439,7 @@ const SteelCalculator: React.FC = () => {
 
                                     {selectedType === 'expanded_metal' && (
                                         <>
-                                            <div className="col-span-2">
+                                            <div className="col-span-1 sm:col-span-2">
                                                 <label className="text-[10px] text-gray-400 uppercase font-bold mb-0.5 block">{t('calculatorPage.inputs.mesh')}</label>
                                                 <div className="relative">
                                                     <select value={expandedPatternId} onChange={handleExpandedPatternSelect} className="w-full bg-[#1e293b] border border-white/10 rounded-md py-1.5 pl-2 text-white text-[10px] outline-none appearance-none mb-2 h-8">
@@ -463,7 +465,7 @@ const SteelCalculator: React.FC = () => {
                                     )}
 
                                     {isTubeType && (
-                                        <div className="col-span-2 xl:col-span-3 grid grid-cols-3 gap-3 bg-[#1e293b]/30 p-2 rounded-lg border border-white/5 relative">
+                                        <div className="col-span-1 sm:col-span-2 xl:col-span-3 grid grid-cols-3 gap-3 bg-[#1e293b]/30 p-2 rounded-lg border border-white/5 relative">
                                             <div className="absolute -top-1.5 right-2 text-[8px] bg-brand-orange text-white px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-1"><Zap size={8}/> Auto</div>
                                             {renderTubeInput('outerDiameter', t('calculatorPage.inputs.outerDiameter'))}{renderTubeInput('innerDiameter', t('calculatorPage.inputs.innerDiameter'))}{renderTubeInput('thickness', t('calculatorPage.inputs.wallThickness'))}
                                         </div>
@@ -509,7 +511,7 @@ const SteelCalculator: React.FC = () => {
 
                                     {/* PRESETS DE ESPESSURA */}
                                     {(!typesWithoutThickness.includes(selectedType) && !isCustomExpanded) && (
-                                        <div className="col-span-2 xl:col-span-3 flex flex-col gap-1 pb-1 mt-1">
+                                        <div className="col-span-1 sm:col-span-2 xl:col-span-3 flex flex-col gap-1 pb-1 mt-1">
                                             <div className="flex items-center gap-1 text-[9px] text-brand-orange uppercase font-bold tracking-wider">
                                                 <MousePointerClick size={10} /> {t('calculatorPage.common.presets')}
                                             </div>
@@ -543,8 +545,8 @@ const SteelCalculator: React.FC = () => {
                              </div>
 
                              {/* COLUNA DIREITA: DADOS TÉCNICOS ENRIQUECIDOS */}
-                             <div className="w-full lg:w-[280px] xl:w-[320px] flex flex-col gap-4">
-                                <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-white/10 pb-2 mb-1 flex items-center justify-between">
+                             <div className="w-full lg:w-[280px] xl:w-[320px] flex flex-row lg:flex-col gap-4">
+                                <h4 className="hidden lg:flex text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-white/10 pb-2 mb-1 items-center justify-between">
                                     <span>{t('calculatorPage.common.telemetry')}</span>
                                     <div className="flex gap-1">
                                         <div className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse"></div>
@@ -553,7 +555,7 @@ const SteelCalculator: React.FC = () => {
                                 </h4>
                                 
                                 {/* CARD SECUNDÁRIO: ÁREA DE PINTURA */}
-                                <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col relative overflow-hidden group hover:bg-white/10 transition-colors">
+                                <div className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col relative overflow-hidden group hover:bg-white/10 transition-colors">
                                     <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
                                         <Paintbrush size={32} />
                                     </div>
@@ -567,7 +569,7 @@ const SteelCalculator: React.FC = () => {
                                 </div>
 
                                 {/* CARD TERCIÁRIO: DENSIDADE */}
-                                <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col mt-auto group hover:bg-white/10 transition-colors">
+                                <div className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col lg:mt-auto group hover:bg-white/10 transition-colors">
                                      <div className="flex justify-between items-center mb-1">
                                         <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">{t('calculatorPage.common.density')}</span>
                                         <Ruler size={14} className="text-gray-600 group-hover:text-brand-orange transition-colors"/>
@@ -580,25 +582,25 @@ const SteelCalculator: React.FC = () => {
                         </div>
 
                         {/* --- BARRA DE RESULTADO INTEGRADA (DOCK GIGANTE) --- */}
-                        <div className="bg-gradient-to-r from-[#050c21] via-[#0b162e] to-[#050c21] border-t border-brand-orange/30 p-6 lg:p-8 mt-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] min-h-[120px] lg:min-h-[140px]">
+                        <div className="bg-gradient-to-r from-[#050c21] via-[#0b162e] to-[#050c21] border-t border-brand-orange/30 p-4 lg:p-8 mt-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] min-h-[120px] lg:min-h-[140px]">
                             {/* Decorative Line Top */}
                             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-orange/60 to-transparent"></div>
 
-                            <div className="flex flex-col md:flex-row items-center gap-8 w-full md:w-auto">
+                            <div className="flex flex-col md:flex-row items-center gap-8 w-full md:w-auto text-center md:text-left">
                                 {/* Peso Principal - GIGANTE (TOTAL) */}
                                 <div className="flex flex-col items-center md:items-start">
                                     <span className="text-[10px] font-bold uppercase text-brand-orange tracking-[0.2em] mb-1 flex items-center gap-2">
                                         <Info size={12} /> {t('calculatorPage.common.totalWeight')} ({values.quantity} un)
                                     </span>
                                     <div 
-                                        className="flex items-baseline gap-2 cursor-pointer group/copy" 
+                                        className="flex items-baseline gap-2 cursor-pointer group/copy justify-center md:justify-start" 
                                         onClick={copyResult} 
                                         title="Clique para copiar"
                                     >
-                                        <span className="text-5xl lg:text-6xl font-mono font-bold text-white tracking-tighter leading-none group-hover/copy:text-brand-orange transition-colors drop-shadow-2xl">
+                                        <span className="text-4xl lg:text-6xl font-mono font-bold text-white tracking-tighter leading-none group-hover/copy:text-brand-orange transition-colors drop-shadow-2xl">
                                             {totalWeight > 0 ? totalWeight.toFixed(2) : '0.00'}
                                         </span>
-                                        <span className="text-xl font-medium text-gray-500 mb-1">kg</span>
+                                        <span className="text-lg lg:text-xl font-medium text-gray-500 mb-1">kg</span>
                                         {copied && <span className="text-xs text-green-400 font-bold animate-pulse ml-2 bg-green-900/30 px-2 py-0.5 rounded border border-green-500/30">Copiado!</span>}
                                     </div>
                                 </div>
@@ -607,25 +609,25 @@ const SteelCalculator: React.FC = () => {
                                 <div className="hidden md:block w-px h-12 bg-white/10"></div>
 
                                 {/* Dados Secundários (Unitário + Área) */}
-                                <div className="flex flex-col justify-center gap-2">
+                                <div className="flex flex-row md:flex-col justify-center gap-6 md:gap-2">
                                         {/* Unit Weight */}
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider w-16 text-right">{t('calculatorPage.common.unitWeight')}:</span>
+                                        <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
+                                            <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider text-center md:text-right md:w-16">{t('calculatorPage.common.unitWeight')}:</span>
                                             <div className="flex items-baseline gap-1.5">
-                                            <span className="text-2xl font-mono font-bold text-gray-300 tracking-tight">
+                                            <span className="text-lg md:text-2xl font-mono font-bold text-gray-300 tracking-tight">
                                                 {unitWeight > 0 ? unitWeight.toFixed(2) : '0.00'}
                                             </span>
                                             <span className="text-[10px] text-gray-600 font-medium uppercase">kg</span>
                                             </div>
                                         </div>
                                         
-                                        <div className="w-full h-px bg-white/5"></div>
+                                        <div className="hidden md:block w-full h-px bg-white/5"></div>
                                         
                                         {/* Total Area */}
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider w-16 text-right">{t('calculatorPage.common.totalArea')}:</span>
+                                        <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
+                                            <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider text-center md:text-right md:w-16">{t('calculatorPage.common.totalArea')}:</span>
                                             <div className="flex items-baseline gap-1.5">
-                                            <span className="text-2xl font-mono font-bold text-gray-300 tracking-tight">
+                                            <span className="text-lg md:text-2xl font-mono font-bold text-gray-300 tracking-tight">
                                                 {totalArea > 0 ? totalArea.toFixed(2) : '0.00'}
                                             </span>
                                             <span className="text-[10px] text-gray-600 font-medium uppercase">m²</span>

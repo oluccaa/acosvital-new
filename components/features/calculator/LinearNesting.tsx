@@ -181,7 +181,7 @@ const LinearNesting: React.FC = () => {
                 <h3 className="text-white font-bold text-xs uppercase flex items-center gap-2 border-b border-white/5 pb-2 mb-3">
                     <Plus size={14} className="text-brand-orange" /> {t('calculatorPage.nesting.addPieces')}
                 </h3>
-                <div className="flex gap-2 mb-2">
+                <div className="flex flex-col sm:flex-row gap-2 mb-2">
                     <div className="flex-1 relative">
                         <input 
                             id="nest-length-input"
@@ -193,22 +193,24 @@ const LinearNesting: React.FC = () => {
                             className="w-full bg-[#1e293b] border border-white/10 rounded p-2 text-white text-xs outline-none focus:border-brand-orange h-10" 
                         />
                     </div>
-                    <div className="w-20 relative">
-                         <input 
-                            type="number" 
-                            placeholder={t('calculatorPage.nesting.qty')}
-                            value={newItemQty} 
-                            onChange={e => setNewItemQty(e.target.value)} 
-                            onKeyDown={handleKeyDown}
-                            className="w-full bg-[#1e293b] border border-white/10 rounded p-2 text-white text-xs outline-none text-center focus:border-brand-orange h-10" 
-                        />
+                    <div className="flex gap-2">
+                        <div className="w-20 relative">
+                             <input 
+                                type="number" 
+                                placeholder={t('calculatorPage.nesting.qty')}
+                                value={newItemQty} 
+                                onChange={e => setNewItemQty(e.target.value)} 
+                                onKeyDown={handleKeyDown}
+                                className="w-full bg-[#1e293b] border border-white/10 rounded p-2 text-white text-xs outline-none text-center focus:border-brand-orange h-10" 
+                            />
+                        </div>
+                        <button 
+                            onClick={handleAddItem} 
+                            className="bg-brand-orange text-white px-4 rounded hover:bg-brand-orange-dark h-10 flex items-center justify-center transition-colors shadow-lg active:scale-95 flex-1 sm:flex-none"
+                        >
+                            <Plus size={18} strokeWidth={3} />
+                        </button>
                     </div>
-                    <button 
-                        onClick={handleAddItem} 
-                        className="bg-brand-orange text-white px-4 rounded hover:bg-brand-orange-dark h-10 flex items-center justify-center transition-colors shadow-lg active:scale-95"
-                    >
-                        <Plus size={18} strokeWidth={3} />
-                    </button>
                 </div>
                 {error && <p className="text-red-400 text-[10px] mb-2 font-bold animate-pulse">{error}</p>}
             </div>
@@ -267,7 +269,7 @@ const LinearNesting: React.FC = () => {
                 <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
                     
                     {/* Summary Cards */}
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="bg-[#1e293b] p-4 rounded-xl text-center border border-white/10 shadow-lg relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-12 h-12 bg-white/5 rounded-bl-full -mr-2 -mt-2 transition-transform group-hover:scale-110"></div>
                             <span className="text-[10px] text-gray-400 uppercase block font-bold tracking-wider mb-1">{t('calculatorPage.nesting.results.totalBars')}</span>

@@ -152,7 +152,7 @@ const WeldingCalculator: React.FC = () => {
                         </select>
                     </div>
                     
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {calculatorState.weldJointType === 'fillet' ? (
                             <div className="col-span-1"><label className={labelClass}>Perna (z) mm</label><input type="number" value={calculatorState.weldLegSize} onChange={e => updateCalculatorField('weldLegSize', e.target.value)} className={inputClass} /></div>
                         ) : (
