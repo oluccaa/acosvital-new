@@ -54,7 +54,46 @@ export const pt = {
     footer: {
         slogan: "A confiança é o que nos conecta!",
         pagesTitle: "Páginas",
-        followUsTitle: "Siga-nos"
+        followUsTitle: "Siga-nos",
+        privacyPolicy: "Política de Privacidade",
+        terms: "Termos de Uso"
+    },
+    privacy: {
+        title: "Política de Privacidade",
+        lastUpdated: "Última atualização: Março de 2025",
+        intro: "A Aços Vital preza pela segurança e privacidade de seus usuários. Esta Política de Privacidade descreve como coletamos, usamos e protegemos suas informações, em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018).",
+        sections: {
+            collection: {
+                title: "1. Coleta de Dados",
+                text: "Coletamos informações pessoais que você nos fornece voluntariamente ao utilizar nossos formulários de contato, solicitar orçamentos ou utilizar nossas calculadoras. Isso pode incluir nome, e-mail, telefone e nome da empresa."
+            },
+            usage: {
+                title: "2. Uso das Informações",
+                text: "Utilizamos seus dados para: responder às suas solicitações, enviar orçamentos, melhorar nossos produtos e serviços, e, se autorizado, enviar comunicações de marketing relevantes."
+            },
+            cookies: {
+                title: "3. Cookies e Tecnologias",
+                text: "Utilizamos cookies para melhorar a experiência de navegação, analisar o tráfego do site e personalizar conteúdo. Você pode gerenciar suas preferências de cookies através das configurações do seu navegador."
+            },
+            security: {
+                title: "4. Segurança",
+                text: "Adotamos medidas técnicas e organizacionais adequadas para proteger seus dados pessoais contra acesso não autorizado, alteração, divulgação ou destruição."
+            },
+            rights: {
+                title: "5. Seus Direitos (LGPD)",
+                text: "Você tem o direito de confirmar a existência de tratamento de dados, acessar seus dados, corrigir dados incompletos ou desatualizados, e solicitar a eliminação de dados pessoais tratados com o seu consentimento."
+            },
+            contact: {
+                title: "6. Contato",
+                text: "Para exercer seus direitos ou tirar dúvidas sobre esta política, entre em contato conosco através do e-mail: lgpd@acosvital.com.br"
+            }
+        },
+        cookieBanner: {
+            text: "Utilizamos cookies para melhorar sua experiência e analisar o tráfego do site. Ao continuar navegando, você concorda com nossa",
+            link: "Política de Privacidade",
+            accept: "Aceitar Cookies",
+            decline: "Recusar"
+        }
     },
     calculatorPage: {
         title: "Vital Steel Suite",
@@ -101,7 +140,7 @@ export const pt = {
             dimensions: "Dimensões do Cone",
             results: "Resultado da Planificação",
             memory: "Memória de Cálculo",
-            theory: "Cálculo baseado em geometria euclidiana para desenvolvimento de sólidos de revolução (Cones Concêntricos).",
+            theory: "Cálculo baseado em geometria euclidiana para desenvolvimento de sólidos de revolução (Conos Concêntricos).",
             inputs: {
                 D: "Ø Maior (D)",
                 d: "Ø Menor (d)",
@@ -612,7 +651,7 @@ export const pt = {
                 tee: "Perfil Laminado Tee",
                 wBeamH: "Perfil W Abas Paralelas – Perfil (W) H - HP",
                 wBeamI: "Perfil W Abas Paralelas – Perfil (W) I",
-                castIron: "Ferro Fundido"
+                castIron: "Ferro fundido redondo V-2/V-3/V-4/V-5"
             },
             plates: {
                 cold: "Chapa Fina a Frio",

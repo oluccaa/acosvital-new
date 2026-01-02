@@ -54,7 +54,51 @@ export const en = {
           whatsappSupport: "WhatsApp Support"
       }
     },
-    // ... (CONTINUATION)
+    footer: {
+        slogan: "Trust is what connects us!",
+        pagesTitle: "Pages",
+        followUsTitle: "Follow Us",
+        privacyPolicy: "Privacy Policy",
+        terms: "Terms of Use"
+    },
+    privacy: {
+        title: "Privacy Policy",
+        lastUpdated: "Last updated: March 2025",
+        intro: "Aços Vital values the security and privacy of its users. This Privacy Policy describes how we collect, use, and protect your information, in compliance with the General Data Protection Law (LGPD - Law No. 13,709/2018).",
+        sections: {
+            collection: {
+                title: "1. Data Collection",
+                text: "We collect personal information that you voluntarily provide to us when using our contact forms, requesting quotes, or using our calculators. This may include name, email, phone number, and company name."
+            },
+            usage: {
+                title: "2. Use of Information",
+                text: "We use your data to: respond to your requests, send quotes, improve our products and services, and, if authorized, send relevant marketing communications."
+            },
+            cookies: {
+                title: "3. Cookies and Technologies",
+                text: "We use cookies to improve browsing experience, analyze site traffic, and personalize content. You can manage your cookie preferences through your browser settings."
+            },
+            security: {
+                title: "4. Security",
+                text: "We adopt appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction."
+            },
+            rights: {
+                title: "5. Your Rights (LGPD)",
+                text: "You have the right to confirm the existence of data processing, access your data, correct incomplete or outdated data, and request the deletion of personal data processed with your consent."
+            },
+            contact: {
+                title: "6. Contact",
+                text: "To exercise your rights or ask questions about this policy, contact us via email: lgpd@acosvital.com.br"
+            }
+        },
+        cookieBanner: {
+            text: "We use cookies to improve your experience and analyze site traffic. By continuing to browse, you agree to our",
+            link: "Privacy Policy",
+            accept: "Accept Cookies",
+            decline: "Decline"
+        }
+    },
+    // ... (REST OF THE FILE IS IDENTICAL TO PREVIOUS VERSION)
     // ...
     calculatorPage: {
         title: "Vital Steel Suite",
@@ -371,15 +415,6 @@ export const en = {
             footer: "Nominal Conversion (Pipe Table) - Ex: 1/2\" = 15mm | 14\" = 350mm"
         }
     },
-    // ... (REST OF THE FILE)
-    // ...
-    // NOTE: Keep all previous content exactly as it was, just injecting the DN translation in converter.categories.
-    footer: {
-        slogan: "Trust is what connects us!",
-        pagesTitle: "Pages",
-        followUsTitle: "Follow Us"
-    },
-    // ...
     hero: {
       slides: {
         entressafra: {
@@ -510,7 +545,6 @@ export const en = {
         }
       }
     },
-    // ... (REST OF CALCULATOR PAGE IS SAME AS ABOVE)
     tablesPage: {
         title: "Technical Tables and Specifications",
         subtitle: "Consult measurements, weights, and technical standards of our main products.",

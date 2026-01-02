@@ -39,7 +39,7 @@ export const ASSETS = {
   },
   
   CTA: {
-    BG_GIF: "https://cpcqextgfcqhmwsqqdao.supabase.co/storage/v1/object/public/public-assets/acosvital/acos-empresa-gif.png"
+    BG_GIF: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/geral/cta/cta.webp"
   },
 
   // Imagens usadas na Home (Featured Products) e Outdoors

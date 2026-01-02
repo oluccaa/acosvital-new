@@ -46,6 +46,11 @@ const Footer: React.FC = () => {
                                     </a>
                                 </li>
                             ))}
+                             <li>
+                                <a href="#/privacy" className="text-gray-300 hover:text-brand-orange transition-colors text-sm uppercase font-semibold">
+                                    {t('footer.privacyPolicy')}
+                                </a>
+                            </li>
                         </ul>
                     </nav>
 
@@ -83,7 +88,7 @@ const Footer: React.FC = () => {
                         <a href="mailto:acosvital@acosvital.com.br" className="hover:text-white transition-colors">acosvital@acosvital.com.br</a>
                     </address>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                         <p className="text-gray-500">&copy; {new Date().getFullYear()} Aços Vital</p>
                     </div>
                 </div>

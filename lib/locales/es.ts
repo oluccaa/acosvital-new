@@ -1,4 +1,5 @@
 
+
 // ==========================================================================
 // ARQUIVO DE TRADUÇÃO: ESPANHOL (ES)
 // ==========================================================================
@@ -54,7 +55,50 @@ export const es = {
           whatsappSupport: "Soporte WhatsApp"
       }
     },
-    // ...
+    footer: {
+        slogan: "¡La confianza es lo que nos conecta!",
+        pagesTitle: "Páginas",
+        followUsTitle: "Síguenos",
+        privacyPolicy: "Política de Privacidad",
+        terms: "Términos de Uso"
+    },
+    privacy: {
+        title: "Política de Privacidad",
+        lastUpdated: "Última actualización: Marzo de 2025",
+        intro: "Aços Vital valora la seguridad y privacidad de sus usuarios. Esta Política de Privacidad describe cómo recopilamos, usamos y protegemos su información, de conformidad con la Ley General de Protección de Datos (LGPD - Ley N° 13.709/2018).",
+        sections: {
+            collection: {
+                title: "1. Recolección de Datos",
+                text: "Recopilamos información personal que usted nos proporciona voluntariamente al usar nuestros formularios de contacto, solicitar cotizaciones o utilizar nuestras calculadoras. Esto puede incluir nombre, correo electrónico, teléfono y nombre de la empresa."
+            },
+            usage: {
+                title: "2. Uso de la Información",
+                text: "Utilizamos sus datos para: responder a sus solicitudes, enviar cotizaciones, mejorar nuestros productos y servicios, y, si lo autoriza, enviar comunicaciones de marketing relevantes."
+            },
+            cookies: {
+                title: "3. Cookies y Tecnologías",
+                text: "Utilizamos cookies para mejorar la experiencia de navegación, analizar el tráfico del sitio y personalizar el contenido. Puede gestionar sus preferencias de cookies a través de la configuración de su navegador."
+            },
+            security: {
+                title: "4. Seguridad",
+                text: "Adoptamos medidas técnicas y organizativas adecuadas para proteger sus datos personales contra acceso no autorizado, alteración, divulgación o destrucción."
+            },
+            rights: {
+                title: "5. Sus Derechos (LGPD)",
+                text: "Usted tiene derecho a confirmar la existencia del tratamiento de datos, acceder a sus datos, corregir datos incompletos o desactualizados, y solicitar la eliminación de datos personales tratados con su consentimiento."
+            },
+            contact: {
+                title: "6. Contacto",
+                text: "Para ejercer sus derechos o hacer preguntas sobre esta política, contáctenos por correo electrónico: lgpd@acosvital.com.br"
+            }
+        },
+        cookieBanner: {
+            text: "Utilizamos cookies para mejorar su experiencia y analizar el tráfico del sitio. Al continuar navegando, usted acepta nuestra",
+            link: "Política de Privacidad",
+            accept: "Aceptar Cookies",
+            decline: "Rechazar"
+        }
+    },
     calculatorPage: {
         title: "Vital Steel Suite",
         subtitle: "Engineering Workstation v5.0",
@@ -270,7 +314,7 @@ export const es = {
             calculateBtn: "Calcular Optimización",
             params: "Parámetros de Stock",
             waiting: "Esperando Cálculo",
-            waitingDesc: "Añada las piezas que desea cortar en la lista al lado y defina el tamaño de la barra de su stock.",
+            waitingDesc: "Añada las piezas que deseja cortar en la lista al lado y defina el tamaño de la barra de su stock.",
             helpTitle: "Cómo usar el Optimizador",
             helpText: "Esta herramienta utiliza un algoritmo de 'Mejor Ajuste' (Best Fit Decreasing) para organizar las piezas en las barras de stock disponibles. Ingrese la longitud total de la barra que tiene en stock y el grosor de la hoja de corte (pérdida). Si desea calcular el peso total de la chatarra y del material, complete el campo 'Peso Lineal'.",
             errorLength: "Error: La longitud de la pieza (+ corte) no puede ser mayor que la barra de stock.",
@@ -297,14 +341,14 @@ export const es = {
                     stock: { title: "Tamaño de la Barra", desc: "Longitud total de la barra virgen disponible en stock (ej: 6000mm o 12000mm)." },
                     blade: { title: "Ancho de Corte", desc: "Material perdido en cada corte debido al grosor del disco o sierra (kerf). Generalmente entre 3mm y 5mm." },
                     waste: { title: "Sobra (Chatarra)", desc: "Trozo final de la barra que no es suficiente para producir nuevas piezas. Calculado como: Barra Total - (Suma de las Piezas + Pérdidas de Corte)." },
-                    weight: { title: "Peso Lineal", desc: "Masa de la barra por metro (kg/m). Permite calcular el peso total de material comprado y el peso desperdiciado en chatarra." }
+                    weight: { title: "Peso Lineal", desc: "Masa de la barra por metro (kg/m). Permite calcular el peso total de material comprado e o peso desperdiciado en chatarra." }
                 }
             }
         },
         welding: {
             title: "Calculadora de Soldadura",
             helpTitle: "Parámetros de Estimación",
-            helpText: "Esta herramienta estima la cantidad de consumible necesaria con base en el área transversal y la densidad del material seleccionado. La eficiencia de deposición no se considera, proporcionando el peso neto del metal depositado.",
+            helpText: "Esta herramienta estima la cantidad de consumible necesaria con base en el área transversal y la densidad del material seleccionado. A eficiencia de deposición no se considera, proporcionando el peso neto del metal depositado.",
             jointType: "Tipo de Junta",
             types: {
                 fillet: "Filete",
@@ -369,13 +413,6 @@ export const es = {
             },
             footer: "Conversión Nominal (Tabla Pipe) - Ej: 1/2\" = 15mm | 14\" = 350mm"
         }
-    },
-    // ... (REST OF THE FILE)
-    // ...
-    footer: {
-      slogan: "¡La confianza es lo que nos conecta!",
-      pagesTitle: "Páginas",
-      followUsTitle: "Síguenos"
     },
     hero: {
       slides: {
@@ -459,13 +496,13 @@ export const es = {
             plates: 'Chapas de Acero',
             tubes: 'Tubos de Acero',
             flanges: 'Bridas de Acero',
-            valves: 'Válvulas Industriales',
+            valves: 'Válvulas Industriais',
             meshes: 'Mallas de Acero',
             profiles: 'Perfiles de Acero',
             gratings: 'Rejillas de Piso',
             fittings: 'Conexiones de Acero',
             bars: 'Barras de Acero',
-            tanks: 'Tanques Industriales',
+            tanks: 'Tanques Industriais',
             piping: 'Tubería Industrial',
             boilermaking: 'Calderería Industrial',
             grooved: 'Línea Grooved'

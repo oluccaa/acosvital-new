@@ -4,6 +4,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { useRouter } from './hooks/useRouter';
 import LoadingSpinner from './components/common/LoadingSpinner';
+import CookieBanner from './components/common/CookieBanner';
 
 // Core Pages
 const HomePage = React.lazy(() => import('./pages/HomePage'));
@@ -15,6 +16,7 @@ const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const TablesPage = React.lazy(() => import('./pages/TablesPage'));
 const CalculatorPage = React.lazy(() => import('./pages/CalculatorPage'));
+const PrivacyPolicyPage = React.lazy(() => import('./pages/PrivacyPolicyPage'));
 
 const routes: { [key: string]: React.ComponentType } = {
     '#/': HomePage,
@@ -26,6 +28,7 @@ const routes: { [key: string]: React.ComponentType } = {
     '#/calculator': CalculatorPage,
     '#/certifications': CertificationsPage,
     '#/contact': ContactPage,
+    '#/privacy': PrivacyPolicyPage,
     
     // Product Routes
     '#/products/flanges': React.lazy(() => import('./subpages/FlangeProductPage')), 
@@ -68,6 +71,7 @@ const App: React.FC = () => {
                 </React.Suspense>
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 };
