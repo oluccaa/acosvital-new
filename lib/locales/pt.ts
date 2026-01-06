@@ -5,7 +5,7 @@
 
 export const pt = {
     layout: {
-        schedule: "Seg - Sex: 08:00 - 18:00",
+        schedule: "Seg - Sex: 07:00 - 17:00",
         menu: "Menu Principal",
         searchPlaceholder: "Buscar produtos, tabelas...",
         departments: "Departamentos",

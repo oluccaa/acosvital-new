@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus, Trash2, Scissors, Settings, ChevronDown } from 'lucide-react';
