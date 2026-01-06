@@ -197,14 +197,18 @@ export const PRODUCT_CATEGORIES = [
 ];
 
 export const FEATURED_PRODUCTS_LIST = [
-    { id: 'tubes', imageUrl: ASSETS.HOME_FEATURED.TUBOS, href: '#/products/tubos' }, 
-    { id: 'plates', imageUrl: ASSETS.HOME_FEATURED.CHAPAS, href: '#/products/chapas' }, 
-    { id: 'fittings', imageUrl: ASSETS.HOME_FEATURED.CONEXOES, href: '#/products/conexoes' },
     { id: 'flanges', imageUrl: ASSETS.HOME_FEATURED.FLANGE, href: '#/products/flanges' },
-    { id: 'valves', imageUrl: ASSETS.HOME_FEATURED.VALVULAS, href: '#/products/valvulas' },
+    { id: 'tubes', imageUrl: ASSETS.HOME_FEATURED.TUBOS, href: '#/products/tubos' },
     { id: 'boilermaking', imageUrl: ASSETS.HOME_FEATURED.CALDEIRARIA, href: '#/products/caldeiraria' },
+    { id: 'plates', imageUrl: ASSETS.HOME_FEATURED.CHAPAS, href: '#/products/chapas' },
+    { id: 'fittings', imageUrl: ASSETS.HOME_FEATURED.CONEXOES, href: '#/products/conexoes' },
+    { id: 'valves', imageUrl: ASSETS.HOME_FEATURED.VALVULAS, href: '#/products/valvulas' },
+    { id: 'profiles', imageUrl: ASSETS.HOME_FEATURED.PERFIS, href: '#/products/perfis' },
     { id: 'gratings', imageUrl: ASSETS.HOME_FEATURED.GRADE, href: '#/products/grades' },
-    { id: 'meshes', imageUrl: ASSETS.HOME_FEATURED.MALHA, href: '#/products/chapas' },
-    { id: 'tanks', imageUrl: ASSETS.HOME_FEATURED.TANQUES, href: '#/products/tanques' },
+    { id: 'tiles', imageUrl: ASSETS.HOME_FEATURED.TELHAS, href: '#/products/telhas' },
+    { id: 'civil', imageUrl: ASSETS.HOME_FEATURED.CIVIL, href: '#/products/civil' },
+    { id: 'cutting', imageUrl: ASSETS.HOME_FEATURED.OXICORTE, href: '#/products/oxicorte' },
+    { id: 'conduits', imageUrl: ASSETS.HOME_FEATURED.ELETRODUTOS, href: '#/products/eletrodutos' },
     { id: 'grooved', imageUrl: ASSETS.HOME_FEATURED.GROOVED, href: '#/products/grooved' },
+    { id: 'tanks', imageUrl: ASSETS.HOME_FEATURED.TANQUES, href: '#/products/tanques' },
 ];

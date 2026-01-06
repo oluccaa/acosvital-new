@@ -1,5 +1,4 @@
 
-
 // ==========================================================================
 // ARQUIVO DE TRADUÇÃO: ESPANHOL (ES)
 // ==========================================================================
@@ -117,7 +116,7 @@ export const es = {
             presets: "Preajustes de Medida",
             presetsHelp: "Seleccione un campo arriba y haga clic en un preajuste para aplicar.",
             surfaceArea: "Área Superficial",
-            density: "Densidad",
+            density: "Densidade",
             totalWeight: "Peso Total",
             unitWeight: "Unitario",
             totalArea: "Área Total",
@@ -316,7 +315,7 @@ export const es = {
             waiting: "Esperando Cálculo",
             waitingDesc: "Añada las piezas que deseja cortar en la lista al lado y defina el tamaño de la barra de su stock.",
             helpTitle: "Cómo usar el Optimizador",
-            helpText: "Esta herramienta utiliza un algoritmo de 'Mejor Ajuste' (Best Fit Decreasing) para organizar las piezas en las barras de stock disponibles. Ingrese la longitud total de la barra que tiene en stock y el grosor de la hoja de corte (pérdida). Si desea calcular el peso total de la chatarra y del material, complete el campo 'Peso Lineal'.",
+            helpText: "Esta herramienta utiliza un algoritmo de 'Mejor Ajuste' (Best Fit Decreasing) para organizar las piezas en las barras de stock disponibles. Ingrese la longitud total de la barra que tiene en stock y el grosor de la hoja de corte (pérdida). Si desea calcular el peso total da chatarra y del material, complete el campo 'Peso Lineal'.",
             errorLength: "Error: La longitud de la pieza (+ corte) no puede ser mayor que la barra de stock.",
             results: {
                 totalBars: "Total de Barras",
@@ -438,7 +437,7 @@ export const es = {
         },
         flooring: {
             title: 'Rejillas de Piso y Chapas',
-            subtitle: 'Seguridad y versatilidad para su industria. Soluciones robustas y duraderas.',
+            subtitle: 'Seguridad y versatilidad para su industria. Soluciones robustas e duraderas.',
             buttonText: 'Conozca Nuestros Pisos'
         }
       },
@@ -493,19 +492,20 @@ export const es = {
     featuredProducts: {
         title: 'Productos Destacados',
         items: {
-            plates: 'Chapas de Acero',
-            tubes: 'Tubos de Acero',
-            flanges: 'Bridas de Acero',
-            valves: 'Válvulas Industriais',
-            meshes: 'Mallas de Acero',
-            profiles: 'Perfiles de Acero',
-            gratings: 'Rejillas de Piso',
-            fittings: 'Conexiones de Acero',
-            bars: 'Barras de Acero',
-            tanks: 'Tanques Industriais',
-            piping: 'Tubería Industrial',
-            boilermaking: 'Calderería Industrial',
-            grooved: 'Línea Grooved'
+            flanges: 'Flange',
+            tubes: 'Tubos de acero',
+            boilermaking: 'CALDERERÍA INDUSTRIAL',
+            plates: 'Chapas de acero',
+            fittings: 'Conexiones',
+            valves: 'VÁLVULAS',
+            profiles: 'PERFILES LAMINADOS Y PLEGADOS',
+            gratings: 'REJILLAS DE PISO',
+            tiles: 'TEJA TRAPEZOIDAL',
+            civil: 'CONSTRUCCIÓN CIVIL',
+            cutting: 'OXICORTE',
+            conduits: 'CONDUCTOS',
+            grooved: 'LÍNEA RANURADA',
+            tanks: 'TANQUE DE COMBUSTIBLE Y GLP',
         },
         viewDetails: 'Ver detalles',
         onRequest: 'Bajo consulta'
