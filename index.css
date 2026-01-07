@@ -11,7 +11,7 @@ html {
   -webkit-tap-highlight-color: transparent;
   width: 100%;
   overflow-x: hidden;
-  background-color: #081437; /* Match brand background to prevent white gaps */
+  background-color: #081437; /* Updated to Main Brand Blue */
 }
 
 body {
@@ -94,7 +94,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ea6100; /* Brand Orange */
+  background: #FF751A; /* Brand Orange */
 }
 
 /* =========================================

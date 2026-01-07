@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { useI18n } from '../../../context/I18nContext';
 import { STATS_LIST } from '../../../lib/constants';
@@ -9,7 +7,8 @@ const StatsGrid: React.FC = () => {
 
     return (
         <section className="py-12 bg-white border-t border-gray-100 relative z-10" aria-label="Estatísticas da empresa">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Margens laterais padronizadas com o restante do site */}
+            <div className="container mx-auto px-6 sm:px-12 lg:px-24">
                 {/* Standardized max-width container to match AboutContent */}
                 <div className="max-w-7xl mx-auto">
                     {/* Responsive Grid: 1 col (mobile) -> 2 cols (sm) -> 4 cols (lg) */}

@@ -45,7 +45,7 @@ const PaginaPrincipal = CalculatorPage;
 
 const routes: { [key: string]: React.ComponentType } = {
     // A rota raiz agora obedece a variável configurada acima
-    '#/': HomePage,
+    '#/': TablesPage,
 
     // Rotas Fixas
     '#/home': HomePage,

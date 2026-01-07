@@ -22,9 +22,15 @@ export const ASSETS = {
     FLOORING: 'https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/home/hero/5.webp'
   },
 
+  ADS: {
+    CALCULATOR_LEFT: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/calculadora_de_aco/ads_fixo/ads_esquerda.gif",
+    CALCULATOR_RIGHT: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/calculadora_de_aco/ads_fixo/ads_direita.gif",
+    CALCULATOR_BOTTOM: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/calculadora_de_aco/ads_fixo/entrega_otimizada_bottom.webp"
+  },
+
   ABOUT: {
     CONTENT_IMAGE: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/home/sobre/vertical-sobre-empresa.gif",
-    UNITS_MAP: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/MapaOndeAtuamos.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvTWFwYU9uZGVBdHVhbW9zLnBuZyIsImlhdCI6MTc2NDY5NzE2MCwiZXhwIjoxNzk2MjMzMTYwfQ.IRHkVywspCVxCLapfO2ah3204NxkuJ1OEJI8WouT8_A"
+    UNITS_MAP: "https://yrhedrhkfgvaeoavcazg.supabase.co/storage/v1/object/sign/public-assets/acosvital/images/MapaOndeAtuamos.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80MWI0YjViZi00ZjI3LTQyZGUtYTQ5OC03MjdlNjMwMjUzYzMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWMtYXNzZXRzL2Fjb3N2aXRhbC9pbWFnZXMvTWFwYU9uZGVBdHVhbW9zLnBuZyIsImlhdCI6MTc2NDg3MTE5OCwiZXhwIjoxNzk2NDA3MTk4fQ.a6e5a6a6a6a6"
   },
 
   CERTIFICATIONS: {
@@ -222,13 +228,14 @@ export const ASSETS = {
     },
     TELHAS: {
         SLIDES: [
-            "",
-            ""
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/telhas_page/hero/1.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/telhas_page/hero/2.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/telhas_page/hero/3.webp"
         ],
         MODELS: {
-            GALVALUME: "",
-            PINTADA: "",
-            TERMOSTATICA: ""
+            GALVALUME: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/telhas_page/1.webp",
+            PINTADA: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/telhas_page/2.webp",
+            TERMOSTATICA: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/telhas_page/3.webp"
         }
     },
     CIVIL: {
@@ -247,82 +254,88 @@ export const ASSETS = {
     },
     CALDEIRARIA: {
         SLIDES: [
-            "",
-            ""
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/caldeiraria_page/hero/1.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/caldeiraria_page/hero/2.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/caldeiraria_page/hero/3.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/caldeiraria_page/hero/4.webp"
         ],
         MODELS: {
-            TUBOS_CALANDRADOS: "",
-            PECAS_PERSONALIZADAS: "",
-            EQUIPAMENTOS: ""
+            TUBOS_CALANDRADOS: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/caldeiraria_page/1.webp",
+            PECAS_PERSONALIZADAS: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/caldeiraria_page/2.webp",
+            EQUIPAMENTOS: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/caldeiraria_page/3.webp"
         }
     },
     OXICORTE: {
         SLIDES: [
-            "",
-            ""
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/oxicorte_page/hero/1.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/oxicorte_page/hero/2.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/oxicorte_page/hero/3.webp"
         ],
         MODELS: {
-            MACARICO: "",
-            TARTARUGA: "",
-            PLASMA: "",
-            FOTOCELULA: ""
+            MACARICO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/oxicorte_page/1.webp",
+            TARTARUGA: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/oxicorte_page/2.webp",
+            PLASMA: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/oxicorte_page/3.webp",
+            FOTOCELULA: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/oxicorte_page/4.webp"
         }
     },
     ELETRODUTOS: {
         SLIDES: [
-            "",
-            ""
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/hero/1.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/hero/2.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/hero/3.webp"
         ],
         MODELS: {
-            LEVE: "",
-            MEDIO: "",
-            PESADO: "",
-            CONEXOES_ELETRO: "",
-            FOGO_MEDIO: "",
-            FOGO_PESADO: "",
-            FOGO_CONEXOES: "",
-            RIR_NPT: "",
-            RIR_BSP: "",
-            INOX_10: "",
-            INOX_40: "",
-            CONEXOES_GERAL: ""
+            LEVE: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/1.webp",
+            MEDIO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/2.webp",
+            PESADO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/3.webp",
+            CONEXOES_ELETRO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/4.webp",
+            FOGO_MEDIO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/5.webp",
+            FOGO_PESADO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/6.webp",
+            FOGO_CONEXOES: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/7.webp",
+            RIR_NPT: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/8.webp",
+            RIR_BSP: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/9.webp",
+            INOX_10: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/10.webp",
+            INOX_40: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/11.webp",
+            CONEXOES_GERAL: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/eletrodutos_page/12.webp"
         }
     },
     GROOVED: {
         SLIDES: [
-            "",
-            ""
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/hero/1.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/hero/2.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/hero/3.webp"
         ],
         MODELS: {
-            FLEXIVEL: "",
-            REDUCAO_FLEX: "",
-            RIGIDO: "",
-            COTOVELO_45: "",
-            COTOVELO_90: "",
-            CRUZETA_MEC: "h",
-            CRUZETA_RAN: "",
-            TAMPAO: "",
-            LUVA_RED: "",
-            ADAPTADOR: "",
-            TEE_UBOLT: "",
-            TEE_MEC_ROSCA: "",
-            TEE_MEC_RAN: "",
-            TEE_RAN: "",
-            TEE_RED_RAN: "",
-            TEE_RED_ROSCA: "",
-            FLANGE_BIP: ""
+            FLEXIVEL: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/1.webp",
+            REDUCAO_FLEX: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/2.webp",
+            RIGIDO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/3.webp",
+            COTOVELO_45: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/4.webp",
+            COTOVELO_90: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/5.webp",
+            CRUZETA_MEC: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/6.webp",
+            CRUZETA_RAN: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/7.webp",
+            TAMPAO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/8.webp",
+            LUVA_RED: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/9.webp",
+            ADAPTADOR: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/10.webp",
+            TEE_UBOLT: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/11.webp",
+            TEE_MEC_ROSCA: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/12.webp",
+            TEE_MEC_RAN: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/13.webp",
+            TEE_RAN: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/14.webp",
+            TEE_RED_RAN: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/15.webp",
+            TEE_RED_ROSCA: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/16.webp",
+            FLANGE_BIP: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/grooved_page/17.webp"
         }
     },
     TANQUES: {
         SLIDES: [
-            "",
-            ""
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/tanques_page/hero/1.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/tanques_page/hero/2.webp",
+            "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/tanques_page/hero/3.webp"
         ],
         MODELS: {
-            AEREO: "",
-            JAQUETADO: "",
-            GLP: "",
-            MODULOS: ""
+            AEREO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/tanques_page/1.webp",
+            JAQUETADO: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/tanques_page/2.webp",
+            GLP: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/tanques_page/3.webp",
+            MODULOS: "https://mxbsygruslepfcyhtmqr.supabase.co/storage/v1/object/public/public_assets/products/tanques_page/4.webp"
         }
     }
   }

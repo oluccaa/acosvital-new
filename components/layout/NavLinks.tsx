@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useRouter } from '../../hooks/useRouter';
 import { ChevronDown, ArrowRight, FileText, Layers, Box, Settings, Factory, ShieldCheck, ChevronRight as ChevronRightIcon } from 'lucide-react';
@@ -15,7 +14,7 @@ interface NavLinksProps {
   className?: string;
   links: NavLinkData[];
   onLinkClick?: () => void;
-  isMobile?: boolean; // Kept for interface compatibility but ignored for layout logic now
+  isMobile?: boolean; 
   isScrolled?: boolean;
 }
 
@@ -23,9 +22,8 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
     const { t } = useTranslation();
     const currentHash = useRouter();
     const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-    const [activeGroup, setActiveGroup] = useState<string>('tubular'); // Default group
+    const [activeGroup, setActiveGroup] = useState<string>('tubular'); 
 
-    // Grouping logic for the Mega Menu (Desktop Only now) - Moved inside component for i18n
     const PRODUCT_GROUPS = [
         {
             id: 'tubular',
@@ -64,12 +62,10 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
         return currentHash.startsWith(href);
     };
 
-    // Filter products based on active group
     const currentGroupProducts = PRODUCT_CATEGORIES.filter(prod => 
         PRODUCT_GROUPS.find(g => g.id === activeGroup)?.items.includes(prod.id)
     );
 
-    // If mobile, render nothing (handled by Header.tsx now for better control)
     if (isMobile) return null;
 
     return (
@@ -94,33 +90,31 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
                             aria-current={active ? 'page' : undefined}
                             className={`
                                 relative flex items-center justify-start gap-1 transition-all duration-300 whitespace-nowrap
-                                px-3 py-4 lg:py-6 text-sm font-bold tracking-wide text-gray-300 hover:text-white
+                                px-3 py-4 text-xs font-bold tracking-widest text-gray-300 hover:text-white uppercase
                                 ${active ? 'text-brand-orange' : ''}
                             `}
                         >
-                            <span className="flex items-center gap-1.5">
+                            <span className="flex items-center gap-1">
                                 {link.text}
                             </span>
                             {isProducts && (
                                 <ChevronDown 
-                                    size={14} 
+                                    size={12} 
                                     className={`transition-transform duration-300 ${isMegaMenuOpen ? 'rotate-180 text-brand-orange' : ''}`} 
                                 />
                             )}
                             
                             {/* Hover Underline */}
-                            <span className={`absolute bottom-4 left-3 right-3 h-0.5 bg-brand-orange transform origin-left transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+                            <span className={`absolute bottom-3 left-3 right-3 h-[2px] bg-brand-orange transform origin-left transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
                         </a>
 
-                        {/* =================================================================================
-                           DESKTOP MEGA MENU - PREMIUM LAYOUT
-                           ================================================================================= */}
+                        {/* DESKTOP MEGA MENU */}
                         {isProducts && (
                             <div 
                                 className={`
-                                    fixed left-0 right-0 mx-auto w-[90vw] max-w-6xl z-50
+                                    fixed left-0 right-0 mx-auto w-[90vw] max-w-6xl z-[60]
                                     transition-all duration-300 origin-top
-                                    ${isScrolled ? 'top-[50px] pt-[15px]' : 'top-[100px] pt-[25px]'}
+                                    ${isScrolled ? 'top-[70px] pt-4' : 'top-[100px] pt-4'}
                                     ${isMegaMenuOpen ? 'opacity-100 scale-100 visible translate-y-0' : 'opacity-0 scale-95 invisible -translate-y-4 pointer-events-none'}
                                 `}
                             >
@@ -196,7 +190,6 @@ export const NavLinks: React.FC<NavLinksProps> = ({ className = '', links, onLin
 
                                         {/* COL 3: HIGHLIGHT / CATALOG */}
                                         <div className="w-1/4 bg-brand-blue-dark p-6 flex flex-col justify-between relative overflow-hidden">
-                                            {/* Background Decoration */}
                                             <div className="absolute top-0 right-0 w-40 h-40 bg-brand-orange rounded-full blur-[80px] opacity-20 pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
                                             <div className="absolute bottom-0 left-0 w-32 h-32 bg-brand-blue-light rounded-full blur-[60px] opacity-20 pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
 

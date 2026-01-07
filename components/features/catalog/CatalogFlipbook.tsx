@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useI18n } from '../../../context/I18nContext';
 import { 
@@ -335,7 +334,8 @@ const CatalogFlipbook: React.FC = () => {
         <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-900/20 to-transparent pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-orange/5 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Padding padronizado: px-6 sm:px-12 lg:px-24 */}
+        <div className="container mx-auto px-6 sm:px-12 lg:px-24 relative z-10">
             
             {/* Cabeçalho da Seção */}
             <div className="text-center mb-10">

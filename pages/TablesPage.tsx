@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { Search, FileText, ChevronRight, ChevronDown, ChevronUp, Folder, FolderOpen, Menu, X, Maximize2, Minimize2, Image as ImageIcon, ZoomIn, Filter, List } from 'lucide-react';
+import { Search, FileText, ChevronRight, ChevronDown, Folder, FolderOpen, X, Maximize2, Minimize2, Image as ImageIcon, ZoomIn, Filter, List } from 'lucide-react';
 import { TableItem } from '../components/features/tables/shared/types';
 import { getTablesData } from '../lib/tablesData';
 
-// --- HELPER COMPONENT: HIGHLIGHTED TEXT ---
-// Renders text with matched parts highlighted in soft brand orange
-const HighlightedText: React.FC<{ text: string; highlight: string }> = ({ text, highlight }) => {
+// --- HELPER 1: TEXTO DESTACADO (HIGHLIGHT) ---
+const HighlightedText: React.FC<{ text: string; highlight: string }> = React.memo(({ text, highlight }) => {
     if (!highlight || !highlight.trim()) {
         return <span>{text}</span>;
     }
     
-    // Escape special regex characters to prevent crashes
+    // Escapa caracteres especiais do regex para evitar quebra
     const escapedHighlight = highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(`(${escapedHighlight})`, 'gi');
     const parts = text.split(regex);
@@ -29,10 +28,9 @@ const HighlightedText: React.FC<{ text: string; highlight: string }> = ({ text, 
             )}
         </span>
     );
-};
+});
 
-// --- HELPER COMPONENT: SEARCH INPUT ---
-// Reusable input with icon and clear button
+// --- HELPER 2: INPUT DE BUSCA ---
 const SearchInput: React.FC<{
     value: string;
     onChange: (val: string) => void;
@@ -67,10 +65,117 @@ const SearchInput: React.FC<{
     );
 };
 
+// --- HELPER 3: RENDERIZADOR DA SIDEBAR (MOVIDO PARA FORA) ---
+// Isso corrige problemas de performance e foco
+interface SidebarItemProps {
+    item: TableItem;
+    depth?: number;
+    path?: string;
+    selectedPath: string;
+    expandedItems: Record<string, boolean>;
+    searchTerm: string;
+    onToggle: (path: string) => void;
+    onSelect: (item: TableItem, path: string, isContentMatch: boolean) => void;
+}
+
+const SidebarItemRenderer: React.FC<SidebarItemProps> = React.memo(({ 
+    item, 
+    depth = 0, 
+    path = '', 
+    selectedPath, 
+    expandedItems, 
+    searchTerm, 
+    onToggle, 
+    onSelect 
+}) => {
+    const hasChildren = item.items && item.items.length > 0;
+    const currentPath = path ? `${path}/${item.name}` : item.name;
+    const isSelected = selectedPath === currentPath;
+    const isExpanded = expandedItems[currentPath];
+    const isContentMatch = item._isContentMatch;
+
+    const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (hasChildren) {
+            onToggle(currentPath);
+        } else {
+            onSelect(item, currentPath, !!isContentMatch);
+        }
+    };
+
+    return (
+        <div className="mb-1">
+            <button
+                onClick={handleClick}
+                className={`
+                    w-full flex items-center text-left py-3 px-3 rounded-lg transition-all duration-200 group relative
+                    ${isSelected 
+                        ? 'bg-brand-blue-dark text-white shadow-md shadow-brand-blue-dark/20' 
+                        : 'text-brand-blue-dark hover:bg-gray-100'
+                    }
+                `}
+                style={{ paddingLeft: `${depth * 16 + 12}px` }}
+            >
+                {isSelected && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-brand-orange rounded-r-full"></div>}
+
+                <span className="mr-3 flex-shrink-0 relative">
+                    {hasChildren ? (
+                        isExpanded ? 
+                            <FolderOpen size={18} className={isSelected ? 'text-brand-orange' : 'text-brand-blue-dark/80'} /> : 
+                            <Folder size={18} className={isSelected ? 'text-gray-300' : 'text-brand-blue-dark/70 group-hover:text-brand-orange'} />
+                    ) : (
+                        <FileText size={18} className={isSelected ? 'text-brand-orange' : 'text-brand-blue-dark/70 group-hover:text-brand-blue-light'} />
+                    )}
+                </span>
+                
+                <div className="flex-1 flex flex-col min-w-0">
+                    <span className={`text-sm tracking-wide leading-tight truncate ${isSelected ? 'font-bold' : 'font-medium'}`}>
+                        <HighlightedText text={item.name} highlight={searchTerm} />
+                    </span>
+                    
+                    {isContentMatch && (
+                        <span className={`text-[10px] uppercase font-bold mt-0.5 flex items-center ${isSelected ? 'text-brand-orange' : 'text-gray-600'}`}>
+                            <span className="w-1.5 h-1.5 rounded-full bg-current mr-1.5 animate-pulse"></span>
+                            Contém item
+                        </span>
+                    )}
+                </div>
+
+                {hasChildren && (
+                    <span className={`ml-auto pl-2 opacity-70 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
+                        <ChevronRight size={14} />
+                    </span>
+                )}
+            </button>
+
+            {hasChildren && isExpanded && item.items && (
+                <div className="mt-1 relative ml-4">
+                    <div className="absolute left-0 top-0 bottom-2 w-px bg-gray-200"></div>
+                    {item.items.map((child, idx) => (
+                        <SidebarItemRenderer 
+                            key={`${currentPath}-${idx}`}
+                            item={child}
+                            depth={depth + 1}
+                            path={currentPath}
+                            selectedPath={selectedPath}
+                            expandedItems={expandedItems}
+                            searchTerm={searchTerm}
+                            onToggle={onToggle}
+                            onSelect={onSelect}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+});
+
+
+// --- COMPONENTE PRINCIPAL ---
 const TablesPage: React.FC = () => {
     const { t, i18n } = useTranslation();
     
-    // Memoize the table structure so it only recalculates when language changes
+    // Cache tables data
     const tables = useMemo(() => getTablesData(t), [t, i18n.language]);
     
     // --- STATE ---
@@ -88,23 +193,25 @@ const TablesPage: React.FC = () => {
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [isGalleryOpen, setIsGalleryOpen] = useState(true);
 
-    // --- DEEP SEARCH LOGIC (MEMOIZED) ---
-    const { filteredTables, totalResults } = useMemo(() => {
+    // --- CORREÇÃO IMPORTANTE: LÓGICA DE BUSCA ---
+    // Removemos o setExpandedItems de dentro do useMemo para evitar loop infinito
+    const { filteredTables, totalResults, pathsToExpand } = useMemo(() => {
         if (!sidebarSearchTerm.trim()) {
-            return { filteredTables: tables, totalResults: 0 };
+            return { filteredTables: tables, totalResults: 0, pathsToExpand: [] };
         }
 
         const lowerTerm = sidebarSearchTerm.toLowerCase();
         let matchCount = 0;
+        const pathsFound: string[] = []; // Guardamos os caminhos aqui para expandir depois
 
         const filterRecursive = (items: TableItem[], pathPrefix = ''): TableItem[] => {
             return items.map(item => {
                 const currentPath = pathPrefix ? `${pathPrefix}/${item.name}` : item.name;
                 
-                // 1. Check direct name match
+                // 1. Match Nome
                 const nameMatch = item.name.toLowerCase().includes(lowerTerm);
                 
-                // 2. Check content match (deep search in rows)
+                // 2. Match Conteúdo
                 let contentMatch = false;
                 if (item.rows) {
                     contentMatch = item.rows.some(row => 
@@ -112,30 +219,27 @@ const TablesPage: React.FC = () => {
                     );
                 }
 
-                // 3. Process children recursively
+                // 3. Recursão
                 let filteredChildren: TableItem[] = [];
                 if (item.items) {
                     filteredChildren = filterRecursive(item.items, currentPath);
                 }
 
-                // Decide if we keep this item
                 const hasMatchingChildren = filteredChildren.length > 0;
                 
                 if (nameMatch || contentMatch || hasMatchingChildren) {
-                    // If it's a leaf node (has rows) and matches either name or content, count it
                     if (item.rows && (nameMatch || contentMatch)) {
                         matchCount++;
                     }
 
-                    // Auto-expand folder if children matched
+                    // Se tiver filhos correspondentes, salvamos o caminho para expandir
                     if (hasMatchingChildren) {
-                        setExpandedItems(prev => ({ ...prev, [currentPath]: true }));
+                        pathsFound.push(currentPath);
                     }
 
                     return {
                         ...item,
                         items: filteredChildren.length > 0 ? filteredChildren : undefined,
-                        // Add a flag for UI rendering if it's a content-only match
                         _isContentMatch: contentMatch && !nameMatch 
                     };
                 }
@@ -145,44 +249,34 @@ const TablesPage: React.FC = () => {
         };
 
         const result = filterRecursive(tables);
-        return { filteredTables: result, totalResults: matchCount };
+        return { filteredTables: result, totalResults: matchCount, pathsToExpand: pathsFound };
 
     }, [sidebarSearchTerm, tables]);
 
-
-    // --- INITIAL LOAD & AUTO-SELECT ---
+    // --- EFFECT PARA EXPANDIR ITENS (SAFE) ---
+    // Isso roda APÓS a renderização, corrigindo o erro de update loop
     useEffect(() => {
-        if (tables && tables.length > 0) {
-            if (!selectedTable) {
-                const firstCategory = tables[0];
-                setExpandedItems(prev => ({ ...prev, [firstCategory.name]: true }));
-                
-                const findFirstLeaf = (items: TableItem[], path: string): { item: TableItem, path: string } | null => {
-                    for (const item of items) {
-                        const currentPath = path ? `${path}/${item.name}` : item.name;
-                        if (item.rows) return { item, path: currentPath };
-                        if (item.items) {
-                            const leaf = findFirstLeaf(item.items, currentPath);
-                            if (leaf) return leaf;
-                        }
+        if (sidebarSearchTerm && pathsToExpand.length > 0) {
+            setExpandedItems(prev => {
+                const newExpanded = { ...prev };
+                let changed = false;
+                pathsToExpand.forEach(path => {
+                    if (!newExpanded[path]) {
+                        newExpanded[path] = true;
+                        changed = true;
                     }
-                    return null;
-                };
-
-                const result = findFirstLeaf(firstCategory.items || [], firstCategory.name);
-                if (result) {
-                    setSelectedTable(result.item);
-                    setSelectedPath(result.path);
-                }
-            }
+                });
+                return changed ? newExpanded : prev;
+            });
         }
-    }, [tables]); 
+    }, [pathsToExpand, sidebarSearchTerm]);
 
-    // Force re-selection on language change
+
+    // --- LOAD INICIAL ---
     useEffect(() => {
-         if (tables && tables.length > 0) {
+        if (tables && tables.length > 0 && !selectedTable) {
             const firstCategory = tables[0];
-            setExpandedItems({ [firstCategory.name]: true });
+            setExpandedItems(prev => ({ ...prev, [firstCategory.name]: true }));
             
             const findFirstLeaf = (items: TableItem[], path: string): { item: TableItem, path: string } | null => {
                 for (const item of items) {
@@ -201,11 +295,28 @@ const TablesPage: React.FC = () => {
                 setSelectedTable(result.item);
                 setSelectedPath(result.path);
             }
-         }
-    }, [i18n.language]);
+        }
+    }, [tables, selectedTable]); 
 
+    // --- HANDLERS ---
+    const handleToggleExpand = useCallback((path: string) => {
+        setExpandedItems(prev => ({ ...prev, [path]: !prev[path] }));
+    }, []);
 
-    // --- KEYBOARD SHORTCUTS ---
+    const handleSelectTable = useCallback((item: TableItem, path: string, isContentMatch: boolean) => {
+        setSelectedTable(item);
+        setSelectedPath(path);
+        setIsMobileMenuOpen(false);
+        setIsGalleryOpen(true);
+        
+        if (sidebarSearchTerm && isContentMatch) {
+            setTableSearchTerm(sidebarSearchTerm);
+        } else {
+            setTableSearchTerm('');
+        }
+    }, [sidebarSearchTerm]);
+
+    // --- SHORTCUTS ---
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
@@ -217,100 +328,7 @@ const TablesPage: React.FC = () => {
         return () => window.removeEventListener('keydown', handleEsc);
     }, [isFullScreen, previewImage]);
 
-
-    // --- SIDEBAR ITEM RENDERER ---
-    const SidebarItemRenderer: React.FC<{ item: TableItem, depth?: number, path?: string }> = ({ item, depth = 0, path = '' }) => {
-        const hasChildren = item.items && item.items.length > 0;
-        const currentPath = path ? `${path}/${item.name}` : item.name;
-        const isSelected = selectedPath === currentPath;
-        const isExpanded = expandedItems[currentPath];
-        const isContentMatch = item._isContentMatch;
-
-        const toggleExpand = (e: React.MouseEvent) => {
-            e.stopPropagation();
-            setExpandedItems(prev => ({ ...prev, [currentPath]: !prev[currentPath] }));
-        };
-
-        const handleClick = (e: React.MouseEvent) => {
-            if (hasChildren) {
-                toggleExpand(e);
-            } else {
-                setSelectedTable(item);
-                setSelectedPath(currentPath);
-                setIsMobileMenuOpen(false);
-                setIsGalleryOpen(true);
-                
-                if (sidebarSearchTerm && isContentMatch) {
-                    setTableSearchTerm(sidebarSearchTerm);
-                } else {
-                    setTableSearchTerm('');
-                }
-            }
-        };
-
-        return (
-            <div className="mb-1">
-                <button
-                    onClick={handleClick}
-                    className={`
-                        w-full flex items-center text-left py-3 px-3 rounded-lg transition-all duration-200 group relative
-                        ${isSelected 
-                            ? 'bg-brand-blue-dark text-white shadow-md shadow-brand-blue-dark/20' 
-                            : 'text-brand-blue-dark hover:bg-gray-100'
-                        }
-                    `}
-                    style={{ paddingLeft: `${depth * 16 + 12}px` }}
-                >
-                    {isSelected && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-brand-orange rounded-r-full"></div>}
-
-                    <span className="mr-3 flex-shrink-0 relative">
-                        {hasChildren ? (
-                            isExpanded ? 
-                                <FolderOpen size={18} className={isSelected ? 'text-brand-orange' : 'text-brand-blue-dark/80'} /> : 
-                                <Folder size={18} className={isSelected ? 'text-gray-300' : 'text-brand-blue-dark/70 group-hover:text-brand-orange'} />
-                        ) : (
-                            <FileText size={18} className={isSelected ? 'text-brand-orange' : 'text-brand-blue-dark/70 group-hover:text-brand-blue-light'} />
-                        )}
-                    </span>
-                    
-                    <div className="flex-1 flex flex-col min-w-0">
-                        <span className={`text-sm tracking-wide leading-tight truncate ${isSelected ? 'font-bold' : 'font-medium'}`}>
-                            <HighlightedText text={item.name} highlight={sidebarSearchTerm} />
-                        </span>
-                        
-                        {isContentMatch && (
-                            <span className={`text-[10px] uppercase font-bold mt-0.5 flex items-center ${isSelected ? 'text-brand-orange' : 'text-gray-600'}`}>
-                                <span className="w-1.5 h-1.5 rounded-full bg-current mr-1.5 animate-pulse"></span>
-                                Contém item
-                            </span>
-                        )}
-                    </div>
-
-                    {hasChildren && (
-                        <span className={`ml-auto pl-2 opacity-70 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
-                            <ChevronRight size={14} />
-                        </span>
-                    )}
-                </button>
-
-                {hasChildren && isExpanded && item.items && (
-                    <div className="mt-1 relative ml-4">
-                        <div className="absolute left-0 top-0 bottom-2 w-px bg-gray-200"></div>
-                        {item.items.map((child, idx) => (
-                            <SidebarItemRenderer 
-                                key={`${currentPath}-${idx}`} 
-                                item={child} 
-                                depth={depth + 1} 
-                                path={currentPath}
-                            />
-                        ))}
-                    </div>
-                )}
-            </div>
-        );
-    };
-
-    // --- TABLE ROWS FILTERING ---
+    // --- FILTRAGEM DE LINHAS ---
     const filteredRows = useMemo(() => {
         if (!selectedTable?.rows) return [];
         if (!tableSearchTerm) return selectedTable.rows;
@@ -321,7 +339,7 @@ const TablesPage: React.FC = () => {
         );
     }, [selectedTable, tableSearchTerm]);
 
-    // Calculate total columns
+    // Calcular total de colunas
     const totalCols = useMemo(() => {
         if (!selectedTable) return 0;
         let maxCols = 0;
@@ -370,6 +388,7 @@ const TablesPage: React.FC = () => {
                     }
                 `}>
                     
+                    {/* MOBILE HEADER */}
                     <div className="lg:hidden p-3 border-b border-gray-100 bg-white/95 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between shadow-sm transition-all duration-300 supports-[backdrop-filter]:bg-white/60">
                         <div className="flex items-center gap-2.5">
                             <div className="bg-gradient-to-br from-brand-orange to-brand-orange-dark p-2 rounded-lg text-white shadow-md shadow-brand-orange/20">
@@ -406,6 +425,7 @@ const TablesPage: React.FC = () => {
                         </div>
                     </div>
 
+                    {/* SIDEBAR */}
                     <aside className={`
                         fixed lg:static inset-y-0 left-0 z-[60] lg:z-auto w-full sm:w-80 
                         bg-white lg:bg-gray-50/50 border-r border-gray-200 flex flex-col 
@@ -461,7 +481,15 @@ const TablesPage: React.FC = () => {
                             {filteredTables.length > 0 ? (
                                 <div className="p-3 pt-0">
                                     {filteredTables.map((category, index) => (
-                                        <SidebarItemRenderer key={index} item={category} />
+                                        <SidebarItemRenderer 
+                                            key={index} 
+                                            item={category} 
+                                            selectedPath={selectedPath}
+                                            expandedItems={expandedItems}
+                                            searchTerm={sidebarSearchTerm}
+                                            onToggle={handleToggleExpand}
+                                            onSelect={handleSelectTable}
+                                        />
                                     ))}
                                 </div>
                             ) : (
@@ -492,6 +520,7 @@ const TablesPage: React.FC = () => {
                         ></div>
                     )}
 
+                    {/* MAIN CONTENT AREA */}
                     <section className={`flex-1 flex flex-col min-w-0 bg-white relative ${!isFullScreen ? 'lg:rounded-r-xl overflow-hidden' : ''}`}>
                         {selectedTable ? (
                             <>

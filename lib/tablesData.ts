@@ -5,7 +5,7 @@ import { TableItem } from '../components/features/tables/shared/types';
 // Importing grouped items from domains
 import * as Acoplamento from '../components/features/tables/domains/acoplamento';
 import * as ConexoesTubulares from '../components/features/tables/domains/conexoes-tubulares';
-import * as ConexoesForjadas from '../components/features/tables/domains/chapas-grades/conexoes-forjadas';
+import * as ConexoesForjadas from '../components/features/tables/domains/conexoes-forjadas';
 import * as ValvulasTubos from '../components/features/tables/domains/valvulas-tubos';
 import * as ChapasGrades from '../components/features/tables/domains/chapas-grades';
 import * as Flanges from '../components/features/tables/domains/flanges';
